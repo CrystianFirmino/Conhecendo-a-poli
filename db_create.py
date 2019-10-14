@@ -1,7 +1,5 @@
 import sqlite3
 
-
-
 class Banco():
     def criarTabelas(self):
         connection = sqlite3.connect('db1.db')
@@ -14,21 +12,27 @@ class Banco():
                 usuario TEXT NOT NULL,
                 email TEXT NOT NULL,
                 senha TEXT NOT NULL
-                )
+                );
         """
         )
         
         cursor.execute (
         """
-            CREATE TABLE IF NOT EXISTS eventos (
+            CREATE TABLE eventos (
                 id INTEGER PRIMARY KEY,
                 nome TEXT NOT NULL, 
                 descricao TEXT NOT NULL,
                 local TEXT,
+<<<<<<< HEAD
                 horario_de_inicio TEXT,
                 horario_de_acabar TEXT
+=======
+                data TEXT,
+                horario_de_inicio TEXT NOT NULL,
+                horario_de_fim TEXT NOT NULL
+>>>>>>> bdbcd5cce575348f6c7af6303ee281dc3d31fe1b
                 
-            )
+            );
         """
         )
 
@@ -41,7 +45,7 @@ class Banco():
                 sala TEXT,
                 descricao TEXT NOT NULL
 
-            )
+            );
         """
         )
         cursor.execute (
@@ -57,10 +61,26 @@ class Banco():
         #cursor.execute('ALTER TABLE user ADD classe TEXT')
 
         connection.commit()
+        cursor.close()
 
-    def adicionarEvento(self):
-        pass
+    def adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim):
 
+        with sqlite3.connect('db1.db') as connection:
+            cursor = connection.cursor()    
+        
+            ex = (
+            """
+                INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim) 
+                    VALUES (?, ?, ?, ?, ?, ?);       
+            """
+            )
+            cursor.execute("""
+                            INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim)
+                            VALUES (?, ?, ?, ?, ?, ?)
+                            """, (nome, descricao, local, data, horarioIn, horarioFim)
+                           )
+            connection.commit()
+        
     def cadastrar_pessoa(self,user, senha, email):
         try:
             with sqlite3.connect('db1.db') as connection:
@@ -95,8 +115,13 @@ class Banco():
 banco = Banco()
 
 #banco.cadastrar_pessoa('teste','senha', 'teste@email')
+<<<<<<< HEAD
 banco.criarTabelas()
 
 resultado = banco.listarEventos()
 
 print(resultado)
+=======
+resultado = banco.buscar_pessoa('teste', 'senha')
+print(resultado)
+>>>>>>> bdbcd5cce575348f6c7af6303ee281dc3d31fe1b
