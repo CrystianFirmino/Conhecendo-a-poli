@@ -1,0 +1,21 @@
+{% extends "base/base.html" %}
+
+{% block head %}
+    <title>Cadastro - Conhecendo a poli</title>
+{% endblock %}
+
+{% block body %}
+    <p>Cadastro</p>
+    {% if session['logged_in'] %}
+        <p>Você está logado</p>
+    
+    {% else %}
+    <form action="/cadastrar" method="POST">
+        <input type="text" name="usuario" placeholder="User">
+        <input type="email" name="email" placeholder="Email">
+        <input type="password" name="senha" placeholder="Password">
+        
+        <input type="submit" value="cadastrar" >
+    </form>
+    {% endif %}
+{% endblock %}

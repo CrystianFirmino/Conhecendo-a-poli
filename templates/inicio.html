@@ -1,0 +1,15 @@
+{% extends "base/base.html" %}
+
+{% block head %}
+    <title>Conhecendo a poli</title>
+{% endblock %}
+
+{% block body %}
+    <h1>Inicio</h1>
+    
+    {% if not session['logged_in'] %}
+    <a href = "login">Login</a>
+    <a href = "cadastro">Cadastro</a>
+    {% endif %}
+    
+{% endblock %}

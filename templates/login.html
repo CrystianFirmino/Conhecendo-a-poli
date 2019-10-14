@@ -1,0 +1,20 @@
+{% extends "base/base.html" %}
+
+{% block head %}
+    <title>Login - Conhecendo a poli</title>
+{% endblock %}
+
+{% block body %}
+    <p>Login</p>
+    {% if session['logged_in'] %}
+        <p>Você já está logado</p>
+    
+    {% else %}
+    <form action="/logar" method="POST">
+        <input type="text" name="usuario" placeholder="User">
+        <input type="password" name="senha" placeholder="Password">
+
+        <input type="submit" value="Login" >
+    </form>
+    {% endif %}
+{% endblock %}

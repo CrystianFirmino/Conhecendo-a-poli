@@ -1,0 +1,21 @@
+{% extends "base/base.html" %}
+
+{% block head %}
+    <title>Sugerir topicos - Conhecendo a poli</title>
+{% endblock %}
+
+{% block body %}
+    <p>Sugerir topicos</p>
+
+    <form action="/sugerir" method="POST">
+        <input type="radio" name="topicos" value="informacao" checked> Informacao
+        <input type="radio" name="topicos" value="evento"> Evento
+        <input type="radio" name="topicos" value="local"> Local
+
+        <br>
+        <input type="text" name="nome" placeholder="Nome"><br>
+        <textarea name="message" placeholder="Descrição"></textarea><br>
+
+        <input type="submit" value="Enviar" >
+    </form>
+{% endblock %}
