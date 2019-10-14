@@ -1,5 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for, session
 import os
+from db_create import Banco
+
 app = Flask(__name__)
 
 class Pessoa:
@@ -64,9 +66,9 @@ class Adm(Coordenador):
     def get_classe(self):
         return self.__classe
 
-visitante = Pessoa()
 
-class Banco:
+
+class bBanco:
     def __init__(self):
         pass
 
@@ -93,6 +95,8 @@ class Banco:
 
 exemplo_usr = Usuario("Chaves", "chaves@.br", "1234")
 
+visitante = Pessoa()
+
 print(exemplo_usr.get_classe())
 
 @app.route("/")
@@ -105,17 +109,20 @@ def login():
 
 @app.route("/logar", methods = ['POST'])
 def logar():
+    
     usr = str(request.form["usuario"]).title()
     senha = str(request.form["senha"])
+    visitante = Pessoa()
 
     banco = Banco()
     busca =  banco.buscar_pessoa(usr, senha)
-
-    if len(busca) == 3:    
-        classe = busca[0]
-        usuario = busca[1]
-        email = busca[2]
-
+    print(busca)
+    if len(busca) > 0:    
+        classe = "usuario"
+        x = busca[0]
+        usuario = x[1]
+        email = x[2]
+        
         session['logged_in'] = True
         if classe == "usuario":
             visitante = Usuario(usuario, senha, email)
@@ -129,11 +136,13 @@ def logar():
     
     visitante.validar() #inutil
     session['priority'] = visitante.priority
-
-    if session['logged_in']:
-        return redirect('/')
-    else:
-        return "Login Negado"
+    try:
+        if session['logged_in']:
+            return redirect('/')
+        else:
+            return "Login Negado"
+    except:
+        return "Concerte isso"
 
 @app.route("/sair")
 def sair():
@@ -152,7 +161,7 @@ def cadastrar():
     
     banco = Banco()
     cadastrado =  banco.cadastrar_pessoa(usr, senha, email)
-    
+    print(cadastrado)
     if cadastrado:
         return redirect('/')
     else:

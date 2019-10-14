@@ -69,7 +69,7 @@ class Banco():
                                     WHERE data = ? AND horario_de_inicio > ? AND horario_de_fim < ?
                                     """ , (data, horarioIn, horarioFim)).fetchall()
         return result
-        
+
     def cadastrar_pessoa(self,user, senha, email):
         try:
             with sqlite3.connect('db1.db') as connection:
@@ -86,6 +86,8 @@ class Banco():
             find_user = ("SELECT * FROM user WHERE usuario = ? AND senha = ?")
             cursor.execute(find_user, (usr, senha))
             results = cursor.fetchall()
+            print("Resultado: ")
+            print(results)
         return results
 
     def aceitarEvento(self):
