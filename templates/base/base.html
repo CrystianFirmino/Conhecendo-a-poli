@@ -5,35 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
+    <meta name="keywords" content="web des, affordable web design, professional web design">
+
     <link rel="stylesheet" href="static/css/main.css">
-    <LINK REL="SHORTCUT ICON" href="static/img/icon_normal.jpg">
+    <LINK REL="SHORTCUT ICON" href="static/img/logopoli.jpg">
 
     {% block head %}{% endblock %}
 
 </head>
 
 <body>
-    <a href="/">Inicio</a>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1>Conhecendo a<span class = "highlight"> Poli</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class = "current"><a href="/">Inicio</a></li>
+                    <li><a href="encontrar_atividades">Encontrar atividades</a></li>
+
+                    {% if session['logged_in'] and session['priority'] > 0 %}
+                    <li><a href="grade">Grade</a></li>
+                    <li><a href="sugerir_topicos">Sugerir Topicos</a></li>
+                    {% endif %}
+
+                    {% if session['logged_in'] and session['priority'] > 2 %}
+                    <li><a href="aceitar_topicos">Aceitar topicos</a></li>
+                    {% endif %}
+
+                    {% if session['logged_in'] and session['priority'] > 4 %}
+                    <li><a href="gerenciar_colaboradores">Gerenciar Colaboradores</a></li>
+                    {% endif %}
+
+                    {% if session['logged_in'] %}
+                    <a href="sair">Sair</a>
+                    {% endif %}
+
+
+                </ul>
+            </nav>
+            </div>
+    </header>
+
+{% block body %}{% endblock %}
+
+
+
+<footer>
+    <p>Conhecendo a Poli, Copyright &copy; 2019</p>
+
+</footer>
     
-    <a href="encontrar_atividades">Encontrar atividades</a>
-
-    {% if session['logged_in'] and session['priority'] > 0 %}
-    <a href="grade">Grade</a>
-    <a href="sugerir_topicos">Sugerir Topicos</a>
-    {% endif %}
-
-    {% if session['logged_in'] and session['priority'] > 2 %}
-    <a href="aceitar_topicos">Aceitar topicos</a>
-    {% endif %}
-
-    {% if session['logged_in'] and session['priority'] > 4 %}
-    <a href="gerenciar_colaboradores">Gerenciar Colaboradores</a>
-    {% endif %}
-
-    {% if session['logged_in'] %}
-    <a href="sair">Sair</a>
-    {% endif %}
-
-
-    {% block body %}{% endblock %}
 </body>
+</html>
