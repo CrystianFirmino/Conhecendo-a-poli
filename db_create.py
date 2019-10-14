@@ -18,7 +18,7 @@ class Banco():
         
         cursor.execute (
         """
-            CREATE TABLE eventos (
+            CREATE TABLE IF NOT EXISTS eventos (
                 id INTEGER PRIMARY KEY,
                 nome TEXT NOT NULL, 
                 descricao TEXT NOT NULL,
@@ -53,7 +53,7 @@ class Banco():
             )
         """
         )        
-        cursor.execute('ALTER TABLE eventos ADD data TEXT')
+        #cursor.execute('ALTER TABLE eventos ADD data TEXT')
 
         connection.commit()
         cursor.close()
