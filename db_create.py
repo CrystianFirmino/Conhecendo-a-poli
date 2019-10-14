@@ -25,8 +25,8 @@ class Banco():
                 nome TEXT NOT NULL, 
                 descricao TEXT NOT NULL,
                 local TEXT,
-                horario de inicio TEXT,
-                horario de acabar TEXT,
+                horario_de_inicio TEXT,
+                horario_de_acabar TEXT
                 
             )
         """
@@ -44,7 +44,8 @@ class Banco():
             )
         """
         )
-        
+        #cursor.execute('ALTER TABLE user ADD classe TEXT')
+
         connection.commit()
 
     def adicionarEvento(self):
@@ -71,11 +72,21 @@ class Banco():
     def aceitarEvento(self):
         pass
 
-    def listarEventos(self):    
-        pass
+    def listarEventos(self):
+        with sqlite3.connect('db1.db') as connection:
+            cursor = connection.cursor()
+            find_evento = ("SELECT * FROM eventos ")
+            cursor.execute(find_evento)
+            results = cursor.fetchall()
+        return results
+
 
 
 banco = Banco()
+
 #banco.cadastrar_pessoa('teste','senha', 'teste@email')
-resultado = banco.buscar_pessoa('teste', 'senha')
+#banco.criarTabelas()
+
+resultado = banco.listarEventos()
+
 print(resultado)
