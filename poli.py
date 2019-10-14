@@ -91,8 +91,6 @@ class Banco:
 
         return ["adm","user","email"] #Provisorio
 
-
-
 exemplo_usr = Usuario("Chaves", "chaves@.br", "1234")
 
 print(exemplo_usr.get_classe())
