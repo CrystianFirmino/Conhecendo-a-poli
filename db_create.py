@@ -50,20 +50,25 @@ class Banco():
     def adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim):
 
         with sqlite3.connect('db1.db') as connection:
+            
             cursor = connection.cursor()    
-        
-            ex = (
-            """
-                INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim) 
-                    VALUES (?, ?, ?, ?, ?, ?);       
-            """
-            )
             cursor.execute("""
                             INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim)
                             VALUES (?, ?, ?, ?, ?, ?)
                             """, (nome, descricao, local, data, horarioIn, horarioFim)
                            )
             connection.commit()
+
+    def listarEventos(self, data, horarioIn, horarioFim):    
+        
+        with sqlite3.connect('db1.db') as connectio:
+
+            cursor = connectio.cursor()
+            result = cursor.execute("""
+                                    SELECT nome, descricao, local FROM eventos
+                                    WHERE data = ? AND horario_de_inicio > ? AND horario_de_fim < ?
+                                    """ , (data, horarioIn, horarioFim)).fetchall()
+        return result
         
     def cadastrar_pessoa(self,user, senha, email):
         try:
@@ -86,11 +91,12 @@ class Banco():
     def aceitarEvento(self):
         pass
 
-    def listarEventos(self):    
-        pass
+
 
 
 banco = Banco()
 #banco.cadastrar_pessoa('teste','senha', 'teste@email')
 resultado = banco.buscar_pessoa('teste', 'senha')
 print(resultado)
+
+banco.listarEventos("2/2", "3", "9")
