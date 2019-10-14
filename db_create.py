@@ -1,43 +1,64 @@
 import sqlite3
 
-conection = sqlite3.connect('db1.db')
 
-cursor = conection.cursor()
 
-cursor.execute (
+class Banco():
+    def criarTabelas(self):
+        connection = sqlite3.connect('db1.db')
+        cursor = connection.cursor()   
+        cursor.execute (
 
-"""
-    CREATE TABLE IF NOT EXISTS user (
-        id INTEGER PRIMARY KEY AUTO_INCREMENT,
-        usuario TEXT NOT NULL,
-        email TEXT NOT NULL,
-        senha TEXT NOT NULL
+        """
+            CREATE TABLE IF NOT EXISTS user (
+                id INTEGER PRIMARY KEY,
+                usuario TEXT NOT NULL,
+                email TEXT NOT NULL,
+                senha TEXT NOT NULL
+                )
+        """
         )
-"""
-)
 
-cursor.execute (
+        cursor.execute (
+        """
+            CREATE TABLE IF NOT EXISTS eventos (
+                id INTEGER PRIMARY KEY,
+                nome TEXT NOT NULL, 
+                descricao TEXT NOT NULL,
+                local TEXT,
+                horario de inicio TEXT,
+                horario de acabar TEXT,
+                
+            )
+        """
+        )
 
-    CREATE TABLE IF NOT EXISTS eventos (
-        id INTEGER PRIMARY KEY AUTO_INCREMENT,
-        nome TEXT NOT NULL, 
-        descricao TEXT NOT NULL,
-        local TEXT,
-        horario 
+        cursor.execute (
+        """
+            CREATE TABLE IF NOT EXISTS local (
+                id INTEGER PRIMARY KEY,
+                nome TEXT NOT NULL, 
+                bloco TEXT NOT NULL,
+                sala TEXT,
+                descricao TEXT NOT NULL
 
-    )
+            )
+        """
+        )
+        
+        connection.commit()
 
-)
+    def adicionarEvento():
 
-cursor.execute (
+    def cadastrarPessoa():
+    
+    def logarPessoa():
 
-    CREATE TABLE IF NOT EXISTS local (
-        id INTEGER PRIMARY KEY AUTO_INCREMENT,
-        nome TEXT NOT NULL, 
-        bloco TEXT NOT NULL,
-        sala TEXT,
-        descricao TEXT NOT NULL
+    def aceitarEvento():
 
-    )
+    def listarEventos():
+    
 
-)
+
+
+banco = Banco()
+banco.criarTabelas()
