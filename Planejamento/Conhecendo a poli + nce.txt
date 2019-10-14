@@ -1,0 +1,27 @@
+﻿Conhecendo a poli + nce
+
+
+1. O Predio *
+   1. Salas de estudo
+   2. Computadores
+   3. Secretarias
+   4. Banheiros (Mapa)
+2. Eventos (Calendario) *
+   1. Calendario Academico
+   2. Palestras
+   3. Semanas Academicas
+   4. Mini cursos
+   5. Outros
+3. Guia de sobrevivencia (Calouros ou nao)
+   1. Importante: Fale com o Micelli
+      1. Professor orientador
+      2. Planejamento do periodo
+   2. Bandejao
+   3. Onibus
+   4. Xerox
+4. Links Uteis
+   1. Equipes
+   2. Outros Sites da Ufrj
+5. O Site (Mudar)
+6. Ajude-nos
+7. Login

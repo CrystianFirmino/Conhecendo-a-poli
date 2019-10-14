@@ -1,7 +1,5 @@
 import sqlite3
 
-
-
 class Banco():
     def criarTabelas(self):
         connection = sqlite3.connect('db1.db')
@@ -48,14 +46,19 @@ class Banco():
         connection.commit()
 
     def adicionarEvento():
+        pass
 
     def cadastrarPessoa():
+        pass
     
     def logarPessoa():
+        pass
 
     def aceitarEvento():
+        pass
 
     def listarEventos():
+        pass
     
 
 
