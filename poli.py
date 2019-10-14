@@ -89,7 +89,7 @@ class Banco:
         #Se não
             #return []     
 
-        return ["adm","user","email"] #Provisorio
+        return ["usuario","user","email"] #Provisorio
 
 exemplo_usr = Usuario("Chaves", "chaves@.br", "1234")
 
