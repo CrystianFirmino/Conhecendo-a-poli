@@ -23,14 +23,9 @@ class Banco():
                 nome TEXT NOT NULL, 
                 descricao TEXT NOT NULL,
                 local TEXT,
-<<<<<<< HEAD
-                horario_de_inicio TEXT,
-                horario_de_acabar TEXT
-=======
                 data TEXT,
                 horario_de_inicio TEXT NOT NULL,
                 horario_de_fim TEXT NOT NULL
->>>>>>> bdbcd5cce575348f6c7af6303ee281dc3d31fe1b
                 
             );
         """
@@ -58,22 +53,14 @@ class Banco():
             )
         """
         )        
-        #cursor.execute('ALTER TABLE user ADD classe TEXT')
+        cursor.execute('ALTER TABLE eventos ADD data TEXT')
 
         connection.commit()
         cursor.close()
 
     def adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim):
-
         with sqlite3.connect('db1.db') as connection:
             cursor = connection.cursor()    
-        
-            ex = (
-            """
-                INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim) 
-                    VALUES (?, ?, ?, ?, ?, ?);       
-            """
-            )
             cursor.execute("""
                             INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim)
                             VALUES (?, ?, ?, ?, ?, ?)
@@ -115,13 +102,8 @@ class Banco():
 banco = Banco()
 
 #banco.cadastrar_pessoa('teste','senha', 'teste@email')
-<<<<<<< HEAD
 banco.criarTabelas()
-
+banco.adicionarEvento('resenha', 'resenhinha pra codar', 'bbccmn', 'agora', '15:25', '15:35')
 resultado = banco.listarEventos()
 
 print(resultado)
-=======
-resultado = banco.buscar_pessoa('teste', 'senha')
-print(resultado)
->>>>>>> bdbcd5cce575348f6c7af6303ee281dc3d31fe1b
