@@ -44,6 +44,16 @@ class Banco():
             )
         """
         )
+        cursor.execute (
+        """
+            CREATE TABLE IF NOT EXISTS grade (
+                userId INTEGER NOT NULL,
+                eventoId INTEGER NOT NULL,
+                FOREIGN KEY (userId) REFERENCES user(id),
+                FOREIGN KEY (eventoId) REFERENCES eventos(id)
+            )
+        """
+        )        
         #cursor.execute('ALTER TABLE user ADD classe TEXT')
 
         connection.commit()
@@ -85,7 +95,7 @@ class Banco():
 banco = Banco()
 
 #banco.cadastrar_pessoa('teste','senha', 'teste@email')
-#banco.criarTabelas()
+banco.criarTabelas()
 
 resultado = banco.listarEventos()
 
