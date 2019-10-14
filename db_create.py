@@ -17,7 +17,7 @@ class Banco():
                 )
         """
         )
-
+        
         cursor.execute (
         """
             CREATE TABLE IF NOT EXISTS eventos (
@@ -47,18 +47,35 @@ class Banco():
         
         connection.commit()
 
-    def adicionarEvento():
+    def adicionarEvento(self):
+        pass
 
-    def cadastrarPessoa():
-    
-    def logarPessoa():
+    def cadastrar_pessoa(self,user, senha, email):
+        try:
+            with sqlite3.connect('db1.db') as connection:
+                cursor = connection.cursor()
+                cursor.execute('INSERT INTO user(usuario, email, senha) VALUES(?, ?, ?)', (user, email, senha))
+                connection.commit()
+                return True
+        except:
+            return 'deu ruim no cadastro'
+   
+    def buscar_pessoa(self, usr, senha):
+        with sqlite3.connect('db1.db') as connection:
+            cursor = connection.cursor()
+            find_user = ("SELECT * FROM user WHERE usuario = ? AND senha = ?")
+            cursor.execute(find_user, (usr, senha))
+            results = cursor.fetchall()
+        return results
 
-    def aceitarEvento():
+    def aceitarEvento(self):
+        pass
 
-    def listarEventos():
-    
-
+    def listarEventos(self):    
+        pass
 
 
 banco = Banco()
-banco.criarTabelas()
+#banco.cadastrar_pessoa('teste','senha', 'teste@email')
+resultado = banco.buscar_pessoa('teste', 'senha')
+print(resultado)
