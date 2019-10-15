@@ -128,4 +128,8 @@ class Banco():
 banco = Banco()
 #adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim)
 resultado = banco.listarEventos("04/11", "09", "14")
+<<<<<<< Updated upstream
 print(resultado)
+=======
+print(resultado)
+>>>>>>> Stashed changes
