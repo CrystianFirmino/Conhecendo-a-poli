@@ -11,7 +11,8 @@ class Banco():
                 id INTEGER PRIMARY KEY,
                 usuario TEXT NOT NULL,
                 email TEXT NOT NULL,
-                senha TEXT NOT NULL
+                senha TEXT NOT NULL, 
+                classe TEXT
                 );
         """
         )
@@ -25,7 +26,11 @@ class Banco():
                 local TEXT,
                 data TEXT,
                 horario_de_inicio TEXT NOT NULL,
+<<<<<<< HEAD
                 horario_de_fim TEXT NOT NULL,
+=======
+                horario_de_fim TEXT NOT NULL
+>>>>>>> abe09c483d122e739b42aa091db7bf940c392730
             );
         """
         )
@@ -53,7 +58,12 @@ class Banco():
             );
         """
         )
+<<<<<<< HEAD
         #cursor.execute('ALTER TABLE user ADD class TEXT')
+=======
+        
+
+>>>>>>> abe09c483d122e739b42aa091db7bf940c392730
         connection.commit()
         cursor.close()
 
@@ -90,17 +100,17 @@ class Banco():
         except:
             return 'deu ruim no cadastro'
    
-    def buscar_pessoa(self, usr, senha):
+    def buscar_pessoa(self, usr, senha=0):
         with sqlite3.connect('db1.db') as connection:
             cursor = connection.cursor()
             find_user = ("SELECT * FROM user WHERE usuario = ? AND senha = ?")
             cursor.execute(find_user, (usr, senha))
-            results = cursor.fetchall()
-            print("Resultado: ")
-            print(results)
+            results = cursor.fetchall()        
+            #print("Resultado: ")
+            #print(result)
         return results
 
-    def aceitarEvento(self, usr, evento):
+    def adicionarNaGrade(self, usr, evento):
         try:
             with sqlite3.connect('db1.db') as connection:
                 cursor = connection.cursor()
@@ -110,16 +120,14 @@ class Banco():
                 result0 = cursor.fetchall()
                 
                 x= result0[0]
+                print(x)
                 find_eventoId = ("SELECT id FROM eventos WHERE nome = ?")
                 cursor.execute(find_eventoId, (evento,))
                 result1 = cursor.fetchall()
                 y = result1[0]
                 x = x + y
                 print(x)
-                a= 1
-                b= 2
-                set_grade = ("INSERT INTO grade userId = ?, eventoId = ?")
-                cursor.execute(set_grade,(a, b,))
+                cursor.execute("INSERT INTO grade (userId, eventoId) VALUES (?, ?)", x)
                 connection.commit()
             return True
         except:
@@ -127,13 +135,7 @@ class Banco():
             return False    
 
 banco = Banco()
-try:
-    with sqlite3.connect('db1.db') as connection:
-        cursor = connection.cursor()
-        a=1
-        b=2
-        cursor.execute("INSERT INTO grade (userId, eventoId) VALUES (?, ?)", (a,b))
-        connection.commit()
-        print("acho que foi")
-except:
-    print("nem isso? tafoda")
+
+#banco.adicionarNaGrade("Marina", "mimi")
+
+banco.criarTabelas()
