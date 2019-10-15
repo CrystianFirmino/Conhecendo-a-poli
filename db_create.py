@@ -26,7 +26,6 @@ class Banco():
                 data TEXT,
                 horario_de_inicio TEXT NOT NULL,
                 horario_de_fim TEXT NOT NULL,
-                classe TEXT
             );
         """
         )
@@ -54,6 +53,7 @@ class Banco():
             );
         """
         )
+        #cursor.execute('ALTER TABLE user ADD class TEXT')
         connection.commit()
         cursor.close()
 
