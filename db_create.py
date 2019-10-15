@@ -18,19 +18,30 @@ class Banco():
         
         cursor.execute (
         """
-            CREATE TABLE eventos (
+            CREATE TABLE IF NOT EXISTS eventos (
                 id INTEGER PRIMARY KEY,
                 nome TEXT NOT NULL, 
                 descricao TEXT NOT NULL,
                 local TEXT,
                 data TEXT,
                 horario_de_inicio TEXT NOT NULL,
-                horario_de_fim TEXT NOT NULL
-                
+                horario_de_fim TEXT NOT NULL,
+                classe TEXT
             );
         """
         )
 
+        cursor.execute (
+        """
+            CREATE TABLE IF NOT EXISTS grade (
+                id INTEGER PRIMARY KEY,
+                userId INTEGER,
+                eventoId INTEGER,
+                FOREIGN KEY (userId) REFERENCES user(id),
+                FOREIGN KEY (eventoId) REFERENCES evento(id)
+            );
+        """
+        )
         cursor.execute (
         """
             CREATE TABLE IF NOT EXISTS local (
@@ -43,7 +54,6 @@ class Banco():
             );
         """
         )
-        
         connection.commit()
         cursor.close()
 
@@ -90,15 +100,40 @@ class Banco():
             print(results)
         return results
 
-    def aceitarEvento(self):
-        pass
-
-
-
+    def aceitarEvento(self, usr, evento):
+        try:
+            with sqlite3.connect('db1.db') as connection:
+                cursor = connection.cursor()
+                
+                find_userId = ("SELECT id FROM user WHERE usuario = ?")
+                cursor.execute(find_userId, (usr,))
+                result0 = cursor.fetchall()
+                
+                x= result0[0]
+                find_eventoId = ("SELECT id FROM eventos WHERE nome = ?")
+                cursor.execute(find_eventoId, (evento,))
+                result1 = cursor.fetchall()
+                y = result1[0]
+                x = x + y
+                print(x)
+                a= 1
+                b= 2
+                set_grade = ("INSERT INTO grade userId = ?, eventoId = ?")
+                cursor.execute(set_grade,(a, b,))
+                connection.commit()
+            return True
+        except:
+            print("deu ruim")
+            return False    
 
 banco = Banco()
-#banco.cadastrar_pessoa('teste','senha', 'teste@email')
-resultado = banco.buscar_pessoa('teste', 'senha')
-print(resultado)
-
-banco.listarEventos("2/2", "3", "9")
+try:
+    with sqlite3.connect('db1.db') as connection:
+        cursor = connection.cursor()
+        a=1
+        b=2
+        ("INSERT INTO grade (userId, eventoId) VALUES (?, ?)", (a,b))
+        connection.commit()
+        print("acho que foi")
+except:
+    print("nem isso? tafoda")
