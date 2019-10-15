@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head class="seila">
+        <link href="base/static/css/evento.css" type="text/css" rel="stylesheet">
+        <div class="corpo">
+        <form action="sugerir_topicos.html" method="POST">
+            <h1 class="Evento">Cadastre um Evento</h1>
+           
+                <section class="nomeEvento">
+                <p class="paragrafo">Nome</p>
+                <input type="text" name="nome" id="nome" placeholder="Nome do evento">
+                </section>
+            
+                <section class="localEvento">
+                <p class="paragrafo">Local</p>
+                <input type="text" name="local" id="local" placeholder="Local do evento">
+                </section>
+            
+                <section class="assunto">
+                <p class="paragrafo">Quais os cursos sao relacionados ao evento?</p><br>
+                <input type="checkbox" name="assunto" id="computaçao" value="Computaçao">
+                <label id="caixa" for="computaçao">Computacao</label><br>
+                <input type="checkbox" name="assunto" id="eletrica" value="Eletrica">
+                <label id="caixa" for="eletrica">Eletrica</label><br>
+                <input type="checkbox" name="assunto" id="civil" value="Civil">
+                <label id="caixa" for="civil">Civil</label><br>
+                </section><br>
+           
+                <section class="tipoEvento">
+                <p class="paragrafo">Qual o tipo do evento?</p>
+                <input type="radio" name="tipo" id="palestra" value="palestra">
+                <label class="tipo" for="palestra">Palestra</label><br>
+                <input type="radio" name="tipo" id="workshop" value="workshop">
+                <label class="tipo" for="workshop">Workshop</label>
+                </section><br>
+            
+                <section class="descriçaoEvento">
+                <p class="paragrafo">Descreva seu Evento</p>
+                <textarea id="descriçao" name="descriçao" rows="2" cols="35"></textarea>
+                </section>
+            
+            
+
+            <section class="button">
+            <input type="submit" value="Criar">
+            </section>
+        </form>
+    </div>
+    </head>
+</html>
