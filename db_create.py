@@ -89,7 +89,7 @@ class Banco():
                 connection.commit()
                 return True
         except:
-            return 'deu ruim no cadastro'
+            return False
    
     def buscar_pessoa(self, usr, senha):
         with sqlite3.connect('db1.db') as connection:
@@ -126,4 +126,6 @@ class Banco():
             return False    
 
 banco = Banco()
-banco.criarTabelas()
+#adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim)
+resultado = banco.listarEventos("04/11", "09", "14")
+print(resultado)
