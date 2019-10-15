@@ -5,17 +5,30 @@
 {% endblock %}
 
 {% block body %}
-    <p>Sugerir topicos</p>
+<div class="evento-box">
+    <h1 class="titulo">Cadastre um evento</h1>
+    <p>Nome</p>
+    <input type="text" name="nome" id="nome" placeholder="Nome do evento"><br>
+    <p>Local</p>
+    <input type="text" name="local" id="local" placeholder="Local do evento">
+    <p>Data</p>
+    <input type="text" name="local" id="data" placeholder="Data">
+    <p>Quais os cursos são relacionados ao evento?</p>
+    <input type="checkbox" name="assunto" id="computaçao" value="Computaçao">
+    <label id="caixa" for="computaçao">Computacao</label><br>
+    <input type="checkbox" name="assunto" id="eletrica" value="Eletrica">
+    <label id="caixa" for="eletrica">Eletrica</label><br>
+    <input type="checkbox" name="assunto" id="civil" value="Civil">
+    <label id="caixa" for="civil">Civil</label><br><br>
+    <p>Qual o tipo do evento?</p>
+    <input type="radio" name="tipo" id="palestra" value="palestra">
+    <label class="tipo" for="palestra">Palestra</label><br>
+    <input type="radio" name="tipo" id="workshop" value="workshop">
+    <label class="tipo" for="workshop">Workshop</label>
+    <p>Descreva o Evento</p>
+    <textarea id="descriçao" name="descriçao" rows="3" cols="45"></textarea>
+    <input type="submit" value="Criar">
 
-    <form action="/sugerir" method="POST">
-        <input type="radio" name="topicos" value="informacao" checked> Informacao
-        <input type="radio" name="topicos" value="evento"> Evento
-        <input type="radio" name="topicos" value="local"> Local
+</div>
 
-        <br>
-        <input type="text" name="nome" placeholder="Nome"><br>
-        <textarea name="message" placeholder="Descrição"></textarea><br>
-
-        <input type="submit" value="Enviar" >
-    </form>
 {% endblock %}
