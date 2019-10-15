@@ -60,6 +60,3 @@ class Adm(Coordenador):
     def get_classe(self):
         return self.__classe
 
-
-
-
