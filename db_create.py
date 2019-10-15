@@ -127,5 +127,5 @@ class Banco():
 
 banco = Banco()
 #adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim)
-resultado = banco.listarEventos("04/11", "09", "14")
-print(resultado)
+#resultado = banco.listarEventos("04/11", "09", "14")
+#print(resultado)
