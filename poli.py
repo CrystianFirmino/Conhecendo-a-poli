@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for, session
 import os
-from db_create import Banco
+#from db_create import Banco
 from pessoas import Pessoa, Usuario, Coordenador, Adm
 
 app = Flask(__name__)
