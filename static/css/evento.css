@@ -1,0 +1,107 @@
+  .seila
+  {
+      background-color: rgb(244, 255, 236);
+  }
+
+  .Evento
+  {
+    position: absolute;
+    top: 0px;
+    left: 0%;
+    color: #eedd44;
+    text-align: center;
+    font-size: 32px;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 1px;
+    margin: 7px;
+  }
+   .corpo
+   {
+    background-color: rgb(0, 171, 177);
+    width: 350px;
+    height: 530px;
+    padding: 70px 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+    border: 5px solid white;
+    box-sizing: border-box;
+    border-radius: 25px;
+   }
+
+  .paragrafo {
+    padding: 0px;
+    color:#eedd44;
+    margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    }
+    .nomeEvento
+    {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+
+    }
+    .localEvento
+    {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    }
+    .assunto
+    {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    }
+    .tipoEvento
+    {
+    margin: 0px;
+    padding: 0;
+    text-align: left;
+    }
+    input[type=text] 
+    {  
+    width: 100%;
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 1px solid white;
+    background: transparent;
+    outline: none;
+    height: 20px;
+    color: white;
+    font-size: 12px;
+    }
+    
+  label
+  {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    color: white;
+  }
+    
+  .button input[type="submit"]
+{
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #eedd44;
+    color:rgb(0, 171, 177);
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 20px;
+}
+.button input[type="submit"]:hover
+{
+  background: #cab91e;
+}
+        
+      
+
+     
+     
+    
+  
+      

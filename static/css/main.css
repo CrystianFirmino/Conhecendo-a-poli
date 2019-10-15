@@ -49,6 +49,8 @@ ul{
 
 /*Header*/
 header{
+    
+    width: 100%;
     background: rgb(0, 171, 177);
     color: white;
     padding-top: 30px;
@@ -64,6 +66,15 @@ header a{
     font-size: 14px;
 }
 
+.logo{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    position: absolute;
+    top: 30px;
+    left: 25px;
+}
+
 
 header li {
     display: inline;
@@ -76,7 +87,9 @@ header #branding {
 
 
 header #branding h1 {
-    margin: 0;
+    font: 40px/1.3 'Oleo Script', Helvetica, sans-serif;
+    color: rgb(240, 236, 236);
+    text-shadow: 4px 4px 0px rgba(182, 179, 179, 0.507);
 }
 
 header nav {
@@ -95,10 +108,11 @@ header a:hover{
     font-weight: bold;
 }
 
+
+
 /*Showcase*/
 #showcase{
     min-height: 400px;
-    background: url('../img/madeira.jpg') repeat-x;
     text-align: center;
     color: rgba(49, 47, 47, 0.952);
 }
@@ -107,11 +121,155 @@ header a:hover{
     margin-top: 100px;
     font-size: 40px;
     margin-bottom: 8px;
-}b
+}
 
 #showcase p{
     font-size: 16px;
 }
+
+/*Login*/
+.user-box{
+    width: 320px;
+    height: 420px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    padding: 70px 30px;
+}
+.avatar{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: -20px;
+    left: calc(50% - 50px);
+}
+
+.user-box p{
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+.user-box input{
+    width: 100%;
+    margin-bottom: 20px;
+}
+.user-box input[type="text"], input[type="password"], input[type="email"]
+{
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+}
+.user-box input[type="submit"]
+{
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #1c8adb;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+}
+.user-box input[type="submit"]:hover
+{
+    cursor: pointer;
+    background: #39dc79;
+    color: #000;
+}
+
+.user-box a{
+    text-decoration: none;
+    font-size: 14px;
+    color: #fff;
+}
+.user-box a:hover
+{
+    color: #39dc79;
+}
+
+/*Evento -  sugerir tópico*/
+
+.evento-box {
+    margin-top: 40px;
+    background-color: rgb(0, 171, 177);
+    width: 450px;
+    height: 550px;
+    padding: 70px 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+    border: 5px solid white;
+    box-sizing: border-box;
+    border-radius: 25px;
+    color: #fff;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.titulo{
+    position: absolute;
+    top: 0px;
+    color: #eedd44;
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 0px;
+}
+
+.evento-box p{
+    margin: 0px;
+    padding: 0px;
+    color:#eedd44;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+label
+  {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    color: white;
+  }
+
+  .evento-box input[type="text"]{
+    width: 100%;
+    margin-bottom: 15px;
+    border: none;
+    border-bottom: 1px solid white;
+    background: transparent;
+    outline: none;
+    height: 20px;
+    color: white;
+    font-size: 12px;
+  }
+
+  .evento-box input[type="submit"]{
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #eedd44;
+    color:rgb(0, 171, 177);
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 20px;
+    margin-left: 12px;
+    position: absolute;
+
+  }
+
+  .evento-box input[type="submit"]:hover{
+    background: #cab91e;
+  }
+
 
 /*Newsletter*/ 
 #newsletter{
@@ -183,8 +341,16 @@ ul#services li{
 footer {
     padding: 5px;
     margin-top: 20px;
+    position: fixed;
+    width: 100%;
+    height: 40px;
+    bottom: 0px;
     color: rgba(49, 47, 47, 0.952);
-    background-color: rgb(255, 201, 85);
+    background-color: rgba(238, 236, 146, 0.938);
+}
+
+footer p{
+    margin:10px;
 }
 
 /* Media Queries */ 
@@ -205,6 +371,7 @@ footer {
 
     header{
         padding-bottom: 20px;
+        overflow: hidden;
     }
 
     #showcase h1{

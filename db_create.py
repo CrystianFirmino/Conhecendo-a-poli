@@ -11,8 +11,7 @@ class Banco():
                 id INTEGER PRIMARY KEY,
                 usuario TEXT NOT NULL,
                 email TEXT NOT NULL,
-                senha TEXT NOT NULL, 
-                classe TEXT
+                senha TEXT NOT NULL
                 );
         """
         )
@@ -26,7 +25,8 @@ class Banco():
                 local TEXT,
                 data TEXT,
                 horario_de_inicio TEXT NOT NULL,
-                horario_de_fim TEXT NOT NULL
+                horario_de_fim TEXT NOT NULL,
+                classe TEXT
             );
         """
         )
@@ -54,8 +54,6 @@ class Banco():
             );
         """
         )
-        
-
         connection.commit()
         cursor.close()
 
@@ -92,17 +90,17 @@ class Banco():
         except:
             return 'deu ruim no cadastro'
    
-    def buscar_pessoa(self, usr, senha=0):
+    def buscar_pessoa(self, usr, senha):
         with sqlite3.connect('db1.db') as connection:
             cursor = connection.cursor()
             find_user = ("SELECT * FROM user WHERE usuario = ? AND senha = ?")
             cursor.execute(find_user, (usr, senha))
-            results = cursor.fetchall()        
-            #print("Resultado: ")
-            #print(result)
+            results = cursor.fetchall()
+            print("Resultado: ")
+            print(results)
         return results
 
-    def adicionarNaGrade(self, usr, evento):
+    def aceitarEvento(self, usr, evento):
         try:
             with sqlite3.connect('db1.db') as connection:
                 cursor = connection.cursor()
@@ -112,14 +110,16 @@ class Banco():
                 result0 = cursor.fetchall()
                 
                 x= result0[0]
-                print(x)
                 find_eventoId = ("SELECT id FROM eventos WHERE nome = ?")
                 cursor.execute(find_eventoId, (evento,))
                 result1 = cursor.fetchall()
                 y = result1[0]
                 x = x + y
                 print(x)
-                cursor.execute("INSERT INTO grade (userId, eventoId) VALUES (?, ?)", x)
+                a= 1
+                b= 2
+                set_grade = ("INSERT INTO grade userId = ?, eventoId = ?")
+                cursor.execute(set_grade,(a, b,))
                 connection.commit()
             return True
         except:
