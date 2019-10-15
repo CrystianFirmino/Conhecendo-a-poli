@@ -25,8 +25,16 @@ class Banco():
                 local TEXT,
                 data TEXT,
                 horario_de_inicio TEXT NOT NULL,
+<<<<<<< HEAD
+<<<<<<< HEAD
+                horario_de_fim TEXT NOT NULL,
+=======
+                horario_de_fim TEXT NOT NULL
+>>>>>>> abe09c483d122e739b42aa091db7bf940c392730
+=======
                 horario_de_fim TEXT NOT NULL,
                 classe TEXT
+>>>>>>> c6aadbce32b89a4d1c8b3f47b953c0a7323eaf5a
             );
         """
         )
@@ -54,6 +62,15 @@ class Banco():
             );
         """
         )
+<<<<<<< HEAD
+<<<<<<< HEAD
+        #cursor.execute('ALTER TABLE user ADD class TEXT')
+=======
+        
+
+>>>>>>> abe09c483d122e739b42aa091db7bf940c392730
+=======
+>>>>>>> c6aadbce32b89a4d1c8b3f47b953c0a7323eaf5a
         connection.commit()
         cursor.close()
 
