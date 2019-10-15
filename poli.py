@@ -32,10 +32,10 @@ def logar():
     busca =  banco.buscar_pessoa(usr, senha)
     print(busca)
     if len(busca) > 0:    
-        classe = "usuario"
         x = busca[0]
         usuario = x[1]
         email = x[2]
+        classe = x[4]
         
         session['logged_in'] = True
         if classe == "usuario":

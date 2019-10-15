@@ -86,7 +86,7 @@ class Banco():
         try:
             with sqlite3.connect('db1.db') as connection:
                 cursor = connection.cursor()
-                cursor.execute('INSERT INTO user(usuario, email, senha) VALUES(?, ?, ?)', (user, email, senha))
+                cursor.execute('INSERT INTO user(usuario, email, senha, classe) VALUES(?, ?, ?, "usuario")', (user, email, senha))
                 connection.commit()
                 return True
         except:
@@ -131,3 +131,9 @@ banco = Banco()
 #banco.adicionarNaGrade("Marina", "mimi")
 
 banco.criarTabelas()
+
+with sqlite3.connect('db1.db') as connection:
+    cursor = connection.cursor()
+    cursor.execute('UPDATE user SET classe = ? WHERE id = 1 ', ("usuario",))
+    connection.commit()
+
