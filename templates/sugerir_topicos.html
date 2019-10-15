@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+<form action="/sugerir" method=POST>
 <div class="evento-box">
     <h1 class="titulo">Cadastre um evento</h1>
     <p>Nome</p>
@@ -28,6 +29,7 @@
     <p>Descreva o Evento</p>
     <textarea id="descriçao" name="descriçao" rows="3" cols="45"></textarea>
     <input type="submit" value="Criar">
+    </form>
 
 </div>
 

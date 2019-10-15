@@ -8,8 +8,10 @@
     <h1 class="inicio">A Conhecendo a Poli deseja boas vindas!</h1>
     
     {% if not session['logged_in'] %}
-    <a href = "login">Login</a>
-    <a href = "cadastro">Cadastro</a>
+    
+    <a href = "login" class="escolhalogin">Login</a>
+    <a href = "cadastro" class="escolhacadastro">Cadastro</a>
+
     {% endif %}
     
 {% endblock %}
