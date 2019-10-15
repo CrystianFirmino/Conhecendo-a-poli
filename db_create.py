@@ -132,7 +132,7 @@ try:
         cursor = connection.cursor()
         a=1
         b=2
-        ("INSERT INTO grade (userId, eventoId) VALUES (?, ?)", (a,b))
+        cursor.execute("INSERT INTO grade (userId, eventoId) VALUES (?, ?)", (a,b))
         connection.commit()
         print("acho que foi")
 except:
