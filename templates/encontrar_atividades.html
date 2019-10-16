@@ -5,28 +5,41 @@
 {% endblock %}
 
 {% block body %}
-    <p>Encontrar atividades</p>
     {% for evento in eventos %}
-        <table>
+        <table class="boxevento">
+                
             <tr>
                 <th>Evento</th>
-                <th>Data</th>
-                <th>Local</th>
-                <th>Descriçao</th>
-                <th>Assunto</th>
-                <th>Tipo</th>
+                <th class="info">Informacoes</th>
+                
             </tr>
-            
                 <tr>
-                    <td>{{evento[0]}}</td>
-                    <td>{{evento[3]}}</td>
-                    <td>{{evento[2]}}</td>
+                    <td class=infoevento>Nome</td>
                     <td>{{evento[1]}}</td>
+                </tr>
+                <tr>
+                    <td class=infoevento>Data</td>
                     <td>{{evento[4]}}</td>
-                    <td>{{evento[5]}}</td>
-                    <br>
-
-                </tr> 
+                </tr>
+                <tr>
+                    <td class=infoevento>Local</td>
+                    <td>{{evento[3]}}</td>
+                </tr>
+                <tr>
+                    <td class=infoevento>Tipo</td>
+                    <td>{{evento[7]}}</td>
+                </tr>
+                <tr>
+                    <td class=infoevento>Assunto</td>
+                    <td>{{evento[8]}}</td>
+                </tr>
+                <tr>
+                    <td class=infoevento>Descricao</td>
+                    <td class="info">{{evento[2]}}</td>
+                </tr>
+                </tr>
+                <br> 
+          
             
         </table>
     {% endfor %}
