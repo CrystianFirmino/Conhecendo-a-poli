@@ -77,6 +77,7 @@ def logar():
 @app.route("/sair")
 def sair():
     session['logged_in'] = False
+    session['user'] = ""
     return redirect('/')
 
 @app.route("/cadastro")
