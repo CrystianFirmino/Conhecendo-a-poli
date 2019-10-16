@@ -228,8 +228,8 @@ header a:hover{
     text-align: left;
     margin-top: 40px;
     background-color: rgb(0, 171, 177);
-    width: 490px;
-    height: 400px;
+    width: 600px;
+    height: 380px;
     padding: 70px 30px;
     top: 52%;
     left: 50%;
@@ -241,6 +241,7 @@ header a:hover{
     color: #fff;
     overflow-y: scroll;
     overflow-x: hidden;
+    text-align: left;
 }
 
 .titulo{
@@ -289,7 +290,8 @@ label
     font-size: 15px;
     font-weight: bold;
     border-radius: 20px;
-    margin-left: 5px;
+    margin-top: 10px;
+    margin-left: 10px;
     position: absolute;
 
   }
@@ -381,6 +383,35 @@ footer p{
     margin:10px;
 }
 
+.boxevento
+{   
+    margin-left: 25%;
+    box-sizing: border-box;
+    border-radius: 25px;
+    border: 20px solid rgb(255, 215, 128);
+    background-color: rgb(255, 215, 128);
+}
+
+.info
+{
+    width: 500px;
+}
+th
+{   
+    border: 2px solid white;
+    border-radius: 25px;
+    padding: 3px;
+}
+
+td
+{
+    border-bottom: 1px solid white;
+    padding: 4px;
+}
+.infoevento
+{
+    font-weight: bold;
+}
 /* Media Queries */ 
 /*Removendo flutuações nas telas (desajustes)*/
 @media(max-width: 768px){
