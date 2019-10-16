@@ -5,31 +5,9 @@ from pessoas import Pessoa, Usuario, Coordenador, Adm
 
 app = Flask(__name__)
 
-class bBanco:
-    def __init__(self):
-        pass
+visitante = Pessoa()
 
-    def cadastrar_pessoa(self, usuario, senha, email):
-        #Verificar se os dados são validos
-        cadastrado = False
-
-        #Se validos:
-            #Salvar Usuario senha e email no Banco
-            #cadastrado = True
-        
-        return cadastrado
-        
-    def buscar_pessoa(self, usr, senha):
-        #Buscar pelo usr (usuario ou email) e senha
-        
-        #Se encontrado
-            #return [classe, usuario, email]
-        
-        #Se não
-            #return []     
-
-        return ["usuario","user","email"] #Provisorio
-
+#print(exemplo_usr.get_classe())
 
 @app.route("/")
 def inicio():
@@ -58,11 +36,11 @@ def logar():
     busca =  banco.buscar_pessoa(usr, senha)
     print(busca)
     if len(busca) > 0:    
-        classe = "usuario"
         x = busca[0]
         usuario = x[1]
         email = x[2]
-        
+        classe = x[4]
+
         session['logged_in'] = True
         if classe == "usuario":
             visitante = Usuario(usuario, senha, email)
@@ -100,8 +78,11 @@ def cadastrar():
     senha = str(request.form["senha"])
     
     banco = Banco()
-    cadastrado =  banco.cadastrar_pessoa(usr, senha, email)
-    print(cadastrado)
+    if (banco.buscar_pessoa(usr, senha) == []):
+        cadastrado =  banco.cadastrar_pessoa(usr, senha, email)
+        print(cadastrado)
+    else:
+        return 'usuário já existente'
     if cadastrado:
         return redirect('/')
     else:
