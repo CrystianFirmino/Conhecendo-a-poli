@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for, session
 import os
-#from db_create import Banco
+from db_create import Banco
 from pessoas import Pessoa, Usuario, Coordenador, Adm
 
 app = Flask(__name__)
@@ -70,7 +70,7 @@ def cadastrar():
     senha = str(request.form["senha"])
     
     banco = Banco()
-    if (banco.buscar_pessoa == []):
+    if (banco.buscar_pessoa(usr, senha) == []):
         cadastrado =  banco.cadastrar_pessoa(usr, senha, email)
         print(cadastrado)
     else:
