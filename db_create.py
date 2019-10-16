@@ -76,8 +76,8 @@ class Banco():
 
             cursor = connectio.cursor()
             result = cursor.execute("""
-                                    SELECT nome, descricao, local FROM eventos
-                                    WHERE data = ? AND horario_de_inicio > ? AND horario_de_fim < ?
+                                    SELECT * FROM eventos
+                                    WHERE data = ? AND horario_de_inicio >= ? AND horario_de_fim <= ?
                                     """ , (data, horarioIn, horarioFim)).fetchall()
         return result
 
@@ -114,11 +114,8 @@ class Banco():
                 result1 = cursor.fetchall()
                 y = result1[0]
                 x = x + y
-                print(x)
-                a= 1
-                b= 2
                 set_grade = ("INSERT INTO grade userId = ?, eventoId = ?")
-                cursor.execute(set_grade,(a, b,))
+                cursor.execute(set_grade,x)
                 connection.commit()
             return True
         except:

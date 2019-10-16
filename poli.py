@@ -90,7 +90,8 @@ def cadastrar():
 
 @app.route("/encontrar_atividades")
 def encontrar_atividades():
-    return render_template('encontrar_atividades.html', eventos = [["1","2","3","4","5","6"], ["1","2","3","4","5","6"]])
+    banco = Banco()
+    return render_template('encontrar_atividades.html', eventos = banco.listarEventos("04/11","09","14"))
 
 @app.route("/grade")
 def grade():
