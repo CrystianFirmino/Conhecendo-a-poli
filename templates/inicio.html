@@ -7,14 +7,20 @@
 {% block body %}
     <div class="inicio">
     
-    <h1>Olá! A Conhecendo a <span class="highlight">Poli</span> deseja boas vindas!</h1>
+    <h1>Olá! A Conhecendo a Poli deseja boas vindas!</h1>
     {% if not session['logged_in'] %}
     
     <h2>Escolha como proceder:</h2>
-    <a href = "login" class="escolhalogin">Login</a>
-    <a href = "cadastro" class="escolhacadastro">Cadastro</a>
-
+    <form>
+    <input type="button" value="Login" onclick="window.location.href='login'" />
+    </form>
+    <form>
+    <input type="button" value="Cadastro" onclick="window.location.href='cadastro'" />
+    </form>
+    
     {% endif %}
+
+    <!--COLOCAR OLÁ USER-->
 
     </div>
     
