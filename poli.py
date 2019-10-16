@@ -14,7 +14,7 @@ def inicio():
 @app.route("/sugerir", methods = ['POST'])
 def sugerir():
     nome = str(request.form["nome"])
-    descricao = "request.form[]"
+    descricao = str(request.form["descricao"])
     local = str(request.form["local"])
     dataIn = str(request.form["data_inicio"])
     horarioIn = str(request.form["hora_inicio"])
@@ -32,7 +32,7 @@ def sugerir():
     banco = Banco()
     banco.adicionarEvento(nome, descricao, local, dataIn, horarioIn, horarioFim, tipo, assunto)
     
-    return render_template('sugerir_topicos.html', teste = assunto)
+    return render_template('sugerir_topicos.html', teste = ["Enviado"])
 
 @app.route("/login")
 def login():
