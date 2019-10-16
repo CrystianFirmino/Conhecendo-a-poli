@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
-    <meta name="keywords" content="web des, affordable web design, professional web design">
+    <meta name="keywords" content="poli, ufrj, guia, conhecendo a poli">
 
-    <link rel="stylesheet" href="static/css/main.css">
-    <LINK REL="SHORTCUT ICON" href="static/img/logopoli.jpg">
+    <link rel="stylesheet" href="static\css\main.css">
+    <LINK REL="SHORTCUT ICON" href="https://img.icons8.com/clouds/100/000000/map-pin.png">
+    	
+    <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
 
+    
     {% block head %}{% endblock %}
 
 </head>
@@ -19,10 +22,11 @@
         <div class="container">
             <div id="branding">
                 <h1>Conhecendo a<span class = "highlight"> Poli</span></h1>
+                <a href="/"><img src= "static\img\iconemapa.png" class="logo"></a>
             </div>
             <nav>
                 <ul>
-                    <li class = "current"><a href="/">Inicio</a></li>
+                    <li><a href="/">Inicio</a></li>
                     <li><a href="encontrar_atividades">Encontrar atividades</a></li>
 
                     {% if session['logged_in'] and session['priority'] > 0 %}
@@ -47,9 +51,9 @@
             </nav>
             </div>
     </header>
-
+<div class = "conteudo">
 {% block body %}{% endblock %}
-
+</div>
 
 
 <footer>

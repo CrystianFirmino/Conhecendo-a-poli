@@ -1,20 +1,25 @@
+
 {% extends "base/base.html" %}
 
-{% block head %}
-    <title>Login - Conhecendo a poli</title>
-{% endblock %}
-
 {% block body %}
-    <p>Login</p>
     {% if session['logged_in'] %}
         <p>Você já está logado</p>
     
     {% else %}
+    <div class="user-box">
+    <img src="static\img\avatar.jpg" class="avatar">
     <form action="/logar" method="POST">
-        <input type="text" name="usuario" placeholder="User">
-        <input type="password" name="senha" placeholder="Password">
-
+        <p>Usuário</p>
+        <input type="text" name="usuario" placeholder="Usuário ou Email">
+        <p>Senha</p>
+        <input type="password" name="senha" placeholder="Senha">
+        <a href="#">Forget Password</a> 
         <input type="submit" value="Login" >
     </form>
-    {% endif %}
+</div>
+
+
+
+{% endif %}
 {% endblock %}
+

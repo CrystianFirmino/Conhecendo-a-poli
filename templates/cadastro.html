@@ -1,21 +1,23 @@
+
 {% extends "base/base.html" %}
 
-{% block head %}
-    <title>Cadastro - Conhecendo a poli</title>
-{% endblock %}
-
 {% block body %}
-    <p>Cadastro</p>
     {% if session['logged_in'] %}
         <p>Você está logado</p>
     
     {% else %}
+    <div class="user-box">
+    <img src="static\img\avatar.jpg" class="avatar">
     <form action="/cadastrar" method="POST">
+        <p>Usuário</p>
         <input type="text" name="usuario" placeholder="User">
+        <p>Email</p>
         <input type="email" name="email" placeholder="Email">
-        <input type="password" name="senha" placeholder="Password">
-        
+        <p>Senha</p>
+        <input type="password" name="senha" placeholder="Senha">
         <input type="submit" value="cadastrar" >
     </form>
+    </div>
+
     {% endif %}
 {% endblock %}
