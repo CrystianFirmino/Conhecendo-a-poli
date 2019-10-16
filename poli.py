@@ -14,8 +14,13 @@ def inicio():
 @app.route("/sugerir", methods = ['POST'])
 def sugerir():
     test = []
-    test.append(str(request.form["assunto"]))
-    test.append(str(request.form["tipo"]))
+    try:
+        test.append(str(request.form["assunto1"]))
+        test.append(str(request.form["assunto2"]))
+        test.append(str(request.form["assunto3"]))
+        test.append(str(request.form["tipo"]))
+    except:
+        test.append("Dados invalidos")
 
     return render_template('sugerir_topicos.html', teste = test)
 

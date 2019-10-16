@@ -8,25 +8,36 @@
 <form action="/sugerir" method=POST>
 <div class="evento-box">
     <h1 class="titulo">Cadastre um evento</h1>
-    {{teste}} <br>
+
+    {% for tt in teste%}
+        <h6 style="text-align: center;margin-bottom: 0;">{{tt}}</h6>
+    {% endfor%}
+
     <p>Nome</p>
     <input type="text" name="nome" id="nome" placeholder="Nome do evento"><br>
     <p>Local</p>
     <input type="text" name="local" id="local" placeholder="Local do evento">
+
     <p>Data</p>
-    <input type="text" name="data" id="data" placeholder="Data">
+    <input type="data" name="data_inicio" id="data" placeholder="Data Inicio">
+    <input type="number" name="hora_inicio" min="5" max="22" step="1" placeholder="Hora"><br>
+    <input type="data" name="data_fim" id="data" placeholder="Data Fim">
+    <input type="number" name="hora_fim" min="5" max="22" step="1" placeholder="Hora">
+
     <p>Quais os cursos são relacionados ao evento?</p>
-    <input type="checkbox" name="assunto" id="computaçao" value="Computaçao">
+    <input type="checkbox" name="assunto1" id="computaçao" value="Computaçao">
     <label id="caixa" for="computaçao">Computacao</label><br>
-    <input type="checkbox" name="assunto" id="eletrica" value="Eletrica">
+    <input type="checkbox" name="assunto2" id="eletrica" value="Eletrica">
     <label id="caixa" for="eletrica">Eletrica</label><br>
-    <input type="checkbox" name="assunto" id="civil" value="Civil">
+    <input type="checkbox" name="assunto3" id="civil" value="Civil">
     <label id="caixa" for="civil">Civil</label><br><br>
+
     <p>Qual o tipo do evento?</p>
-    <input type="radio" name="tipo" id="palestra" value="palestra">
+    <input type="radio" name="tipo" id="palestra" value="palestra" checked>
     <label class="tipo" for="palestra">Palestra</label><br>
     <input type="radio" name="tipo" id="workshop" value="workshop">
     <label class="tipo" for="workshop">Workshop</label>
+
     <p>Descreva o Evento</p>
     <textarea id="descriçao" name="descriçao" rows="3" cols="45"></textarea>
     <input type="submit" value="Criar">
