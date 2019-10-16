@@ -17,7 +17,8 @@
     <form>
     <input type="button" value="Cadastro" onclick="window.location.href='cadastro'" />
     </form>
-    
+    {% else %}
+        <h2>Olá {{session['user']}}</h2>
     {% endif %}
 
     <!--COLOCAR OLÁ USER-->

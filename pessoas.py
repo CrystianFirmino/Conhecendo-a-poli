@@ -17,8 +17,10 @@ class Pessoa:
         session['priority'] = self.priority
         if self.priority == 0:
             session['logged_in'] = False
+            session['user'] = ""
         elif self.priority>0:
             session['logged_in'] = True
+            session['user'] = self._nome
         #Para (futuramente) verificar se a pessoa é valida
         valido = True
         return valido
