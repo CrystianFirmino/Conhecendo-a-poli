@@ -5,8 +5,6 @@ from pessoas import Pessoa, Usuario, Coordenador, Adm
 
 app = Flask(__name__)
 
-visitante = Pessoa()
-
 #print(exemplo_usr.get_classe())
 
 @app.route("/")
