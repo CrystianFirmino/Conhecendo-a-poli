@@ -13,6 +13,14 @@ visitante = Pessoa()
 def inicio():
     return render_template('inicio.html')
 
+@app.route("/sugerir", methods = ['POST'])
+def sugerir():
+    test = []
+    test.append(str(request.form["assunto"]))
+    test.append(str(request.form["tipo"]))
+
+    return render_template('sugerir_topicos.html', teste = test)
+
 @app.route("/login")
 def login():
     return render_template('login.html')
@@ -82,7 +90,7 @@ def cadastrar():
 
 @app.route("/encontrar_atividades")
 def encontrar_atividades():
-    return render_template('encontrar_atividades.html')
+    return render_template('encontrar_atividades.html', eventos = [["1","2","3","4","5","6"], ["1","2","3","4","5","6"]])
 
 @app.route("/grade")
 def grade():

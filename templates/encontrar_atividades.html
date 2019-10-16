@@ -6,4 +6,28 @@
 
 {% block body %}
     <p>Encontrar atividades</p>
+    {% for evento in eventos %}
+        <table>
+            <tr>
+                <th>Evento</th>
+                <th>Data</th>
+                <th>Local</th>
+                <th>Descriçao</th>
+                <th>Assunto</th>
+                <th>Tipo</th>
+            </tr>
+            
+                <tr>
+                    <td>{{evento[0]}}</td>
+                    <td>{{evento[3]}}</td>
+                    <td>{{evento[2]}}</td>
+                    <td>{{evento[1]}}</td>
+                    <td>{{evento[4]}}</td>
+                    <td>{{evento[5]}}</td>
+                    <br>
+
+                </tr> 
+            
+        </table>
+    {% endfor %}
 {% endblock %}

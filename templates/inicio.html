@@ -5,13 +5,17 @@
 {% endblock %}
 
 {% block body %}
-    <h1 class="inicio">A Conhecendo a Poli deseja boas vindas!</h1>
+    <div class="inicio">
     
+    <h1>Olá! A Conhecendo a <span class="highlight">Poli</span> deseja boas vindas!</h1>
     {% if not session['logged_in'] %}
     
+    <h2>Escolha como proceder:</h2>
     <a href = "login" class="escolhalogin">Login</a>
     <a href = "cadastro" class="escolhacadastro">Cadastro</a>
 
     {% endif %}
+
+    </div>
     
 {% endblock %}

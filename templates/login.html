@@ -13,12 +13,16 @@
         <input type="text" name="usuario" placeholder="Usuário ou Email">
         <p>Senha</p>
         <input type="password" name="senha" placeholder="Senha">
-        <a href="#">Forget Password</a> 
         <input type="submit" value="Login" >
     </form>
+    <a onclick="esqueci()">Esqueci a senha</a>
 </div>
 
-
+<script>
+    function esqueci() {
+      alert("Dó Ré Mi Fa Solamento");
+    }
+    </script>
 
 {% endif %}
 {% endblock %}

@@ -58,15 +58,15 @@ class Banco():
         connection.commit()
         cursor.close()
 
-    def adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim):
+    def adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim, tipo, assunto):
 
         with sqlite3.connect('db1.db') as connection:
             
             cursor = connection.cursor()    
             cursor.execute("""
-                            INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim)
-                            VALUES (?, ?, ?, ?, ?, ?)
-                            """, (nome, descricao, local, data, horarioIn, horarioFim)
+                            INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim, tipo, assunto)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                            """, (nome, descricao, local, data, horarioIn, horarioFim, tipo, assunto)
                            )
             connection.commit()
 
@@ -127,5 +127,9 @@ class Banco():
 
 banco = Banco()
 #adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim)
-#resultado = banco.listarEventos("04/11", "09", "14")
-#print(resultado)
+#banco.adicionarEvento("Maratona de Programação","CCP: código, café e pizza","No NCE","04/11", "09", "14", "computação", "vacas, vacathon")
+#banco.adicionarEvento("PESC","Apresentações sobre tudo que tem de bom: de jogos à IA","No Bloco H","04/11", "09", "14", "seminários", "IA, jogos, xexeo")
+#banco.adicionarEvento("SENEL","tá achando que a gente só faz bomba? Então venha nos ver explodir alguma coisa!","No Bloco A","04/11", "09", "14", "apresentações","bombas")
+#banco.adicionarEvento("INSCREVA-SE NA MINERVABOTS","Gosta de robôs? e competições TOPS com todo o Brasil","No Face","04/11", "09", "14","inscrição, competição","robótica")
+resultado = banco.listarEventos("04/11", "09", "14")
+print(resultado)
