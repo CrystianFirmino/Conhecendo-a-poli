@@ -40,6 +40,14 @@ print(exemplo_usr.get_classe())
 def inicio():
     return render_template('inicio.html')
 
+@app.route("/sugerir", methods = ['POST'])
+def sugerir():
+    test = []
+    test.append(str(request.form["assunto"]))
+    test.append(str(request.form["tipo"]))
+
+    return render_template('sugerir_topicos.html', teste = test)
+
 @app.route("/login")
 def login():
     return render_template('login.html')
