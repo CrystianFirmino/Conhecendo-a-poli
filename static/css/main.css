@@ -1,8 +1,7 @@
 a{
     margin: 2px;
     text-decoration: none;
-   
-
+    cursor: pointer;
     padding: 1px;
 }
 
@@ -19,6 +18,7 @@ body {
 }
 .conteudo {
     margin-top:180px;
+    margin-bottom: 100px;
     text-align: center; /*Mudar depois*/
 }
 
@@ -40,23 +40,6 @@ ul{
     padding: 0;
 }
 
-.button_1{
-    height: 38px;
-    background: #9368a7;
-    border-radius: 4px;
-    padding-left:20px;
-    padding-right: 20px;
-    color: white;  
-
-}
-
-.dark {
-    padding: 15px;
-    background: #35424a;
-    color: white;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
 
 /*Header*/
 header{
@@ -122,7 +105,13 @@ header a:hover{
 }
 
 /*Página de início*/
-.inicio{
+.inicio h1{
+    text-align: center;
+    font: 30px/1.3 'Oleo Script', Helvetica, sans-serif;
+    color: black;
+}
+
+.inicio h2{
     text-align: center;
     font: 20px/1.3 'Oleo Script', Helvetica, sans-serif;
     color: black;
@@ -130,16 +119,15 @@ header a:hover{
 
 .escolhalogin, .escolhacadastro{
     text-align: center;
-    text-decoration: none;
     border: none;
     outline: none;
     height: 20px;
     background: rgb(0, 171, 177);
     color: #fff;
-    font-size: 18px;
+    font-size: 16px;
     border-radius: 20px;
+    padding: 7px;
     text-decoration: none;
-    font-size: 14px;
     color: #fff;
 }
 
@@ -208,7 +196,7 @@ header a:hover{
     width: 100%;
     margin-bottom: 20px;
 }
-.user-box input[type="text"], input[type="password"], input[type="email"]
+.user-box input[type="text"], input[type="password"], input[type="email"], input[type="data"], input[type="number"]
 {
     border: none;
     border-bottom: 1px solid #fff;
@@ -223,7 +211,7 @@ header a:hover{
     border: none;
     outline: none;
     height: 40px;
-    background: #1c8adb;
+    background: #64afe6;
     color: #fff;
     font-size: 18px;
     border-radius: 20px;
@@ -248,10 +236,11 @@ header a:hover{
 /*Evento -  sugerir tópico*/
 
 .evento-box {
+    text-align: left;
     margin-top: 40px;
     background-color: rgb(0, 171, 177);
-    width: 470px;
-    height: 430px;
+    width: 600px;
+    height: 380px;
     padding: 70px 30px;
     top: 52%;
     left: 50%;
@@ -263,6 +252,7 @@ header a:hover{
     color: #fff;
     overflow-y: scroll;
     overflow-x: hidden;
+    text-align: left;
 }
 
 .titulo{
@@ -311,7 +301,8 @@ label
     font-size: 15px;
     font-weight: bold;
     border-radius: 20px;
-    margin-left: 5px;
+    margin-top: 10px;
+    margin-left: 10px;
     position: absolute;
 
   }
@@ -403,6 +394,35 @@ footer p{
     margin:10px;
 }
 
+.boxevento
+{   
+    margin-left: 25%;
+    box-sizing: border-box;
+    border-radius: 25px;
+    border: 20px solid rgb(255, 215, 128);
+    background-color: rgb(255, 215, 128);
+}
+
+.info
+{
+    width: 500px;
+}
+th
+{   
+    border: 2px solid white;
+    border-radius: 25px;
+    padding: 3px;
+}
+
+td
+{
+    border-bottom: 1px solid white;
+    padding: 4px;
+}
+.infoevento
+{
+    font-weight: bold;
+}
 /* Media Queries */ 
 /*Removendo flutuações nas telas (desajustes)*/
 @media(max-width: 768px){

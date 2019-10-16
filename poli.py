@@ -5,36 +5,7 @@ from pessoas import Pessoa, Usuario, Coordenador, Adm
 
 app = Flask(__name__)
 
-class bBanco:
-    def __init__(self):
-        pass
-
-    def cadastrar_pessoa(self, usuario, senha, email):
-        #Verificar se os dados são validos
-        cadastrado = False
-
-        #Se validos:
-            #Salvar Usuario senha e email no Banco
-            #cadastrado = True
-        
-        return cadastrado
-        
-    def buscar_pessoa(self, usr, senha):
-        #Buscar pelo usr (usuario ou email) e senha
-        
-        #Se encontrado
-            #return [classe, usuario, email]
-        
-        #Se não
-            #return []     
-
-        return ["usuario","user","email"] #Provisorio
-
-exemplo_usr = Usuario("Chaves", "chaves@.br", "1234")
-
-visitante = Pessoa()
-
-print(exemplo_usr.get_classe())
+#print(exemplo_usr.get_classe())
 
 @app.route("/")
 def inicio():
@@ -42,11 +13,26 @@ def inicio():
 
 @app.route("/sugerir", methods = ['POST'])
 def sugerir():
-    test = []
-    test.append(str(request.form["assunto"]))
-    test.append(str(request.form["tipo"]))
-
-    return render_template('sugerir_topicos.html', teste = test)
+    nome = str(request.form["nome"])
+    descricao = "request.form[]"
+    local = str(request.form["local"])
+    dataIn = str(request.form["data_inicio"])
+    horarioIn = str(request.form["hora_inicio"])
+    horarioFim = str(request.form["hora_fim"])
+    tipo = str(request.form["tipo"])
+    assunto = []
+    try:
+        assunto.append(str(request.form["assunto1"]))
+        assunto.append(str(request.form["assunto2"]))
+        assunto.append(str(request.form["assunto3"]))
+    except:
+        print("Erro")
+    assunto = ", ".join(assunto)
+    print(assunto)
+    banco = Banco()
+    banco.adicionarEvento(nome, descricao, local, dataIn, horarioIn, horarioFim, tipo, assunto)
+    
+    return render_template('sugerir_topicos.html', teste = assunto)
 
 @app.route("/login")
 def login():
@@ -63,11 +49,11 @@ def logar():
     busca =  banco.buscar_pessoa(usr, senha)
     print(busca)
     if len(busca) > 0:    
-        classe = "usuario"
         x = busca[0]
         usuario = x[1]
         email = x[2]
-        
+        classe = x[4]
+
         session['logged_in'] = True
         if classe == "usuario":
             visitante = Usuario(usuario, senha, email)
@@ -79,13 +65,12 @@ def logar():
             print("Um erro com as classes")
             session['logged_in'] = False
     
-    visitante.validar() #inutil
-    session['priority'] = visitante.priority
+    visitante.validar()
     try:
         if session['logged_in']:
             return redirect('/')
         else:
-            return "Login Negado"
+            return render_template('login.html', erro_log = True)
     except:
         return "Concerte isso"
 
@@ -105,16 +90,20 @@ def cadastrar():
     senha = str(request.form["senha"])
     
     banco = Banco()
-    cadastrado =  banco.cadastrar_pessoa(usr, senha, email)
-    print(cadastrado)
+    if (banco.buscar_pessoa(usr, senha) == []):
+        cadastrado =  banco.cadastrar_pessoa(usr, senha, email)
+        print(cadastrado)
+    else:
+        return 'usuário já existente'
     if cadastrado:
         return redirect('/')
     else:
-        return "Cadastro Negado"
+        return render_template('cadastro.html', erro_cad = True)
 
 @app.route("/encontrar_atividades")
 def encontrar_atividades():
-    return render_template('encontrar_atividades.html')
+    banco = Banco()
+    return render_template('encontrar_atividades.html', eventos = banco.listarEventos2("04/11", "30/12","05","22"))
 
 @app.route("/grade")
 def grade():

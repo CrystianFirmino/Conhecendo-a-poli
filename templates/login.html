@@ -1,5 +1,8 @@
-
 {% extends "base/base.html" %}
+
+{% block head %}
+    <title>Login - Conhecendo a poli</title>
+{% endblock %}
 
 {% block body %}
     {% if session['logged_in'] %}
@@ -13,13 +16,23 @@
         <input type="text" name="usuario" placeholder="Usuário ou Email">
         <p>Senha</p>
         <input type="password" name="senha" placeholder="Senha">
-        <a href="#">Forget Password</a> 
         <input type="submit" value="Login" >
     </form>
-</div>
+    <a onclick="esqueci()">Esqueci a senha</a>
+    </div>
 
+    <script>
+    function esqueci() {
+      alert("Dó Ré Mi Fa Solamento");
+    }
+    </script>
+    {% endif %}
 
+    {% if erro_log %}
+    <script>
+        alert("Algo de errado não está certo");
+    </script>
 
-{% endif %}
+    {% endif %}
 {% endblock %}
 
