@@ -1,4 +1,4 @@
-
+from flask import session
 
 class Pessoa:
     def __init__(self):
@@ -14,6 +14,11 @@ class Pessoa:
     
     def validar(self):
         self.set_priority()
+        session['priority'] = self.priority
+        if self.priority == 0:
+            session['logged_in'] = False
+        elif self.priority>0:
+            session['logged_in'] = True
         #Para (futuramente) verificar se a pessoa é valida
         valido = True
         return valido

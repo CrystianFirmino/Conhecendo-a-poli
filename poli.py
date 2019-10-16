@@ -30,11 +30,6 @@ class bBanco:
 
         return ["usuario","user","email"] #Provisorio
 
-exemplo_usr = Usuario("Chaves", "chaves@.br", "1234")
-
-visitante = Pessoa()
-
-print(exemplo_usr.get_classe())
 
 @app.route("/")
 def inicio():
@@ -80,12 +75,12 @@ def logar():
             session['logged_in'] = False
     
     visitante.validar() #inutil
-    session['priority'] = visitante.priority
+
     try:
         if session['logged_in']:
             return redirect('/')
         else:
-            return "Login Negado"
+            return render_template('login.html', erro_log = True)
     except:
         return "Concerte isso"
 
@@ -110,7 +105,7 @@ def cadastrar():
     if cadastrado:
         return redirect('/')
     else:
-        return "Cadastro Negado"
+        return render_template('cadastro.html', erro_cad = True)
 
 @app.route("/encontrar_atividades")
 def encontrar_atividades():

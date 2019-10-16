@@ -1,5 +1,8 @@
-
 {% extends "base/base.html" %}
+
+{% block head %}
+    <title>Cadastro - Conhecendo a poli</title>
+{% endblock %}
 
 {% block body %}
     {% if session['logged_in'] %}
@@ -20,4 +23,11 @@
     </div>
 
     {% endif %}
+
+    {% if erro_cad %}
+    <script>
+        alert("Deu erro ai no cadastro");
+    </script>
+    {% endif %}
+
 {% endblock %}

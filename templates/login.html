@@ -1,5 +1,8 @@
-
 {% extends "base/base.html" %}
+
+{% block head %}
+    <title>Login - Conhecendo a poli</title>
+{% endblock %}
 
 {% block body %}
     {% if session['logged_in'] %}
@@ -16,14 +19,20 @@
         <input type="submit" value="Login" >
     </form>
     <a onclick="esqueci()">Esqueci a senha</a>
-</div>
+    </div>
 
-<script>
+    <script>
     function esqueci() {
       alert("Dó Ré Mi Fa Solamento");
     }
     </script>
+    {% endif %}
 
-{% endif %}
+    {% if erro_log %}
+    <script>
+        alert("Algo de errado não está certo");
+    </script>
+
+    {% endif %}
 {% endblock %}
 
