@@ -59,7 +59,7 @@ class Banco():
         cursor.close()
 
     def adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim, tipo, assunto):
-
+        deuCerto = False
         with sqlite3.connect('db1.db') as connection:
             
             cursor = connection.cursor()    
@@ -69,6 +69,8 @@ class Banco():
                             """, (nome, descricao, local, data, horarioIn, horarioFim, tipo, assunto)
                            )
             connection.commit()
+            deuCerto = True
+        return deuCerto
 
     def listarEventos(self, data, horarioIn, horarioFim):    
         
@@ -77,8 +79,19 @@ class Banco():
             cursor = connectio.cursor()
             result = cursor.execute("""
                                     SELECT * FROM eventos
-                                    WHERE data = ? AND horario_de_inicio >= ? AND horario_de_fim <= ?
+                                    WHERE data >= ? AND horario_de_inicio >= ? AND horario_de_fim <= ?
                                     """ , (data, horarioIn, horarioFim)).fetchall()
+        return result
+
+    def listarEventos2(self, data,dataFim, horarioIn, horarioFim):    
+        
+        with sqlite3.connect('db1.db') as connectio:
+
+            cursor = connectio.cursor()
+            result = cursor.execute("""
+                                    SELECT * FROM eventos
+                                    WHERE data >= ? AND data <= ? AND horario_de_inicio >= ? AND horario_de_fim <= ?
+                                    """ , (data, dataFim, horarioIn, horarioFim)).fetchall()
         return result
 
     def cadastrar_pessoa(self,user, senha, email, classe = "usuario"):

@@ -13,16 +13,26 @@ def inicio():
 
 @app.route("/sugerir", methods = ['POST'])
 def sugerir():
-    test = []
+    nome = str(request.form["nome"])
+    descricao = "request.form[]"
+    local = str(request.form["local"])
+    dataIn = str(request.form["data_inicio"])
+    horarioIn = str(request.form["hora_inicio"])
+    horarioFim = str(request.form["hora_fim"])
+    tipo = str(request.form["tipo"])
+    assunto = []
     try:
-        test.append(str(request.form["assunto1"]))
-        test.append(str(request.form["assunto2"]))
-        test.append(str(request.form["assunto3"]))
-        test.append(str(request.form["tipo"]))
+        assunto.append(str(request.form["assunto1"]))
+        assunto.append(str(request.form["assunto2"]))
+        assunto.append(str(request.form["assunto3"]))
     except:
-        test.append("Dados invalidos")
-
-    return render_template('sugerir_topicos.html', teste = test)
+        print("Erro")
+    assunto = ", ".join(assunto)
+    print(assunto)
+    banco = Banco()
+    banco.adicionarEvento(nome, descricao, local, dataIn, horarioIn, horarioFim, tipo, assunto)
+    
+    return render_template('sugerir_topicos.html', teste = assunto)
 
 @app.route("/login")
 def login():
@@ -55,8 +65,7 @@ def logar():
             print("Um erro com as classes")
             session['logged_in'] = False
     
-    visitante.validar() #inutil
-
+    visitante.validar()
     try:
         if session['logged_in']:
             return redirect('/')
@@ -94,7 +103,7 @@ def cadastrar():
 @app.route("/encontrar_atividades")
 def encontrar_atividades():
     banco = Banco()
-    return render_template('encontrar_atividades.html', eventos = banco.listarEventos("04/11","09","14"))
+    return render_template('encontrar_atividades.html', eventos = banco.listarEventos2("04/11", "30/12","05","22"))
 
 @app.route("/grade")
 def grade():
