@@ -14,8 +14,7 @@ def inicio():
 @app.route("/sugerir", methods = ['POST'])
 def sugerir():
     nome = str(request.form["nome"])
-    descricao = request.form["descricao"]
-    print(descricao)
+    descricao = str(request.form["descricao"])
     local = str(request.form["local"])
     dataIn = str(request.form["data_inicio"])
     horarioIn = str(request.form["hora_inicio"])
