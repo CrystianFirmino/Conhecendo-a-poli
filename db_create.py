@@ -55,6 +55,7 @@ class Banco():
             );
         """
         )
+
         connection.commit()
         cursor.close()
 
