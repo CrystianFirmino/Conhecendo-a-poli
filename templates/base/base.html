@@ -27,7 +27,6 @@
 
                 {% if not session['logged_in'] %}
                 <a href="login">login</a>
-                <a href="cadastro">cadastro</a>
                 {% endif %}
 
                 {% if session['logged_in'] and session['priority'] > 0 %}
@@ -62,7 +61,7 @@
             <div class="card">
               <h3>Colabore conosco!</h3>
               <a href="#colabore">
-              <div class="imghelp" style="height:100px;"></div></a>
+              <div class="imghelp" style="height:100px;"></a></div>
               <p>Seja um colaborador e nos ajude a manter universitários informados!</p>
             </div>
             <div class="card">

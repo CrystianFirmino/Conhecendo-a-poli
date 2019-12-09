@@ -10,17 +10,39 @@
         <p>Você já está logado</p>
     
     {% else %}
-    <div class="user-box">
-    <img src="static\img\avatar.jpg" class="avatar">
-    <form action="/logar" method="POST">
-        <p>Usuário</p>
-        <input type="text" name="usuario" placeholder="Usuário ou Email">
-        <p>Senha</p>
-        <input type="password" name="senha" placeholder="Senha">
-        <input type="submit" value="Login" >
-    </form>
-    <a onclick="esqueci()">Esqueci a senha</a>
-    </div>
+    
+    <div class="wrap">
+            <div class="login-form">
+                <div class="form-header">
+                    <h3>Bem vindo de volta, aluno!</h3>
+                    <p>Realize login para ter acesso a funcionalidades exclusivas. </p>
+                </div>
+
+                <form action="/logar" method="POST">
+                    
+                <!--Email Input-->
+                <div class="form-group">
+                <input type="text" name = "usuario" class="form-input" placeholder="Usuário">
+                </div>
+                <!--Password Input-->
+                <div class="form-group">
+                <input type="password" name = "senha" class="form-input" placeholder="Senha">
+                </div>
+                <!--Login Button-->
+                <div class="form-group">
+                <input type="submit" class  value = "Login">
+                </div>
+                </form>
+
+                <div class="esqueci">
+                    <a onclick="esqueci()">Esqueci a senha</a>
+                </div>
+
+                <div class="form-footer">
+                Não possui uma conta? <a href="cadastro">Cadastro</a>
+                </div>
+            </div>
+        </div><!--/.wrap-->
 
     <script>
     function esqueci() {
