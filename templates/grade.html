@@ -6,4 +6,38 @@
 
 {% block body %}
     <p>Grade</p>
+        
+    <form action="/enviar_grade" method="POST">
+    <table border="1">
+    <tr>
+        <th> </th>
+        <th>Segunda</th>
+        <th>Terça</th>
+        <th>Quarta</th>
+        <th>Quinta</th>
+        <th>Sexta</th>
+        <th>Sabado</th>
+    </tr>
+    {% for i in range(7, 20)%}
+        <tr>
+            <th>{{i}}:00</th>
+            {% for j in range(2,8)%}
+                
+                <td onclick="marcardesmarcar('{{j}}_{{i}}');"  style="cursor: pointer;"><input  type = "checkbox" class="grade" id="{{j}}_{{i}}" name="{{j}}_{{i}}" value="{{j}}_{{i}}"> </td>
+            {% endfor %}
+            
+            
+            
+        </tr>
+            
+    {% endfor %}
+    </table>
+    <input type="submit" value="Login" >
+    </form>
+
+    <script>
+        function marcardesmarcar(id){
+            document.getElementById(id).checked = !document.getElementById(id).checked;
+        }
+    </script>
 {% endblock %}

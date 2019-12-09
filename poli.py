@@ -110,6 +110,21 @@ def encontrar_atividades():
 def grade():
     return render_template('grade.html')
 
+@app.route("/enviar_grade", methods = ['POST'])
+def enviar_grade():
+    grade=[]
+    for j in range(2,8):
+        for i in range(7, 20):
+            stg = str(j) + "_" + str(i)
+            try:
+                app = request.form[stg]
+                grade.append(app)
+            except:
+                pass
+
+
+    return render_template('grade_enviar.html', grade = grade)
+
 @app.route("/sugerir_topicos")
 def sugerir_topicos():
     return render_template('sugerir_topicos.html')
@@ -123,6 +138,5 @@ def gerenciar_colaboradores():
     return render_template('gerenciar_colaboradores.html')
 
 app.secret_key = os.urandom(12)
-
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000, threaded=True, debug=True)
