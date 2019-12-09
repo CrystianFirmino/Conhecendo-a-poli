@@ -25,6 +25,11 @@
                 <a href="/">Inicio</a>
                 <a href="encontrar_atividades">Encontrar atividades</a>
 
+                {% if not session['logged_in'] %}
+                <a href="login">login</a>
+                <a href="cadastro">cadastro</a>
+                {% endif %}
+
                 {% if session['logged_in'] and session['priority'] > 0 %}
                 <a href="grade">Grade</a>
                 <a href="sugerir_topicos">Cadastrar Evento</a>
@@ -50,14 +55,30 @@
     
 
 <div class = "row">
-    <div class="leftcolumn">
-        {% block body %}{% endblock %}
-    </div>
+        
+    {% block body %}{% endblock %}
 
     <div class="rightcolumn">
-        <div class="card"></div>
-    </div>
+            <div class="card">
+              <h3>Colabore conosco!</h3>
+              <a href="#colabore">
+              <div class="imghelp" style="height:100px;"></div></a>
+              <p>Seja um colaborador e nos ajude a manter universitários informados!</p>
+            </div>
+            <div class="card">
+              <h3>Onde está a Escola Politécnica:</h3>
+              <div class = "map-responsive">
+              
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3676.4638681770484!2d-43.23318398489917!3d-22.85931674192612!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x99793830ed1931%3A0x578e218b106e4493!2sEscola%20Polit%C3%A9cnica%20da%20UFRJ!5e0!3m2!1spt-BR!2sbr!4v1575668410689!5m2!1spt-BR!2sbr" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                      
+              </div>
+            </div>        
+          </div>
+    
+    
 </div>
+
+
 
 
 <div class="footer">
