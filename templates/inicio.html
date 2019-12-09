@@ -9,10 +9,15 @@
 </div>
 
 {% block body %}
+
+{% if not session['logged_in'] %}
 <div class="alert">
     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-    <strong>Bem vindo, universitário!</strong> Acesse nossa página do aluno para uma experiência personalizada!
+    <strong>Bem vindo, universitário!</strong> Faça login para uma experiência personalizada!
 </div>
+{% endif %}
+
+
         {% for evento in eventos %}
         <div class="card">
             <table class="boxevento">
