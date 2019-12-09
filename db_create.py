@@ -33,25 +33,6 @@ class Banco():
                 );
         """
         )
-        
-        cursor.execute (
-        """
-            CREATE TABLE IF NOT EXISTS eventos (
-                id INTEGER PRIMARY KEY,
-                nome TEXT NOT NULL, 
-                descricao TEXT NOT NULL,
-                local TEXT,
-                data TEXT,
-                horario_de_inicio TEXT NOT NULL,
-                horario_de_fim TEXT NOT NULL,
-                tipo TEXT, 
-                assunto TEXT, 
-                aceito INTEGER NOT NULL, 
-                autor INTEGER
-
-            );
-        """
-        )
 
         cursor.execute (
         """
@@ -64,6 +45,25 @@ class Banco():
             );
         """
         )
+        
+        cursor.execute (
+        """
+            CREATE TABLE IF NOT EXISTS eventos (
+                id INTEGER PRIMARY KEY,
+                nome TEXT NOT NULL, 
+                descricao TEXT NOT NULL,
+                local TEXT,
+                data TEXT,
+                horario_de_inicio TEXT NOT NULL,
+                horario_de_fim TEXT NOT NULL,
+                tipo TEXT,  
+                aceito INTEGER NOT NULL, 
+                autor INTEGER
+
+            );
+        """
+        )
+
         cursor.execute (
         """
             CREATE TABLE IF NOT EXISTS local (
@@ -88,6 +88,26 @@ class Banco():
                 aceito INTEGER NOT NULL, 
                 autor INTEGER
                 );
+        """
+        )
+
+        cursor.execute (
+        """
+            CREATE TABLE IF NOT EXISTS assuntosXeventos (
+                id INTEGER PRIMARY KEY,
+                eventoId INTEGER,
+                assuntoId INTEGER,
+                FOREIGN KEY (eventoId) REFERENCES eventos(id),
+                FOREIGN KEY (assuntoId) REFERENCES assuntos(id)
+            );
+        """
+        )
+        cursor.execute (
+        """
+            CREATE TABLE IF NOT EXISTS assuntos (
+                id INTEGER PRIMARY KEY,
+                nome TEXT NOT NULL
+            );
         """
         )
 
@@ -128,15 +148,27 @@ class Banco():
         return deuCerto
 
     def adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim, tipo, assunto):
+        """
+        Assunto deve ser uma lista com nome(s) do(s) assunto(s) do evento
+        """
+        
         deuCerto = False
         with sqlite3.connect('db1.db') as connection:
             
             cursor = connection.cursor()    
             cursor.execute("""
-                            INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim, tipo, assunto, aceito)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)
-                            """, (nome, descricao, local, data, horarioIn, horarioFim, tipo, assunto))
+                            INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim, tipo, aceito)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, 0)
+                            """, (nome, descricao, local, data, horarioIn, horarioFim, tipo))
             
+            id_ev = cursor.execute("SELECT id FROM eventos WHERE descricao = ? AND local = ?", (descricao, local))
+            
+            for a in assunto:
+
+                id_ass = cursor.execute("SELECT id FROM assuntos WHERE nome = ?", a)
+                cursor.execute("INSERT INTO assuntosXenventos VALUES (?, ?)", (id_ev, id_ass))
+
+
             cursor.execute("UPDATE user SET sugestoes = sugestoes + 1 WHERE id = 1")
 
             connection.commit()
@@ -166,12 +198,14 @@ class Banco():
         return result
       
     def listarEventos(self, data, dataFim, horarioIn="00", horarioFim="24", tipo=False, assunto=False):    
-
+        """
+        Assunto deve ser uma lista com nome(s) do(s) assunto(s) do evento
+        """
         with sqlite3.connect('db1.db') as connection:
 
             cursor = connection.cursor()
 
-            lista = ("""SELECT * FROM eventos WHERE aceito = 1 
+            lista = ("""SELECT id FROM eventos WHERE aceito = 1 
             AND data >= ? 
             AND data <= ? 
             AND horario_de_inicio >= ? 
@@ -179,11 +213,28 @@ class Banco():
             """)
             if not tipo == False:
                 lista = lista + "AND tipo = " + str(tipo)
+            #ids dos eventos q cumprem requisitos de horario e tipo 
+            filtro1 = cursor.execute(lista, (data, dataFim, horarioIn, horarioFim)).fetchall()
+            
+            filtro2 = []
+            result = []
             if not assunto == False:
-                lista = lista + "AND assunto = " + str(assunto)
+        
+                for a in assunto:
+                    ids = cursor.connect("SELECT id FROM assuntos WHERE nome =  ", a)
+                    #ids dos eventos q cumprem os requisitos de assunto 
+                    filtro2 = cursor.execute("SELECT eventoId FROM assuntosXeventos WHERE assuntoId = ?", ids)
+                    
+                    for ev in filtro1:
+                        if ev in filtro2:
+                            result.append(ev)
+            else:
+                for i in filtro1:
+                    result.append(cursor.execute("SELECT * FROM evetos WHERE id = ?", i)
             
-            
-            result = cursor.execute(lista, (data, dataFim, horarioIn, horarioFim)).fetchall()
+        #remove duplicatas
+        result = list(dict.fromkeys(mylist))
+
         return result
 
     def cadastrar_pessoa(self,user, senha, email, classe = "usuario"):
@@ -324,7 +375,6 @@ class Banco():
         for user_id in recusados:
             cursor.execute("UPDATE user SET sug_Naceitas = sug_Naceitas + 1 WHERE id = ?", user_id)
 
-   
     def gerenciarColab(self, user):
         """
         Input: id do user que vai ser promovido
@@ -343,20 +393,8 @@ class Banco():
 
 
 banco = Banco()
-#adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim)
-#banco.adicionarEvento("Maratona de Programação","CCP: código, café e pizza","No NCE","04/11", "09", "14", "computação", "vacas, vacathon")
-#banco.adicionarEvento("PESC","Apresentações sobre tudo que tem de bom: de jogos à IA","No Bloco H","04/11", "09", "14", "seminários", "IA, jogos, xexeo")
-#banco.adicionarEvento("SENEL","tá achando que a gente só faz bomba? Então venha nos ver explodir alguma coisa!","No Bloco A","04/11", "09", "14", "apresentações","bombas")
-#banco.adicionarEvento("INSCREVA-SE NA MINERVABOTS","Gosta de robôs? e competições TOPS com todo o Brasil","No Face","04/11", "09", "14","inscrição, competição","robótica")
-#resultado = banco.listarEventos("04/11", "09", "14")
-#banco.adicionarEvento("Festa de mascara", 'vai ser bom', 'reitoria', '8/10', '18', '00', 'festa', 'todos' )
-
-banco.criarTabelas()
-print(banco.listaNAceitos())
-
-lt_s = [[1, 2, 3, 4], []]
-lt_n = [[],[]]
-#banco.aceitarCoisasTest(lt_s, lt_n)
 
 
-#print(resultado)
+
+
+
