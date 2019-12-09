@@ -108,22 +108,35 @@ def encontrar_atividades():
 
 @app.route("/grade")
 def grade():
+    try:
+        x = session['grade']
+    except:
+        session['grade'] = []
+        for j in range(2,8):
+            session['grade'].append("")
+            session['grade'][j-2] = []
+            for i in range(7, 20):
+                session['grade'][j-2].append("")
+    print(session['grade'])
+
     return render_template('grade.html')
 
 @app.route("/enviar_grade", methods = ['POST'])
 def enviar_grade():
     grade=[]
     for j in range(2,8):
+        grade.append("")
+        grade[j-2]=[]
         for i in range(7, 20):
             stg = str(j) + "_" + str(i)
             try:
                 app = request.form[stg]
-                grade.append(app)
+                grade[j-2].append(app.strip())
             except:
-                pass
+                grade[j-2].append("")
+    session['grade'] = grade
 
-
-    return render_template('grade_enviar.html', grade = grade)
+    return redirect('/grade')
 
 @app.route("/sugerir_topicos")
 def sugerir_topicos():
