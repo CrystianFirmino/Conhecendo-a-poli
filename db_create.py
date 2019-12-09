@@ -89,6 +89,34 @@ class Banco():
         cursor.close()
         connection.close()
 
+    def adicionarInfo(self, texto):
+        deuCerto = False
+        with sqlite3.connect('db1.db') as connection:
+            
+            cursor = connection.cursor()    
+            cursor.execute("""
+                            INSERT INTO informacao (texto, aceito)
+                            VALUES (?, 0)
+                            """, (texto)
+                           )
+            connection.commit()
+            deuCerto = True
+        return deuCerto
+
+    def adicionarLocal(self, nome, bloco, sala, descicao):
+        deuCerto = False
+        with sqlite3.connect('db1.db') as connection:
+            
+            cursor = connection.cursor()    
+            cursor.execute("""
+                            INSERT INTO local(nome, bloco, sala, descricao, aceito)
+                            VALUES (?, ?, ?, ?, 0)
+                            """, (nome, bloco, sala, descricao)
+                           )
+            connection.commit()
+            deuCerto = True
+        return deuCerto
+
     def adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim, tipo, assunto):
         deuCerto = False
         with sqlite3.connect('db1.db') as connection:
@@ -96,12 +124,34 @@ class Banco():
             cursor = connection.cursor()    
             cursor.execute("""
                             INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim, tipo, assunto, aceito)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                            """, (nome, descricao, local, data, horarioIn, horarioFim, tipo, assunto, 0)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)
+                            """, (nome, descricao, local, data, horarioIn, horarioFim, tipo, assunto)
                            )
             connection.commit()
             deuCerto = True
         return deuCerto
+
+    def listarInfos(self):
+
+        with sqlite3.connect('db1.db') as connection:
+
+            cursor = connection.cursor()
+
+            lista = ("SELECT * FROM informacao WHERE aceito = 1")
+            result = cursor.execute(lista).fetchall()
+
+        return result
+
+    def listarLocais(self):
+
+        with sqlite3.connect('db1.db') as connection:
+
+            cursor = connection.cursor()
+
+            lista = ("SELECT * FROM local WHERE aceito = 1")
+            result = cursor.execute(lista).fetchall()
+            
+        return result
 
     def listarEventos(self, data, horarioIn, horarioFim):    
         
@@ -115,7 +165,7 @@ class Banco():
         return result
 
     def listarEventos2(self, data, dataFim, horarioIn="00", horarioFim="24", tipo=False, assunto=False):    
-        
+
         with sqlite3.connect('db1.db') as connection:
 
             cursor = connection.cursor()
@@ -178,7 +228,7 @@ class Banco():
 
     def listaNAceitos(self):
         """
-        Retorna uma lista de 3 listas. 1 = lista de eventos, 2 = lista de locais, 3 = lista de informaçoes
+        Retorna uma lista de 3 tuplas. 1 = lista de eventos, 2 = lista de locais, 3 = lista de informaçoes
         (tablas de locais e informacoes ainda n tem conluna aceito)
         """
         with sqlite3.connect('db1.db') as connection:
