@@ -19,29 +19,35 @@
     <input type="text" name="local" id="local" placeholder="Local do evento">
 
     <p>Data</p>
-    <input type="data" name="data_inicio" id="data" placeholder="Data Inicio">
-    <input type="number" name="hora_inicio" min="5" max="22" step="1" placeholder="Hora"><br>
-    <input type="data" name="data_fim" id="data" placeholder="Data Fim">
-    <input type="number" name="hora_fim" min="5" max="22" step="1" placeholder="Hora">
+    <input class="data" type="date" name="data_inicio" id="data" placeholder="Data Inicio">
+    <input class="data" type="time" name="hora_inicio"  placeholder="Hora"><br>
+    <input class="data" type="date" name="data_fim" id="data" placeholder="Data Fim">
+    <input class="data" type="time" name="hora_fim" placeholder="Hora">
 <br><br>
     <p>Quais os cursos são relacionados ao evento?</p>
-    <input type="checkbox" name="assunto1" id="computaçao" value="Computaçao">
-    <label id="caixa" for="computaçao">Computacao</label><br>
-    <input type="checkbox" name="assunto2" id="eletrica" value="Eletrica">
-    <label id="caixa" for="eletrica">Eletrica</label><br>
-    <input type="checkbox" name="assunto3" id="civil" value="Civil">
-    <label id="caixa" for="civil">Civil</label><br><br>
+    <label class="container">Computação
+        <input type="checkbox" name="assunto1" value="computacao" checked="checked">
+        <span class="checkmark"></span>
+    </label>
+    <label class="container">Eletrica
+            <input type="checkbox" name="assunto2" value="eletrica" checked="checked">
+            <span class="checkmark"></span>
+    </label>
 
     <p>Qual o tipo do evento?</p>
-    <input type="radio" name="tipo" id="palestra" value="palestra" checked>
-    <label class="tipo" for="palestra">Palestra</label><br>
-    <input type="radio" name="tipo" id="workshop" value="workshop">
-    <label class="tipo" for="workshop">Workshop</label>
-
+    <label class="container2"> Palestra
+            <input type="radio" name="tipo" value="palestra" >
+            <span class="checkmark2"></span>
+    </label>
+    <label class="container2"> Workshop
+            <input type="radio" name="tipo" value="workshop">
+            <span class="checkmark2"></span>
+    </label>
     <p>Descreva o Evento</p>
-    <textarea id="descricao" name="descricao" rows="4" cols="65"></textarea>
+    <input type="text" name="descricao" class="descricao">
     <input type="submit" value="Criar">
     </form>
+
 
 </div>
 
