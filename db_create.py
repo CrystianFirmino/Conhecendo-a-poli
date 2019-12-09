@@ -9,14 +9,14 @@ class Banco():
         connection = sqlite3.connect('db1.db')
         
 
-        if connection.is_connected():
-            db_Info = connection.get_server_info()
-            print("Connected to MySQL Server version ", db_Info)
-            cursor = connection.cursor()
-            cursor.execute("select database();")
-            record = cursor.fetchone()
-            print("You're connected to database: ", record)
-            cursor = connection.cursor()
+        # if connection.is_connected():
+        #     db_Info = connection.get_server_info()
+        #     print("Connected to MySQL Server version ", db_Info)
+        #     cursor = connection.cursor()
+        #     cursor.execute("select database();")
+        #     record = cursor.fetchone()
+        #     print("You're connected to database: ", record)
+        cursor = connection.cursor()
 
         cursor.execute (
 
@@ -67,9 +67,21 @@ class Banco():
                 nome TEXT NOT NULL, 
                 bloco TEXT NOT NULL,
                 sala TEXT,
-                descricao TEXT NOT NULL
+                descricao TEXT NOT NULL, 
+                aceito INTEGER NOT NULL
 
             );
+        """
+        )
+
+        cursor.execute (
+
+        """
+            CREATE TABLE IF NOT EXISTS informacao (
+                id INTEGER PRIMARY KEY,
+                texto TEXT NOT NULL, 
+                aceito INTEGER NOT NULL
+                );
         """
         )
 
@@ -114,11 +126,11 @@ class Banco():
             AND horario_de_inicio >= ? 
             AND horario_de_fim <= ?
             """)
-            
             if not tipo == False:
                 lista = lista + "AND tipo = " + str(tipo)
             if not assunto == False:
                 lista = lista + "AND assunto = " + str(assunto)
+            
             
             result = cursor.execute(lista, (data, dataFim, horarioIn, horarioFim)).fetchall()
         return result
@@ -164,55 +176,85 @@ class Banco():
             print("deu ruim")
             return False    
 
-    def listaNAceitos(self, tipo):
+    def listaNAceitos(self):
+        """
+        Retorna uma lista de 3 listas. 1 = lista de eventos, 2 = lista de locais, 3 = lista de informaçoes
+        (tablas de locais e informacoes ainda n tem conluna aceito)
+        """
         with sqlite3.connect('db1.db') as connection:
             cursor = connection.cursor() 
             
-            if tipo == "eventos":    
-                results = cursor.execute("SELECT * FROM eventos WHERE aceito = 0").fetchall() 
-
-            elif tipo == "local":
-                results = cursor.execute("SELECT * FROM eventos WHERE aceito = 0").fetchall()
-    
+            res_eventos = cursor.execute("SELECT * FROM eventos WHERE aceito = 0").fetchall() 
+            res_local = cursor.execute("SELECT * FROM local WHERE aceito = 0").fetchall()
+            res_informacao = cursor.execute("SELECT * FROM informacao WHERE aceito = 0").fetchall()
+            
+            results = []
+            results.append(res_eventos)
+            results.append(res_local)
+            results.append(res_informacao)
             return results
 
-    def aceitarCoisasTest(self, lista_s, lista_n):
+    def aceitarCoisas(self, lista_eve, lista_loc, lista_info):
         """
-        Atualiza as listas de eventos e locais. lista_s e lista_n são listas de listas de forma (tipo de tópico, número de aceitos/ n aceitos).
-        linha0: eventos, linha1: local.
+        Atualiza as tabelas de eventos, locais e info. 
+        Cada uma das lista do input deve ser um dicionário com o ID e o resultado da sugestao(s ou n)
         """
         with sqlite3.connect('db1.db') as connection:
             cursor = connection.cursor()
 
-            for j in range(len(lista_s)):
 
-                if j == 0:
-                    tabela = "eventos"
-                if j == 1:
-                    tabela = "local"
+            for evento in lista_eve:
+                if lista_eve[evento] == 's':
 
-                for i in range(len(lista_s[j])):
                     cursor.execute(
-                    """
-                    UPDATE ?
-                    SET aceito = 1
-                    WHERE id = ?
-                    """, (tabela, lista_s[j][i]))
+                        """
+                        UPDATE eventos
+                        SET aceito = 1
+                        WHERE id = ?
+                        """, (evento))
+                
+                if lista_eve[evento] == 'n':
+                    cursor.execute(
+                        """
+                        DELETE FROM eventos
+                        WHERE id = ?
+                        """, (evento))
             
-            for j in range(len(lista_n)):
+            for local in lista_loc:
+                if lista_loc[local] == 's':
 
-                if j == 0:
-                    tabela = "eventos"
-                if j == 1:
-                    tabela = "local"
-
-                for i in range(len(lista_n[j])):
                     cursor.execute(
-                    """
-                    UPDATE ?
-                    SET aceito = 1
-                    WHERE id = ?
-                    """, (tabela, lista_n[j][i]))
+                        """
+                        UPDATE local
+                        SET aceito = 1
+                        WHERE id = ?
+                        """, (local))
+                
+                if lista_loc[local] == 'n':
+                    cursor.execute(
+                        """
+                        DELETE FROM local
+                        WHERE id = ?
+                        """, (local))
+
+            for info in lista_info:
+                if lista_info[info] == 's':
+
+                    cursor.execute(
+                        """
+                        UPDATE informacao
+                        SET aceito = 1
+                        WHERE id = ?
+                        """, (info))
+                
+                if lista_info[info] == 'n':
+                    cursor.execute(
+                        """
+                        DELETE FROM informacao
+                        WHERE id = ?
+                        """, (info))
+                
+                    
 
             
 
@@ -225,7 +267,10 @@ banco = Banco()
 #banco.adicionarEvento("INSCREVA-SE NA MINERVABOTS","Gosta de robôs? e competições TOPS com todo o Brasil","No Face","04/11", "09", "14","inscrição, competição","robótica")
 #resultado = banco.listarEventos("04/11", "09", "14")
 #banco.adicionarEvento("Festa de mascara", 'vai ser bom', 'reitoria', '8/10', '18', '00', 'festa', 'todos' )
-print(banco.listaNAceitos("eventos"))
+
+banco.criarTabelas()
+print(banco.listaNAceitos())
+
 lt_s = [[1, 2, 3, 4], []]
 lt_n = [[],[]]
 #banco.aceitarCoisasTest(lt_s, lt_n)
