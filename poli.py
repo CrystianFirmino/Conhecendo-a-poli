@@ -9,7 +9,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def inicio():
-    return render_template('inicio.html')
+    banco = Banco()
+    return render_template('inicio.html', eventos = banco.listarEventos2("04/11", "30/12","05","22"))
 
 @app.route("/sugerir", methods = ['POST'])
 def sugerir():

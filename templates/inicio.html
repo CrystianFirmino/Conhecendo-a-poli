@@ -4,25 +4,58 @@
     <title>Conhecendo a poli</title>
 {% endblock %}
 
+<div class="topnav" id="myTopnav">
+        <a href="/" class="active">Inicio</a>
+</div>
+
 {% block body %}
-    <div class="inicio">
+<div class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+    <strong>Bem vindo, universitário!</strong> Acesse nossa página do aluno para uma experiência personalizada!
+</div>
+        {% for evento in eventos %}
+        <div class="card">
+            <table class="boxevento">
+                    
+                <tr>
+                    <th>Evento</th>
+                    <th class="info">Informacoes</th>
+                    
+                </tr>
     
-    <h1>Olá! A Conhecendo a Poli deseja boas vindas!</h1>
-    {% if not session['logged_in'] %}
+                    <tr>
+                        <td class=infoevento>Nome</td>
+                        <td>{{evento[1]}}</td>
+                    </tr>
     
-    <h2>Escolha como proceder:</h2>
-    <form>
-    <input type="button" value="Login" onclick="window.location.href='login'" />
-    </form>
-    <form>
-    <input type="button" value="Cadastro" onclick="window.location.href='cadastro'" />
-    </form>
-    {% else %}
-        <h2>Olá {{session['user']}}</h2>
-    {% endif %}
-
-    <!--COLOCAR OLÁ USER-->
-
-    </div>
+                    <tr>
+                        <td class=infoevento>Data</td>
+                        <td>{{evento[4]}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td class=infoevento>Local</td>
+                        <td>{{evento[3]}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td class=infoevento>Tipo</td>
+                        <td>{{evento[7]}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td class=infoevento>Assunto</td>
+                        <td>{{evento[8]}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td class=infoevento>Descricao</td>
+                        <td class="info">{{evento[2]}}</td>
+                    </tr>
+                    </tr>             
+            </table>
+        </div>
+        {% endfor %}
     
 {% endblock %}
+
