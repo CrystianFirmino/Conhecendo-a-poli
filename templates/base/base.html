@@ -25,6 +25,11 @@
                 <a href="/">Inicio</a>
                 <a href="encontrar_atividades">Encontrar atividades</a>
 
+                {% if not session['logged_in'] %}
+                <a href="login">login</a>
+                <a href="cadastro">cadastro</a>
+                {% endif %}
+
                 {% if session['logged_in'] and session['priority'] > 0 %}
                 <a href="grade">Grade</a>
                 <a href="sugerir_topicos">Cadastrar Evento</a>
