@@ -102,15 +102,25 @@ class Banco():
                                     """ , (data, horarioIn, horarioFim)).fetchall()
         return result
 
-    def listarEventos2(self, data,dataFim, horarioIn, horarioFim):    
+    def listarEventos2(self, data, dataFim, horarioIn="00", horarioFim="24", tipo=False, assunto=False):    
         
         with sqlite3.connect('db1.db') as connection:
 
             cursor = connection.cursor()
-            result = cursor.execute("""
-                                    SELECT * FROM eventos
-                                    WHERE data >= ? AND data <= ? AND horario_de_inicio >= ? AND horario_de_fim <= ?
-                                    """ , (data, dataFim, horarioIn, horarioFim)).fetchall()
+
+            lista = ("""SELECT * FROM eventos WHERE aceito = 1 
+            AND data >= ? 
+            AND data <= ? 
+            AND horario_de_inicio >= ? 
+            AND horario_de_fim <= ?
+            """)
+            
+            if not tipo == False:
+                lista = lista + "AND tipo = " + str(tipo)
+            if not assunto == False:
+                lista = lista + "AND assunto = " + str(assunto)
+            
+            result = cursor.execute(lista, (data, dataFim, horarioIn, horarioFim)).fetchall()
         return result
 
     def cadastrar_pessoa(self,user, senha, email, classe = "usuario"):
@@ -130,7 +140,7 @@ class Banco():
             results = cursor.execute(find_user, (usr, senha)).fetchall()
         return results
 
-    def aceitarEvento(self, usr, evento):
+    def colocarNaGrade(self, usr, evento):
         try:
             with sqlite3.connect('db1.db') as connection:
                 cursor = connection.cursor()
