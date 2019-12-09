@@ -201,6 +201,8 @@ class Banco():
         """
         Assunto deve ser uma lista com nome(s) do(s) assunto(s) do evento
         """
+        result = []
+
         with sqlite3.connect('db1.db') as connection:
 
             cursor = connection.cursor()
@@ -217,7 +219,6 @@ class Banco():
             filtro1 = cursor.execute(lista, (data, dataFim, horarioIn, horarioFim)).fetchall()
             
             filtro2 = []
-            result = []
             if not assunto == False:
         
                 for a in assunto:
@@ -230,10 +231,10 @@ class Banco():
                             result.append(ev)
             else:
                 for i in filtro1:
-                    result.append(cursor.execute("SELECT * FROM evetos WHERE id = ?", i)
+                    result.append(cursor.execute("SELECT * FROM evetos WHERE id = ?", i))
             
         #remove duplicatas
-        result = list(dict.fromkeys(mylist))
+        result = list(dict.fromkeys(result))
 
         return result
 
