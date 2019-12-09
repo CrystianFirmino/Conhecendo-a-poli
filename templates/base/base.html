@@ -19,47 +19,52 @@
 
 <body>
     <header>
-        <div class="container">
-            <div id="branding">
-                <h1>Conhecendo a<span class = "highlight"> Poli</span></h1>
-                <a href="/"><img src= "static\img\iconemapa.png" class="logo"></a>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="encontrar_atividades">Encontrar atividades</a></li>
-
-                    {% if session['logged_in'] and session['priority'] > 0 %}
-                    <li><a href="grade">Grade</a></li>
-                    <li><a href="sugerir_topicos">Cadastrar Evento</a></li>
-                    {% endif %}
-
-                    {% if session['logged_in'] and session['priority'] > 2 %}
-                    <li><a href="aceitar_topicos">Aceitar topicos</a></li>
-                    {% endif %}
-
-                    {% if session['logged_in'] and session['priority'] > 4 %}
-                    <li><a href="gerenciar_colaboradores">Gerenciar Colaboradores</a></li>
-                    {% endif %}
-
-                    {% if session['logged_in'] %}
-                    <a href="sair">Sair</a>
-                    {% endif %}
-
-
-                </ul>
-            </nav>
-            </div>
+         <h1>Conhecendo a<span class = "highlight"> Poli</span></h1>
     </header>
-<div class = "conteudo">
-{% block body %}{% endblock %}
+        <div class="topnav" id="myTopnav">
+                <a href="/">Inicio</a>
+                <a href="encontrar_atividades">Encontrar atividades</a>
+
+                {% if session['logged_in'] and session['priority'] > 0 %}
+                <a href="grade">Grade</a>
+                <a href="sugerir_topicos">Cadastrar Evento</a>
+                {% endif %}
+
+                {% if session['logged_in'] and session['priority'] > 2 %}
+                <a href="aceitar_topicos">Aceitar topicos</a>
+                {% endif %}
+
+                {% if session['logged_in'] and session['priority'] > 4 %}
+                <a href="gerenciar_colaboradores">Gerenciar Colaboradores</a>
+                {% endif %}
+
+                {% if session['logged_in'] %}
+                <a href="sair">Sair</a>
+                {% endif %}
+
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                        <i class="fa fa-bars"></i>
+                </a>
+
+         </div>
+    
+
+<div class = "row">
+    <div class="leftcolumn">
+        {% block body %}{% endblock %}
+    </div>
+
+    <div class="rightcolumn">
+        <div class="card"></div>
+    </div>
 </div>
 
 
-<footer>
+<div class="footer">
     <p>Conhecendo a Poli, Copyright &copy; 2019</p>
+</div>
+      
+<script src="static/script/script.js"></script>
 
-</footer>
-    
 </body>
 </html>

@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+<div class="card">
     {% if session['logged_in'] %}
         <p>Você já está logado</p>
     
@@ -34,5 +35,7 @@
     </script>
 
     {% endif %}
+
+</div>
 {% endblock %}
 

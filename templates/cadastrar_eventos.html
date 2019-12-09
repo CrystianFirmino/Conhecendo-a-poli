@@ -1,7 +1,13 @@
-<!DOCTYPE html>
-<html>
+{% extends "base/base.html" %}
+    
+{% block head %}
+    <title>Cadastrar evento - Conhecendo a poli</title>
+{% endblock %}
+
+{% block body %}
     <head class="seila">
         <link href="base/static/css/evento.css" type="text/css" rel="stylesheet">
+    <div class = "card">
         <div class="corpo">
         <form action="sugerir_topicos.html" method="POST">
             <h1 class="Evento">Cadastre um Evento</h1>
@@ -46,5 +52,6 @@
             </section>
         </form>
     </div>
-    </head>
-</html>
+</div>
+</head>
+{% endblock %}

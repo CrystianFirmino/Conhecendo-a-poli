@@ -4,25 +4,28 @@
     <title>Conhecendo a poli</title>
 {% endblock %}
 
+<div class="topnav" id="myTopnav">
+        <a href="/" class="active">Inicio</a>
+</div>
+
 {% block body %}
+<div class = "card">
     <div class="inicio">
-    
-    <h1>Olá! A Conhecendo a Poli deseja boas vindas!</h1>
-    {% if not session['logged_in'] %}
-    
-    <h2>Escolha como proceder:</h2>
-    <form>
-    <input type="button" value="Login" onclick="window.location.href='login'" />
-    </form>
-    <form>
-    <input type="button" value="Cadastro" onclick="window.location.href='cadastro'" />
-    </form>
-    {% else %}
-        <h2>Olá {{session['user']}}</h2>
-    {% endif %}
-
-    <!--COLOCAR OLÁ USER-->
-
+        <h1>Olá! A Conhecendo a Poli deseja boas vindas!</h1>
+        {% if not session['logged_in'] %}
+        
+        <h2>Escolha como proceder:</h2>
+        <form>
+        <input type="button" value="Login" onclick="window.location.href='login'" />
+        </form>
+        <form>
+        <input type="button" value="Cadastro" onclick="window.location.href='cadastro'" />
+        </form>
+        {% else %}
+            <h2>Olá {{session['user']}}</h2>
+        {% endif %}
+ 
     </div>
+</div>
     
 {% endblock %}
