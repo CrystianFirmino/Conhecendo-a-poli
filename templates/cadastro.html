@@ -5,22 +5,52 @@
 {% endblock %}
 
 {% block body %}
+<div class="card">
     {% if session['logged_in'] %}
         <p>Você está logado</p>
     
     {% else %}
-    <div class="user-box">
-    <img src="static\img\avatar.jpg" class="avatar">
-    <form action="/cadastrar" method="POST">
-        <p>Usuário</p>
-        <input type="text" name="usuario" placeholder="User">
-        <p>Email</p>
-        <input type="email" name="email" placeholder="Email">
-        <p>Senha</p>
-        <input type="password" name="senha" placeholder="Senha">
-        <input type="submit" value="cadastrar" >
-    </form>
-    </div>
+
+
+    <div class="wrap">
+            <div class="login-form">
+                <div class="form-header">
+                    <h3>Bem vindo, aluno!</h3>
+                    <p>Preencha os formulários para utilizar das funcionalidades do Conhecendo a Poli. </p>
+                </div>
+
+                <form action="/cadastrar" method="POST">
+                
+                <!--User Input-->
+                <div class="form-group">
+                <input type="text" name = "usuario" class="form-input" placeholder="Usuário">
+                </div>
+
+                <!--Email Input-->
+                <div class="form-group">
+                <input type="text" name = "email" class="form-input" placeholder="Email">
+                </div>
+                <!--Password Input-->
+                <div class="form-group">
+                <input type="password" name = "senha" id = "password" class="form-input" placeholder="Senha" required>
+                </div>
+
+                <!--Confirm Password Input-->
+                <div class="form-group">
+                <input type="password" name = "confirme_senha" id="confirm_password" class="form-input" placeholder="Confirme a Senha" required>
+                </div>
+
+                <!--Sign Up Button-->
+                <div class="form-group">
+                <input type="submit" class  value = "cadastrar">
+                </div>
+                </form>
+
+                <div class="form-footer">
+                Já possui uma conta? <a href="login">Login</a>
+                </div>
+            </div>
+        </div><!--/.wrap-->
 
     {% endif %}
 
@@ -30,4 +60,25 @@
     </script>
     {% endif %}
 
+    <script>
+    
+            var password = document.getElementById("password")
+        , confirm_password = document.getElementById("confirm_password");
+
+        function validatePassword(){
+        if(password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Senhas não são iguais");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+        }
+
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+    
+    </script>
+
+
+</div>
 {% endblock %}
+
