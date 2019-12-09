@@ -13,26 +13,49 @@
     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
     <strong>Bem vindo, universitário!</strong> Acesse nossa página do aluno para uma experiência personalizada!
 </div>
-<div class="leftcolumn">
+        {% for evento in eventos %}
         <div class="card">
-          <h2>EVENTO 1</h2>
-          <h5>Title description, Dec 7, 2017</h5>
-          <div class="fakeimg" style="height:200px;">Image</div>
-          <p>Some text..</p>
-          <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+            <table class="boxevento">
+                    
+                <tr>
+                    <th>Evento</th>
+                    <th class="info">Informacoes</th>
+                    
+                </tr>
+    
+                    <tr>
+                        <td class=infoevento>Nome</td>
+                        <td>{{evento[1]}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td class=infoevento>Data</td>
+                        <td>{{evento[4]}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td class=infoevento>Local</td>
+                        <td>{{evento[3]}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td class=infoevento>Tipo</td>
+                        <td>{{evento[7]}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td class=infoevento>Assunto</td>
+                        <td>{{evento[8]}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td class=infoevento>Descricao</td>
+                        <td class="info">{{evento[2]}}</td>
+                    </tr>
+                    </tr>             
+            </table>
         </div>
-        <div class="card">
-            <h2>EVENTO 2</h2>
-            <h5>Title description, Sep 2, 2017</h5>
-            <div class="fakeimg" style="height:200px;">Image</div>
-            <p>Some text..</p>
-            <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-        </div>
- </div>
-
-
-
-
+        {% endfor %}
     
 {% endblock %}
 
