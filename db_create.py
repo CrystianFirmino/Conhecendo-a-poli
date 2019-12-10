@@ -316,6 +316,9 @@ class Banco():
             for evento in eventos:
                 result.append = cursor.execute("""SELECT nome, data, horario_de_inicio, horario_de_fim 
                                                     FROM eventos WHERE id = ?""", (evento,))
+
+            connection.commit()
+
         return result 
 
     def listarNAceitos(self):
@@ -334,7 +337,10 @@ class Banco():
             results.append(res_eventos)
             results.append(res_local)
             results.append(res_informacao)
-            return results
+
+            connection.commit()
+        
+        return results
 
     def aceitarCoisas(self, lista_eve, lista_loc, lista_info):
         """
@@ -346,74 +352,70 @@ class Banco():
 
             aceitos = []
             recusados = []
-            
-            form1 = "UPDATE ? SET aceito = 1 WHERE id = ?"
-            form2 = "DELETE FROM ? WHERE id = ?"
-            form3 = "SELECT autor FROM ? WHERE id = ?" 
-
+        
             for evento in lista_eve:
-                
-                tabela  = 'eventos'
 
                 if lista_eve[evento] == 's':
-                    print(tabela, evento)
-                    cursor.execute(form1, (tabela, str(evento)))
+                    #print(evento)
+                    cursor.execute("UPDATE eventos SET aceito = 1 WHERE id = ?", (evento,))
                     #add id do autor da sugestao
-                    
-                    aceitos.append(cursor.execute(form3, (tabela, evento))) 
+                    aceitos.append(cursor.execute("SELECT autor FROM eventos WHERE id = ?", (evento,)).fetchall()) 
 
                 if lista_eve[evento] == 'n':
                     
-                    cursor.execute(form2, (tabela, evento))
-                    recusados.append(cursor.execute(form3, (tabela, evento)).fetchall())
+                    cursor.execute("DELETE FROM eventos WHERE id = ?", (evento,))
+                    recusados.append(cursor.execute("SELECT autor FROM eventos WHERE id = ?" , (evento,)).fetchall())
             
             for local in lista_loc:
 
-                tabela = "local"
-
                 if lista_loc[local] == 's':
 
-                    cursor.execute(form1, (tabela, local))
-                    aceitos.append(cursor.execute(form3, (tabela, local)).fetchall())
+                    cursor.execute("UPDATE local SET aceito = 1 WHERE id = ?", (local,))
+                    aceitos.append(cursor.execute("SELECT autor FROM local WHERE id = ?" , (local,)).fethcall())
                     
                 if lista_loc[local] == 'n':
 
-                    cursor.execute(form2, (tabela, local))
-                    recusados.append(cursor.execute(form3, (tabela, local)).fetchall())
+                    cursor.execute("DELETE FROM local WHERE id = ?", (local,))
+                    recusados.append(cursor.execute("SELECT autor FROM local WHERE id = ?" , (local,)).fetchall())
 
             for info in lista_info:
 
-                tabela = "informacao"
-
                 if lista_info[info] == 's':
 
-                    cursor.execute(form1, (tabela, info))
-                    aceitos.append(cursor.execute(form3, (tabela, info)).fetchall())
+                    cursor.execute("UPDATE informacao SET aceito = 1 WHERE id = ?", (info,))
+                    aceitos.append(cursor.execute("SELECT autor FROM informacao WHERE id = ?" , (info,)).fetchall())
                 
                 if lista_info[info] == 'n':
 
-                    cursor.execute(form2, (tabela, info))
-                    recusados.append(cursor.execute(form3, (tabela, info)).fetchall)
-                
-        for user_id in aceitos:
-            cursor.execute("UPDATE user SET sug_aceitas = sug_aceitas + 1 WHERE id = ?", (user_id,))
+                    cursor.execute("DELETE FROM informacao WHERE id = ?", (info,))
+                    recusados.append(cursor.execute("SELECT autor FROM informacao WHERE id = ?" , (info,)).fetchall())
+                   
+            for user_id in aceitos:
+                user_id = user_id[0][0]
+                cursor.execute("UPDATE user SET sug_aceitas = sug_aceitas + 1 WHERE id = ?", (user_id,))
 
-        for user_id in recusados:
-            cursor.execute("UPDATE user SET sug_Naceitas = sug_Naceitas + 1 WHERE id = ?", (user_id,))
+            for user_id in recusados:
+                user_id = user_id[0][0]
+                cursor.execute("UPDATE user SET sug_Naceitas = sug_Naceitas + 1 WHERE id = ?", (user_id,))
+
+            connection.commit()
 
     def gerenciarColab(self, user):
         """
-        Input: id do user que vai ser promovido
+        Input: lista de ids dos users que vao ser promovidos
         """
         with sqlite3.connect('db1.db') as connection:
             cursor = connection.cursor()
 
-            cursor.execute(
-                """
-                UPDATE user
-                SET calsse = "coordenador"
-                WHERE id = ?
-                """, (user))
+            for u in user:
+                cursor.execute(
+                    """
+                    UPDATE user
+                    SET calsse = "coordenador"
+                    WHERE id = ?
+                    """, (u,))
+
+            connection.commit()
 
             
 
