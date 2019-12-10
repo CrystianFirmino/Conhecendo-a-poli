@@ -190,6 +190,10 @@ def topico_recusado():
 def gerenciar_colaboradores():
     return render_template('gerenciar_colaboradores.html')
 
+@app.route("/seja_colaborador")
+def seja_colaborador():
+    return render_template('formulario_colaborador.html')
+
 app.secret_key = os.urandom(12)
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000, threaded=True, debug=True)
