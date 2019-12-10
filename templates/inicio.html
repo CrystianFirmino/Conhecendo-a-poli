@@ -13,6 +13,9 @@
     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
     <strong>Bem vindo, universitário!</strong> Acesse nossa página do aluno para uma experiência personalizada!
 </div>
+        {% if not envento %}
+        <p class="card">Nada por aqui</p>
+        {% endif %}
         {% for evento in eventos %}
         <div class="card">
             <table class="boxevento">

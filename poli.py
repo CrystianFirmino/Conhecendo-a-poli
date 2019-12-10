@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route("/")
 def inicio():
     banco = Banco()
-    return render_template('inicio.html', eventos = banco.listarEventos2("04/11", "30/12","05","22"))
+    return render_template('inicio.html', eventos = banco.listarEventos("04/11/19", "30/12/20","05","22"))
 
 @app.route("/sugerir", methods = ['POST'])
 def sugerir():
@@ -23,12 +23,13 @@ def sugerir():
     tipo = str(request.form["tipo"])
     assunto = []
     try:
-        assunto.append(str(request.form["assunto1"]))
-        assunto.append(str(request.form["assunto2"]))
-        assunto.append(str(request.form["assunto3"]))
+        assunto.append(str(request.form["assunto1"]).title())
+        assunto.append(str(request.form["assunto2"]).title())
+        assunto.append(str(request.form["assunto3"]).title())
     except:
         print("Erro")
-    assunto = ", ".join(assunto)
+
+    print("Assuntos: ")
     print(assunto)
     banco = Banco()
     banco.adicionarEvento(nome, descricao, local, dataIn, horarioIn, horarioFim, tipo, assunto)
@@ -48,7 +49,6 @@ def logar():
 
     banco = Banco()
     busca =  banco.buscar_pessoa(usr, senha)
-    print(busca)
     if len(busca) > 0:    
         x = busca[0]
         usuario = x[1]
@@ -94,7 +94,6 @@ def cadastrar():
     banco = Banco()
     if (banco.buscar_pessoa(usr, senha) == []):
         cadastrado =  banco.cadastrar_pessoa(usr, senha, email)
-        print(cadastrado)
     else:
         return 'usuário já existente'
     if cadastrado:
@@ -118,7 +117,6 @@ def grade():
             session['grade'][j-2] = []
             for i in range(7, 20):
                 session['grade'][j-2].append("")
-    print(session['grade'])
 
     return render_template('grade.html')
 

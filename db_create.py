@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 import sqlite3
-import mysql.connector
-from mysql.connector import errorcode
 
 class Banco():
     def criarTabelas(self):
@@ -166,7 +164,8 @@ class Banco():
             for a in assunto:
 
                 id_ass = cursor.execute("SELECT id FROM assuntos WHERE nome = ?", a)
-                cursor.execute("INSERT INTO assuntosXenventos VALUES (?, ?)", (id_ev, id_ass))
+                print("id_ass: ",id_ass, "id_ev: ",id_ev)
+                cursor.execute("INSERT INTO assuntosXeventos (eventoId, assuntoId) VALUES (?, ?)", (id_ev, id_ass))
 
 
             cursor.execute("UPDATE user SET sugestoes = sugestoes + 1 WHERE id = 1")
@@ -273,7 +272,6 @@ class Banco():
                 set_grade = ("INSERT INTO grade userId = ?, eventoId = ?")
                 cursor.execute(set_grade,x)
                 connection.commit()
-                print(x)
             return True
         except:
             print("deu ruim")
