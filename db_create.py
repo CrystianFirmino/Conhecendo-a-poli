@@ -5,11 +5,8 @@ class Banco():
 
     def ajeitarTabelas(self):
         with sqlite3.connect('db1.db') as connection:
-            
             cursor = connection.cursor() 
-            for i in (1,1):  
-                #cursor.execute("UPDATE user SET sug_Naceitas = 1 WHERE id = ?", (i,))
-                pass
+            #cursor.execute("UPDATE eventos SET tipo = ? WHERE id = 9",("Pode chorar",))
     def criarTabelas(self):
 
         connection = sqlite3.connect('db1.db')
@@ -60,8 +57,9 @@ class Banco():
                 descricao TEXT NOT NULL,
                 local TEXT,
                 data TEXT,
-                horario_de_inicio TEXT NOT NULL,
-                horario_de_fim TEXT NOT NULL,
+                data_fim TEXT,
+                horario_de_inicio TEXT,
+                horario_de_fim TEXT,
                 tipo TEXT,  
                 aceito INTEGER NOT NULL, 
                 autor INTEGER
@@ -423,7 +421,6 @@ class Banco():
                 WHERE id = ?
                 """, (user))
             connection.commit()
-
 
 
 
