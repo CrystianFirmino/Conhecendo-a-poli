@@ -3,10 +3,11 @@ from flask import session
 class Pessoa:
     def __init__(self):
         self.__classe = "none"
-        self.iniciar( 0, 0, 0)
+        self.iniciar(0, 0, 0, 0)
 
-    def iniciar(self, nome, senha, email):
+    def iniciar(self, id, nome, senha, email):
         self.priority = 0
+        self._id = id
         self._nome = nome
         self._email = email
         self._senha=senha
@@ -18,9 +19,11 @@ class Pessoa:
         if self.priority == 0:
             session['logged_in'] = False
             session['user'] = ""
+            session['user_id'] = ""
         elif self.priority>0:
             session['logged_in'] = True
             session['user'] = self._nome
+            session['user_id'] = int(self._id)
         #Para (futuramente) verificar se a pessoa é valida
         valido = True
         return valido
@@ -44,25 +47,25 @@ class Pessoa:
         return "Ainda nao e possivel alterar a senha"
         
 class Usuario(Pessoa):
-    def __init__(self, nome, senha, email):
+    def __init__(self, id, nome, senha, email):
         self.__classe = "usuario"
-        self.iniciar(nome, senha, email)
+        self.iniciar(id, nome, senha, email)
  
     def get_classe(self):
         return self.__classe
 
 class Coordenador(Pessoa):
-    def __init__(self, nome, senha, email):
+    def __init__(self, id, nome, senha, email):
         self.__classe = "coordenador"
-        self.iniciar(nome, senha, email)
+        self.iniciar(id, nome, senha, email)
  
     def get_classe(self):
         return self.__classe
 
 class Adm(Coordenador):
-    def __init__(self, nome, senha, email):
+    def __init__(self, id, nome, senha, email):
         self.__classe = "adm"
-        self.iniciar(nome, senha, email)
+        self.iniciar(id, nome, senha, email)
  
     def get_classe(self):
         return self.__classe

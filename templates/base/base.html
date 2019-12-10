@@ -19,47 +19,72 @@
 
 <body>
     <header>
-        <div class="container">
-            <div id="branding">
-                <h1>Conhecendo a<span class = "highlight"> Poli</span></h1>
-                <a href="/"><img src= "static\img\iconemapa.png" class="logo"></a>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="encontrar_atividades">Encontrar atividades</a></li>
-
-                    {% if session['logged_in'] and session['priority'] > 0 %}
-                    <li><a href="grade">Grade</a></li>
-                    <li><a href="sugerir_topicos">Cadastrar Evento</a></li>
-                    {% endif %}
-
-                    {% if session['logged_in'] and session['priority'] > 2 %}
-                    <li><a href="aceitar_topicos">Aceitar topicos</a></li>
-                    {% endif %}
-
-                    {% if session['logged_in'] and session['priority'] > 4 %}
-                    <li><a href="gerenciar_colaboradores">Gerenciar Colaboradores</a></li>
-                    {% endif %}
-
-                    {% if session['logged_in'] %}
-                    <a href="sair">Sair</a>
-                    {% endif %}
-
-
-                </ul>
-            </nav>
-            </div>
+         <h1>Conhecendo a<span class = "highlight"> Poli</span></h1>
     </header>
-<div class = "conteudo">
-{% block body %}{% endblock %}
+        <div class="topnav" id="myTopnav">
+                <a href="/">Inicio</a>
+                <a href="encontrar_atividades">Encontrar atividades</a>
+
+                {% if not session['logged_in'] %}
+                <a href="login">login</a>
+                {% endif %}
+
+                {% if session['logged_in'] and session['priority'] > 0 %}
+                <a href="grade">Grade</a>
+                <a href="sugerir_topicos">Cadastrar Evento</a>
+                {% endif %}
+
+                {% if session['logged_in'] and session['priority'] > 2 %}
+                <a href="aceitar_topicos">Aceitar topicos</a>
+                {% endif %}
+
+                {% if session['logged_in'] and session['priority'] > 4 %}
+                <a href="gerenciar_colaboradores">Gerenciar Colaboradores</a>
+                {% endif %}
+
+                {% if session['logged_in'] %}
+                <a href="sair">Sair</a>
+                {% endif %}
+
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                        <i class="fa fa-bars"></i>
+                </a>
+
+         </div>
+    
+
+<div class = "row">
+    <div class="leftcolumn">
+    {% block body %}{% endblock %}</div>    
+
+    <div class="rightcolumn">
+            <div class="card">
+              <h3>Colabore conosco!</h3>
+              <a href="#colabore">
+              <div class="imghelp" style="height:100px;"></a></div>
+              <p>Seja um colaborador e nos ajude a manter universitários informados!</p>
+            </div>
+            <div class="card">
+              <h3>Onde está a Escola Politécnica:</h3>
+              <div class = "map-responsive">
+              
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3676.4638681770484!2d-43.23318398489917!3d-22.85931674192612!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x99793830ed1931%3A0x578e218b106e4493!2sEscola%20Polit%C3%A9cnica%20da%20UFRJ!5e0!3m2!1spt-BR!2sbr!4v1575668410689!5m2!1spt-BR!2sbr" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                      
+              </div>
+            </div>        
+          </div>
+    
+    
 </div>
 
 
-<footer>
-    <p>Conhecendo a Poli, Copyright &copy; 2019</p>
 
-</footer>
-    
+
+<div class="footer">
+    <p>Conhecendo a Poli, Copyright &copy; 2019</p>
+</div>
+      
+<script src="static/script/script.js"></script>
+
 </body>
 </html>
