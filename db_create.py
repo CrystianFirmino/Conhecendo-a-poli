@@ -226,7 +226,7 @@ class Banco():
 
             cursor = connection.cursor()
 
-            lista = ("""SELECT id FROM eventos WHERE aceito = 0
+            lista = ("""SELECT id FROM eventos WHERE aceito = 1
             AND data >= ? 
             AND data <= ? 
             AND horario_de_inicio >= ? 
@@ -236,11 +236,9 @@ class Banco():
                 lista = lista + "AND tipo = " + str(tipo)
             #ids dos eventos q cumprem requisitos de horario e tipo 
             filtro1 = cursor.execute(lista, (data, dataFim, horarioIn, horarioFim)).fetchall()
-            
             for i in range(len(filtro1)):
                 filtro1[i] = filtro1[i][0]
 
-            #print(filtro1)
             filtro2 = []
             if not assunto == False:
         
@@ -258,7 +256,6 @@ class Banco():
             
         #remove duplicatas
         
-        print(result)
         for ev1 in result:
             r = result.index(ev1) +1
             for e in range(r, len(result)):

@@ -11,7 +11,7 @@ app = Flask(__name__)
 def inicio():
     banco = Banco()
     banco.ajeitarTabelas()
-    return render_template('inicio.html', eventos = banco.listarEventos("04/11", "30/12"))
+    return render_template('inicio.html', eventos = banco.listarEventos("0000", "9999"))
 
 @app.route("/sugerir", methods = ['POST'])
 def sugerir():
@@ -21,7 +21,10 @@ def sugerir():
     dataIn = str(request.form["data_inicio"])
     horarioIn = str(request.form["hora_inicio"])
     horarioFim = str(request.form["hora_fim"])
-    tipo = str(request.form["tipo"])
+    try:
+        tipo = str(request.form["tipo"])
+    except:
+        tipo = ''
     assunto = []
     try:
         assunto.append(str(request.form["assunto1"]).title())
