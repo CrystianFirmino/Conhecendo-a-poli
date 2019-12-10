@@ -121,59 +121,71 @@ class Banco():
             
             cursor = connection.cursor()    
             cursor.execute("""
-                            INSERT INTO informacao (texto, aceito)
-                            VALUES (?, 0)
-                            """, (texto))
+                            INSERT INTO informacao (texto, autor, aceito)
+                            VALUES (?, ?, 0)
+                            """, (texto, user))
 
-            cursor.execute("UPDATE user SET sugestoes = sugestoes + 1 WHERE id = 1")
+            cursor.execute("UPDATE user SET sugestoes = sugestoes + 1 WHERE id = ?", (user,))
 
             connection.commit()
             deuCerto = True
         return deuCerto
 
-    def adicionarLocal(self, nome, bloco, sala, descricao):
+    def adicionarLocal(self, nome, bloco, sala, descricao, user):
         deuCerto = False
         with sqlite3.connect('db1.db') as connection:
             
             cursor = connection.cursor()    
             cursor.execute("""
-                            INSERT INTO local(nome, bloco, sala, descricao, aceito)
-                            VALUES (?, ?, ?, ?, 0)
-                            """, (nome, bloco, sala, descricao))
+                            INSERT INTO local(nome, bloco, sala, descricao, autor, aceito)
+                            VALUES (?, ?, ?, ?, ?, 0)
+                            """, (nome, bloco, sala, descricao, user))
 
-            cursor.execute("UPDATE user SET sugestoes = sugestoes + 1 WHERE id = 1")
+            cursor.execute("UPDATE user SET sugestoes = sugestoes + 1 WHERE id = ?", (user,))
             
             connection.commit()
             deuCerto = True
         return deuCerto
 
-    def adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim, tipo, assunto):
+    def adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim, tipo, assunto, user):
         """
-        Assunto deve ser uma lista com nome(s) do(s) assunto(s) do evento
+        Assunto deve ser uma lista com nome(s) do(s) assunto(s) do evento. Retorna False se o evento já existir ou se houver erro.
         """
         
         deuCerto = False
         with sqlite3.connect('db1.db') as connection:
             
             cursor = connection.cursor()    
-            cursor.execute("""
-                            INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim, tipo, aceito)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, 0)
-                            """, (nome, descricao, local, data, horarioIn, horarioFim, tipo))
+            repetido = cursor.execute("SELECT id FROM eventos WHERE nome = ? AND data = ? AND local = ?", (nome, data, local)).fetchall()
+            try:
+                r = repetido[0]
+                
+            except:
+                cursor.execute("""
+                                INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim, tipo, autor, aceito)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)
+                                """, (nome, descricao, local, data, horarioIn, horarioFim, tipo, user))
+                connection.commit()
             
-            id_ev = cursor.execute("SELECT id FROM eventos WHERE descricao = ? AND local = ?", (descricao, local))
+                id_ev = cursor.execute("SELECT id FROM eventos WHERE nome = ? AND data = ? AND local = ?", (nome, data, local)).fetchall()
+                id_ev = id_ev[0][0]
+                #print ("id_ev: " + str(id_ev))
+                
+                for a in assunto:
+          
+                    id_ass = cursor.execute("SELECT id FROM assuntos WHERE nome = ?", (a,)).fetchall()
+                    id_ass = id_ass[0][0]
+                    #print("id_ass: " + str(id_ass))
+                    cursor.execute("INSERT INTO assuntosXeventos (eventoId, assuntoId) VALUES (?, ?)", (id_ev, id_ass))
+
+                cursor.execute("UPDATE user SET sugestoes = sugestoes + 1 WHERE id = ?", (user,))
+
+                connection.commit()
+                deuCerto = True
+                return deuCerto
             
-            for a in assunto:
-
-                id_ass = cursor.execute("SELECT id FROM assuntos WHERE nome = ?", a)
-                cursor.execute("INSERT INTO assuntosXenventos VALUES (?, ?)", (id_ev, id_ass))
-
-
-            cursor.execute("UPDATE user SET sugestoes = sugestoes + 1 WHERE id = 1")
-
-            connection.commit()
-            deuCerto = True
-        return deuCerto
+            else:
+                return deuCerto
 
     def listarInfos(self):
 
@@ -199,7 +211,9 @@ class Banco():
       
     def listarEventos(self, data, dataFim, horarioIn="00", horarioFim="24", tipo=False, assunto=False):    
         """
-        Assunto deve ser uma lista com nome(s) do(s) assunto(s) do evento
+        Assunto deve ser uma lista com nome(s) do(s) assunto(s) do evento. 
+        data e dataFim são os limitadores de periodo da busca.
+        Ex: de hj (variavel sistema) até daqui a 1 semana (hj+7)
         """
         result = []
 
@@ -207,7 +221,7 @@ class Banco():
 
             cursor = connection.cursor()
 
-            lista = ("""SELECT id FROM eventos WHERE aceito = 1 
+            lista = ("""SELECT id FROM eventos WHERE aceito = 0
             AND data >= ? 
             AND data <= ? 
             AND horario_de_inicio >= ? 
@@ -218,23 +232,33 @@ class Banco():
             #ids dos eventos q cumprem requisitos de horario e tipo 
             filtro1 = cursor.execute(lista, (data, dataFim, horarioIn, horarioFim)).fetchall()
             
+            for i in range(len(filtro1)):
+                filtro1[i] = filtro1[i][0]
+
+            #print(filtro1)
             filtro2 = []
             if not assunto == False:
         
                 for a in assunto:
-                    ids = cursor.connect("SELECT id FROM assuntos WHERE nome =  ", a)
+                    ids = cursor.connect("SELECT id FROM assuntos WHERE nome =  ", (a,))
                     #ids dos eventos q cumprem os requisitos de assunto 
-                    filtro2 = cursor.execute("SELECT eventoId FROM assuntosXeventos WHERE assuntoId = ?", ids)
+                    filtro2 = cursor.execute("SELECT eventoId FROM assuntosXeventos WHERE assuntoId = ?", (ids,))
                     
                     for ev in filtro1:
                         if ev in filtro2:
                             result.append(ev)
             else:
                 for i in filtro1:
-                    result.append(cursor.execute("SELECT * FROM evetos WHERE id = ?", i))
+                    result.append(cursor.execute("SELECT * FROM eventos WHERE id = ?", (i,)).fetchall())
             
         #remove duplicatas
-        result = list(dict.fromkeys(result))
+        print(result)
+        for ev1 in result:
+            r = result.index(ev1) +1
+            for e in range(r, len(result)):
+                ev2 = result[e]
+                if ev1[0] == ev2[0]:
+                    result.remove(ev2)
 
         return result
 
@@ -287,11 +311,11 @@ class Banco():
         with sqlite3.connect('db1.db') as connection:
             cursor = connection.cursor()
 
-            eventos = cursor.execute("SELECT eventoId FROM eventos WHERE userId = ?", user).fetchall
+            eventos = cursor.execute("SELECT eventoId FROM eventos WHERE userId = ?", (user,)).fetchall
             result = []
             for evento in eventos:
                 result.append = cursor.execute("""SELECT nome, data, horario_de_inicio, horario_de_fim 
-                                                    FROM eventos WHERE id = ?""", evento)
+                                                    FROM eventos WHERE id = ?""", (evento,))
         return result 
 
     def listaNAceitos(self):
@@ -371,10 +395,10 @@ class Banco():
                     recusados.append(cursor.execute(form3, (tabela, info)))
                 
         for user_id in aceitos:
-            cursor.execute("UPDATE user SET sug_aceitas = sug_aceitas + 1 WHERE id = ?", user_id)
+            cursor.execute("UPDATE user SET sug_aceitas = sug_aceitas + 1 WHERE id = ?", (user_id,))
 
         for user_id in recusados:
-            cursor.execute("UPDATE user SET sug_Naceitas = sug_Naceitas + 1 WHERE id = ?", user_id)
+            cursor.execute("UPDATE user SET sug_Naceitas = sug_Naceitas + 1 WHERE id = ?", (user_id,))
 
     def gerenciarColab(self, user):
         """
