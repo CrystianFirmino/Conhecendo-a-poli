@@ -2,10 +2,18 @@
 import sqlite3
 
 class Banco():
+
+    def ajeitarTabelas(self):
+        with sqlite3.connect('db1.db') as connection:
+            
+            cursor = connection.cursor() 
+            for i in (1,1):  
+                #cursor.execute("UPDATE user SET sug_Naceitas = 1 WHERE id = ?", (i,))
+                pass
     def criarTabelas(self):
 
         connection = sqlite3.connect('db1.db')
-        
+
 
         # if connection.is_connected():
         #     db_Info = connection.get_server_info()
@@ -145,33 +153,34 @@ class Banco():
             deuCerto = True
         return deuCerto
 
-    def adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim, tipo, assunto):
+    def adicionarEvento(self, nome, descricao, local, data, horarioIn, horarioFim, tipo, assunto, user_id = False):
         """
         Assunto deve ser uma lista com nome(s) do(s) assunto(s) do evento
         """
-        
         deuCerto = False
-        with sqlite3.connect('db1.db') as connection:
-            
-            cursor = connection.cursor()    
-            cursor.execute("""
-                            INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim, tipo, aceito)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, 0)
-                            """, (nome, descricao, local, data, horarioIn, horarioFim, tipo))
-            
-            id_ev = cursor.execute("SELECT id FROM eventos WHERE descricao = ? AND local = ?", (descricao, local))
-            
-            for a in assunto:
+        if type(user_id) == int:
+            if user_id>0:
+                with sqlite3.connect('db1.db') as connection:
+                    
+                    cursor = connection.cursor()    
+                    cursor.execute("""
+                                    INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim, tipo, aceito, autor)
+                                    VALUES (?, ?, ?, ?, ?, ?, ?, 0, ?)
+                                    """, (nome, descricao, local, data, horarioIn, horarioFim, tipo, user_id))
+                    
+                    id_ev = cursor.execute("SELECT id FROM eventos").fetchall()
+                    
+                    for a in assunto:
+                        print("a: ",a)
+                        id_ass = cursor.execute("SELECT id FROM assuntos WHERE nome = ?", (a,)).fetchall()
+                        print("id_ass: ",id_ev[-1][0], "id_ev: ",id_ass[0])
+                        cursor.execute("INSERT INTO assuntosXeventos (eventoId, assuntoId) VALUES (?, ?)", (id_ev[-1][0], id_ass[0][0]))
 
-                id_ass = cursor.execute("SELECT id FROM assuntos WHERE nome = ?", a)
-                print("id_ass: ",id_ass, "id_ev: ",id_ev)
-                cursor.execute("INSERT INTO assuntosXeventos (eventoId, assuntoId) VALUES (?, ?)", (id_ev, id_ass))
 
+                    cursor.execute("UPDATE user SET sugestoes = sugestoes + 1 WHERE id = ?", str(user_id))
 
-            cursor.execute("UPDATE user SET sugestoes = sugestoes + 1 WHERE id = 1")
-
-            connection.commit()
-            deuCerto = True
+                    connection.commit()
+                    deuCerto = True
         return deuCerto
 
     def listarInfos(self):
@@ -230,11 +239,10 @@ class Banco():
                             result.append(ev)
             else:
                 for i in filtro1:
-                    result.append(cursor.execute("SELECT * FROM evetos WHERE id = ?", i))
+                    result.append(cursor.execute("SELECT * FROM eventos WHERE id = ?", i).fetchall()[0])
             
         #remove duplicatas
         result = list(dict.fromkeys(result))
-
         return result
 
     def cadastrar_pessoa(self,user, senha, email, classe = "usuario"):
@@ -274,7 +282,7 @@ class Banco():
                 connection.commit()
             return True
         except:
-            print("deu ruim")
+            print("Deu ruim no coloacarNaGrade")
             return False    
 
     def listarGrade(self, user):
@@ -321,24 +329,23 @@ class Banco():
             aceitos = []
             recusados = []
             
-            form1 = "UPDATE ? SET aceito = 1 WHERE id = ?"
-            form2 = "DELETE FROM ? WHERE id = ?"
-            form3 = "SELECT autor FROM ? WHERE id = ?" 
+            form1 = "UPDATE # SET aceito = 1 WHERE id = ?"
+            form2 = "DELETE FROM # WHERE id = ?"
+            form3 = "SELECT autor FROM # WHERE id = ?" 
 
             for evento in lista_eve:
-                
                 tabela  = "eventos"
 
                 if lista_eve[evento] == 's':
                     
-                    cursor.execute(form1, (tabela, evento))
+                    cursor.execute(form1.replace("#", tabela), (evento,))
                     #add id do autor da sugestao
-                    aceitos.append(cursor.execute(form3, (tabela, evento))) 
+                    aceitos.append(cursor.execute(form3.replace("#", tabela), (evento,)).fetchall()) 
 
                 if lista_eve[evento] == 'n':
+                    recusados.append(cursor.execute(form3.replace("#", tabela), (evento,)).fetchall())
+                    cursor.execute(form2.replace("#", tabela), (evento,))
                     
-                    cursor.execute(form2, (tabela, evento))
-                    recusados.append(cursor.execute(form3, (tabela, evento)))
             
             for local in lista_loc:
 
@@ -346,13 +353,13 @@ class Banco():
 
                 if lista_loc[local] == 's':
 
-                    cursor.execute(form1, (tabela, local))
-                    aceitos.append(cursor.execute(form3, (tabela, local)))
+                    cursor.execute(form1.replace("#", tabela), (local,))
+                    aceitos.append(cursor.execute(form3.replace("#", tabela), (local,)).fetchall())
                     
                 if lista_loc[local] == 'n':
-
-                    cursor.execute(form2, (tabela, local))
-                    recusados.append(cursor.execute(form3, (tabela, local)))
+                    recusados.append(cursor.execute(form3.replace("#", tabela), (local,)).fetchall())
+                    cursor.execute(form2.replace("#", tabela), (local,))
+                    
 
             for info in lista_info:
 
@@ -361,18 +368,23 @@ class Banco():
                 if lista_info[info] == 's':
 
                     cursor.execute(form1, (tabela, info))
-                    aceitos.append(cursor.execute(form3, (tabela, info)))
+                    aceitos.append(cursor.execute(form3, (tabela, info,)).fetchall())
                 
                 if lista_info[info] == 'n':
-
+                    recusados.append(cursor.execute(form3, (tabela, info,)).fetchall())
                     cursor.execute(form2, (tabela, info))
-                    recusados.append(cursor.execute(form3, (tabela, info)))
+                    
+        print(aceitos)  
+        print(recusados)            
                 
         for user_id in aceitos:
-            cursor.execute("UPDATE user SET sug_aceitas = sug_aceitas + 1 WHERE id = ?", user_id)
+            cursor.executemany("UPDATE user SET sug_aceitas = sug_aceitas + 1 WHERE id = ?", user_id)
 
         for user_id in recusados:
-            cursor.execute("UPDATE user SET sug_Naceitas = sug_Naceitas + 1 WHERE id = ?", user_id)
+            cursor.executemany("UPDATE user SET sug_Naceitas = sug_Naceitas + 1 WHERE id = ?", user_id)
+
+        connection.commit()
+
 
     def gerenciarColab(self, user):
         """
@@ -384,15 +396,10 @@ class Banco():
             cursor.execute(
                 """
                 UPDATE user
-                SET calsse = "coordenador"
+                SET classe = "coordenador"
                 WHERE id = ?
                 """, (user))
-
-            
-
-
-banco = Banco()
-
+            connection.commit()
 
 
 

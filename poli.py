@@ -10,6 +10,7 @@ app = Flask(__name__)
 @app.route("/")
 def inicio():
     banco = Banco()
+    banco.ajeitarTabelas()
     return render_template('inicio.html', eventos = banco.listarEventos("04/11", "30/12"))
 
 @app.route("/sugerir", methods = ['POST'])
@@ -25,14 +26,11 @@ def sugerir():
     try:
         assunto.append(str(request.form["assunto1"]).title())
         assunto.append(str(request.form["assunto2"]).title())
-        assunto.append(str(request.form["assunto3"]).title())
     except:
-        print("Erro")
+        print("Nem todos assuntos selecionados -> /sugerir")
 
-    print("Assuntos: ")
-    print(assunto)
     banco = Banco()
-    banco.adicionarEvento(nome, descricao, local, dataIn, horarioIn, horarioFim, tipo, assunto)
+    banco.adicionarEvento(nome, descricao, local, dataIn, horarioIn, horarioFim, tipo, assunto, session['user_id'])
     
     return render_template('sugerir_topicos.html', teste = ["Enviado"])
 
@@ -51,19 +49,20 @@ def logar():
     busca =  banco.buscar_pessoa(usr, senha)
     if len(busca) > 0:    
         x = busca[0]
+        id = x[0]
         usuario = x[1]
         email = x[2]
         classe = x[4]
 
         session['logged_in'] = True
         if classe == "usuario":
-            visitante = Usuario(usuario, senha, email)
+            visitante = Usuario(id, usuario, senha, email)
         elif classe == "coordenador":
-            visitante = Coordenador(usuario, senha, email)
+            visitante = Coordenador(id, usuario, senha, email)
         elif classe == "adm":
-            visitante = Adm(usuario, senha, email)
+            visitante = Adm(id, usuario, senha, email)
         else:
-            print("Um erro com as classes")
+            print("Um erro com as classes -> /logar")
             session['logged_in'] = False
     
     visitante.validar()
@@ -79,6 +78,7 @@ def logar():
 def sair():
     session['logged_in'] = False
     session['user'] = ""
+    session['user_id'] = ""
     return redirect('/')
 
 @app.route("/cadastro")
@@ -145,6 +145,44 @@ def sugerir_topicos():
 def aceitar_topicos():
     banco = Banco()
     return render_template('aceitar_topicos.html', eventos = banco.listaNAceitos()[0])
+
+@app.route("/topico_aceito", methods = ['POST'])
+def topico_aceito():
+
+    try:
+        eventos = {request.form["eventos"]:'s'}
+    except:
+        eventos = {}
+    try:
+        informacoes = {request.form["informacoes"]:'s'}
+    except:
+        informacoes = {}
+    try:
+        locais = {request.form["locais"]:'s'}
+    except:
+        locais = {}
+    banco = Banco()
+    banco.aceitarCoisas(eventos, locais, informacoes)
+    return redirect('/aceitar_topicos')
+
+@app.route("/topico_recusado", methods = ['POST'])
+def topico_recusado():
+
+    try:
+        eventos = {request.form["eventos"]:'n'}
+    except:
+        eventos = {}
+    try:
+        informacoes = {request.form["informacoes"]:'n'}
+    except:
+        informacoes = {}
+    try:
+        locais = {request.form["locais"]:'n'}
+    except:
+        locais = {}
+    banco = Banco()
+    banco.aceitarCoisas(eventos, locais, informacoes)
+    return redirect('/aceitar_topicos')
 
 @app.route("/gerenciar_colaboradores")
 def gerenciar_colaboradores():

@@ -22,7 +22,7 @@
         <tr>
             <th class="horario">{{i}}:00</th>
             {% for j in range(2,8)%}
-                <input type = "text" class="grade_inp" id="{{j}}_{{i}}" name="{{j}}_{{i}}" value="{{session['grade'][j-2][i-7]}}" style="visibility: hidden;">
+                <input type = "hidden" class="grade_inp" id="{{j}}_{{i}}" name="{{j}}_{{i}}" value="{{session['grade'][j-2][i-7]}}" style="display: none;">
                 <td class = "grade" id="{{j}}e{{i}}" contenteditable = "True">
                     {{session['grade'][j-2][i-7]}}
                 </td>
@@ -34,7 +34,7 @@
             
     {% endfor %}
     </table>
-        <input onclick="enviar()" type="submit" value="Enviar" >
+        <input onclick="enviar()" type="submit" value="Enviar">
     </form>
     
     <button class = "btn" onclick="edit_table()">Edit Table</button>

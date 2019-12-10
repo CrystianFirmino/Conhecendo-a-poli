@@ -42,6 +42,14 @@
                 </tr>
             </tr>
         </table>
+        <form action="/topico_aceito" method="POST">
+            <input type="hidden" name="eventos" value="{{evento[0]}}">
+            <input type="submit" value="Aceitar">
+        </form>
+        <form action="/topico_recusado" method="POST">
+            <input type="hidden" name="eventos" value="{{evento[0]}}">
+            <input type="submit" value="Recusar">
+        </form>
     </div>
     {% endfor %}
 {% endblock %}
