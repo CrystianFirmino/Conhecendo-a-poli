@@ -146,7 +146,7 @@ def sugerir_topicos():
 @app.route("/aceitar_topicos")
 def aceitar_topicos():
     banco = Banco()
-    return render_template('aceitar_topicos.html', eventos = banco.listaNAceitos()[0])
+    return render_template('aceitar_topicos.html', eventos = banco.listarNAceitos()[0])
 
 @app.route("/topico_aceito", methods = ['POST'])
 def topico_aceito():
