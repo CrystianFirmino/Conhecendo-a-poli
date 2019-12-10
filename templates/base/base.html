@@ -12,7 +12,9 @@
     	
     <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
 
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
     {% block head %}{% endblock %}
 
 </head>
@@ -22,28 +24,32 @@
          <h1>Conhecendo a<span class = "highlight"> Poli</span></h1>
     </header>
         <div class="topnav" id="myTopnav">
-                <a href="/">Inicio</a>
-                <a href="encontrar_atividades">Encontrar atividades</a>
+                <a href="/" title="Inicio"><i class="fa fa-fw fa-home"></i></a>
+
+                <a href="#mapa" title="Mapa"><i class="fas fa-map-marked-alt"></i></a>
+                
+                <!--<a href="encontrar_atividades">Encontrar atividades</a>-->
 
                 {% if not session['logged_in'] %}
-                <a href="login">login</a>
+                <a href="login" title="Login"><i class="fas fa-user"></i></a>
                 {% endif %}
 
                 {% if session['logged_in'] and session['priority'] > 0 %}
-                <a href="grade">Grade</a>
-                <a href="sugerir_topicos">Cadastrar Evento</a>
+                <a href="grade" title="Minha grade"><i class="far fa-calendar-alt"></i></a>
+                
+                <a href="sugerir_topicos"title="Cadastrar evento"><i class="far fa-lightbulb"></i></a>
                 {% endif %}
 
                 {% if session['logged_in'] and session['priority'] > 2 %}
-                <a href="aceitar_topicos">Aceitar topicos</a>
+                <a href="aceitar_topicos" title="Aceitar tópicos"><i class="fas fa-clipboard-check"></i></a>
                 {% endif %}
 
                 {% if session['logged_in'] and session['priority'] > 4 %}
-                <a href="gerenciar_colaboradores">Gerenciar Colaboradores</a>
+                <a href="gerenciar_colaboradores" title="Gerenciar colaboradores"><i class="fas fa-users"></i></a>
                 {% endif %}
 
                 {% if session['logged_in'] %}
-                <a href="sair">Sair</a>
+                <a href="sair" title="Sair"><i class="fas fa-power-off"></i></a>
                 {% endif %}
 
                 <a href="javascript:void(0);" class="icon" onclick="myFunction()">

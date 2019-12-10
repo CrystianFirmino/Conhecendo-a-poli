@@ -86,6 +86,15 @@
   .topnav .icon{
     display: none;
   }
+
+  
+
+
+
+
+
+
+
   
   /* Create two unequal columns that floats next to each other */
 /* Left column */
@@ -288,44 +297,21 @@ font-size: 13px;
   font-weight: bold;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*Evento -  sugerir tópico*/
 /* Customize the label (the container) */
 .container {
   display: block;
   position: relative;
   padding-left: 35px;
-  margin-bottom: 3%;
+  margin-bottom: 1.5%;
   cursor: pointer;
-  font-size: 100%;
+  font-size: 95%;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   margin-left: 5%;
+  color: #24305e;
 
 }
 
@@ -343,19 +329,21 @@ font-size: 13px;
   position: absolute;
   top: 0;
   left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
+  height: 20px;
+  width: 20px;
+  background-color: #e2d492;
+  border-bottom: 2px solid white;
+  border-left: 2px solid white;
 }
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: #ccc;
+  background-color: #b6ab76;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: #2196F3;
+  background-color: #F76c6c;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -372,8 +360,8 @@ font-size: 13px;
 
 /* Style the checkmark/indicator */
 .container .checkmark:after {
-  left: 9px;
-  top: 5px;
+  left: 5px;
+  top: 1px;
   width: 5px;
   height: 10px;
   border: solid white;
@@ -387,14 +375,15 @@ font-size: 13px;
   display: block;
   position: relative;
   padding-left: 35px;
-  margin-bottom: 12px;
+  margin-bottom: 1.5%;
   cursor: pointer;
-  font-size: 100%;
+  font-size: 95%;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   margin-left: 5%;
+  color: #24305e;
 }
 
 /* Hide the browser's default radio button */
@@ -409,20 +398,22 @@ font-size: 13px;
   position: absolute;
   top: 0;
   left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
+  height: 20px;
+  width: 20px;
+  background-color: #e2d492;
+  border-bottom: 2px solid white;
+  border-left: 2px solid white;
   border-radius: 50%;
 }
 
 /* On mouse-over, add a grey background color */
 .container2:hover input ~ .checkmark2 {
-  background-color: #ccc;
+  background-color: #b6ab76;
 }
 
 /* When the radio button is checked, add a blue background */
 .container2 input:checked ~ .checkmark2 {
-  background-color: #2196F3;
+  background-color: #F76c6c;
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -439,8 +430,8 @@ font-size: 13px;
 
 /* Style the indicator (dot/circle) */
 .container2 .checkmark2:after {
- 	top: 9px;
-	left: 9px;
+ 	top: 5px;
+	left: 5px;
 	width: 8px;
 	height: 8px;
 	border-radius: 50%;
@@ -449,43 +440,53 @@ font-size: 13px;
 
 .evento-box {
     text-align: left;
-    margin-top: 5%;
-    margin-bottom: 5%;
+    margin-top: 1%;
+    margin-bottom: 1%;
     margin-left: 10%;
     margin-right: 10%;
     background-color: #F8e9a1;
     width: 75%;
     height: 55%;
     border: 3px solid white;
-    border-radius: 2px;
+    border-radius: 5px;
     box-sizing: border-box;
     text-align: left;
 }
 
 .titulo{
-    margin-left: 5%;
+    text-align: center;
+    margin-top: 5%;
     font-size: 30px;
+    color: #24305e;
 }
 
-.evento-box p
+
+.tit
 {
     margin-left: 5%;
-    margin-top: 0px;
+    margin-top: 2%;
     margin-right: 0px;
+    margin-bottom: 2%;
     padding: 0px;
     font-weight: bold;
+    font-size: 120%;
+    color: #24305e;
+    
+
 }
 
 .data
 {
-  background-color: #F8e9a1 ;
-  border-bottom: 1px solid white;
+  background-color:#e2d492;
+  border-bottom: 2px solid white;
   border-top: none;
-  border-left: none;
+  border-left: 2px solid white;
   border-right: none;
   font-size: 120%;
   margin-left: 5%;
-  margin-bottom: 3%;
+  margin-bottom: 2%;
+  color: #24305e;
+  text-indent: 5%;
   
 }
 label
@@ -496,14 +497,16 @@ label
   .evento-box input[type="text"]{
     width: 90%;
     border: none;
-    margin-bottom: 5%;
+    margin-bottom: 0.5%;
     margin-left: 5%;
-    border-bottom: 2px solid white;
-    background: transparent;
+    border-bottom: 2px solid rgb(255, 255, 255);
+    border-left: 2px solid rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0.089);
     outline: none;
-    height: 25px;
-    color: white;
-    font-size: 15px;
+    height: 33px;
+    color: rgb(128, 128, 128);
+    font-size: 13px;
+    text-indent: 3%;
   }
   .descricao[type="text"]
   {
@@ -516,20 +519,22 @@ label
   .evento-box input[type="submit"]{
 
     height: 50px;
-    border-radius: 2%;
-    width: 90%;
-    background: #F8e9a1;
-    color: white;
+    border-radius: 3%;
+    width: 60%;
+    background: #f5e7a3;
+    color: #24305e;
     font-size: 15px;
     font-weight: bold;
-    border-radius: 2%;
-    margin-top: 5%;
-    margin-left: 5%;
+    border: 2px solid white;
+    margin-right: 20%;
+    margin-left: 20%;
+    margin-bottom: 3%;
+    margin-top: 3%;
 
   }
 
   .evento-box input[type="submit"]:hover{
-    background: #35424a;
+    background: #aadaff;
   }
 
 
@@ -574,8 +579,6 @@ label
 }
 
 
-
-
 .boxevento
 {   
     margin-left: 15%;
@@ -616,11 +619,6 @@ td
     color: #24305e;
     
 }
-
-
-
-
-
 
 
 /* Clear floats after the columns */
@@ -719,8 +717,50 @@ td
     background-color: rgb(250, 233, 148);
     border-radius: 0%;
 }
-  
-  
+.botoes
+{
+  margin-left: 35%;
+}
+
+.aceitar
+{
+    height: 45px;
+    border-radius: 3%;
+    width: 25%;
+    background-color: #f5e7a3;
+    color: #24305e;
+    font-size: 15px;
+    font-weight: bold;
+    border: 3px solid #f5e7a3;
+    border-radius: 2%;
+    margin-bottom: 3%;
+    margin-top: 0px;
+}
+.aceitar:hover
+{
+  background-color: #aadaff;
+  border: 3px solid #aadaff;
+}
+
+.excluir
+{
+  height: 45px;
+    border-radius: 2%;
+    width: 25%;
+    background-color: #f5e7a3;
+    color: #24305e;
+    font-size: 15px;
+    font-weight: bold;
+    border: 3px solid #f5e7a3;
+    margin-bottom: 3%;
+    margin-top: 0px;
+}
+.excluir:hover
+{
+  background-color: #F76c6c;
+  border:3px solid #F76c6c;
+}
+
   
   
   

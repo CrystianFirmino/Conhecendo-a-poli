@@ -9,20 +9,26 @@
 </div>
 
 {% block body %}
+
+{% if not session['logged_in'] %}
 <div class="alert">
     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-    <strong>Bem vindo, universitário!</strong> Acesse nossa página do aluno para uma experiência personalizada!
+    <strong>Bem vindo, universitário!</strong> Faça login para uma experiência personalizada!
 </div>
+{% endif %}
         {% if not envento %}
         <p class="card">Nada por aqui</p>
         {% endif %}
+
+
+
         {% for evento in eventos %}
         <div class="card">
             <table class="boxevento">
                     
                 <tr>
                     <th>Evento</th>
-                    <th class="info">Informacoes</th>
+                    <th class="info">Informações</th>
                     
                 </tr>
     
@@ -52,7 +58,7 @@
                     </tr>
     
                     <tr>
-                        <td class=infoevento>Descricao</td>
+                        <td class=infoevento>Descrição</td>
                         <td class="info">{{evento[2]}}</td>
                     </tr>
                     </tr>             
