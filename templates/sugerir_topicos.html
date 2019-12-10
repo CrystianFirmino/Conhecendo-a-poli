@@ -5,50 +5,53 @@
 {% endblock %}
 
 {% block body %}
-<form action="/sugerir" method=POST>
-<div class="evento-box">
-    <h1 class="titulo">Cadastre um evento</h1>
+<div class = "left column">
+    <div class = "card">
+    <form action="/sugerir" method=POST>
+    <div class="evento-box">
+        <h1 class="titulo">Cadastre um evento</h1>
 
-    {% for tt in teste%}
-        <h6 style="text-align: center;margin-bottom: 0;">{{tt}}</h6>
-    {% endfor%}
+        {% for tt in teste%}
+            <h6 style="text-align: center;margin-bottom: 0;">{{tt}}</h6>
+        {% endfor%}
 
-    <p>Nome</p>
-    <input type="text" name="nome" id="nome" placeholder="Nome do evento"><br>
-    <p>Local</p>
-    <input type="text" name="local" id="local" placeholder="Local do evento">
+        <p>Nome</p>
+        <input type="text" name="nome" id="nome" placeholder="Nome do evento"><br>
+        <p>Local</p>
+        <input type="text" name="local" id="local" placeholder="Local do evento">
 
-    <p>Data</p>
-    <input class="data" type="date" name="data_inicio" id="data" placeholder="Data Inicio">
-    <input class="data" type="time" name="hora_inicio"  placeholder="Hora"><br>
-    <input class="data" type="date" name="data_fim" id="data" placeholder="Data Fim">
-    <input class="data" type="time" name="hora_fim" placeholder="Hora">
-<br><br>
-    <p>Quais os cursos são relacionados ao evento?</p>
-    <label class="container">Computação
-        <input type="checkbox" name="assunto1" value="computacao" checked="checked">
-        <span class="checkmark"></span>
-    </label>
-    <label class="container">Eletrica
-            <input type="checkbox" name="assunto2" value="eletrica" checked="checked">
+        <p>Data</p>
+        <input class="data" type="date" name="data_inicio" id="data" placeholder="Data Inicio">
+        <input class="data" type="time" name="hora_inicio"  placeholder="Hora"><br>
+        <input class="data" type="date" name="data_fim" id="data" placeholder="Data Fim">
+        <input class="data" type="time" name="hora_fim" placeholder="Hora">
+    <br><br>
+        <p>Quais os cursos são relacionados ao evento?</p>
+        <label class="container">Computação
+            <input type="checkbox" name="assunto1" value="computacao" checked="checked">
             <span class="checkmark"></span>
-    </label>
+        </label>
+        <label class="container">Eletrica
+                <input type="checkbox" name="assunto2" value="eletrica" checked="checked">
+                <span class="checkmark"></span>
+        </label>
 
-    <p>Qual o tipo do evento?</p>
-    <label class="container2"> Palestra
-            <input type="radio" name="tipo" value="palestra" >
-            <span class="checkmark2"></span>
-    </label>
-    <label class="container2"> Workshop
-            <input type="radio" name="tipo" value="workshop">
-            <span class="checkmark2"></span>
-    </label>
-    <p>Descreva o Evento</p>
-    <input type="text" name="descricao" class="descricao">
-    <input type="submit" value="Criar">
-    </form>
+        <p>Qual o tipo do evento?</p>
+        <label class="container2"> Palestra
+                <input type="radio" name="tipo" value="palestra" >
+                <span class="checkmark2"></span>
+        </label>
+        <label class="container2"> Workshop
+                <input type="radio" name="tipo" value="workshop">
+                <span class="checkmark2"></span>
+        </label>
+        <p>Descreva o Evento</p>
+        <input type="text" name="descricao" class="descricao">
+        <input type="submit" value="Criar">
+        </form>
 
-
+</div>
+</div>
 </div>
 
 {% endblock %}
