@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route("/")
 def inicio():
     banco = Banco()
-    return render_template('inicio.html', eventos = banco.listarEventos("04/11/19", "30/12/20","05","22"))
+    return render_template('inicio.html', eventos = banco.listarEventos("04/11", "30/12"))
 
 @app.route("/sugerir", methods = ['POST'])
 def sugerir():
@@ -143,7 +143,8 @@ def sugerir_topicos():
 
 @app.route("/aceitar_topicos")
 def aceitar_topicos():
-    return render_template('aceitar_topicos.html')
+    banco = Banco()
+    return render_template('aceitar_topicos.html', eventos = banco.listaNAceitos()[0])
 
 @app.route("/gerenciar_colaboradores")
 def gerenciar_colaboradores():
