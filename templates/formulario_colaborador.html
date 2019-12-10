@@ -1,0 +1,44 @@
+{% extends "base/base.html" %}
+
+{% block head %}
+    <title>Gerenciar colaboradores - Conhecendo a poli</title>
+{% endblock %}
+
+{% block body %}
+<div class = "left column">
+    <div class = "card">
+    <form action="/gerenciar_colaboradores" method=POST>
+    <div class="evento-box">
+    <h1 class="titulo">Seja um Colaborador</h1>
+
+    {% for tt in teste%}
+        <h6 style="text-align: center;margin-bottom: 0;">{{tt}}</h6>
+    {% endfor%}
+
+    <div class="tit">Nome</div>
+    <input type="text" name="nome_colab" placeholder="Seu nome completo"><br>
+    <div class="tit">Curso</div>
+    <input type="text" name="curso" placeholder="Caso seja funcionario, explique sua filiação.">
+        <div class="tit"> Em qual ano entrou na UFRJ? </div>
+        {% for i in range(19,9,-1)%}
+        <label class="container2"> 20{{i}}
+                <input type="radio" name="ano" value="20{{i}}" >
+                <span class="checkmark2"></span>
+        </label>
+        {% endfor %}
+        <label class="container2"> Sou funcionário/filiado
+            <input type="radio" name="ano" value="funcionario" >
+            <span class="checkmark2"></span>
+        </label>
+        <label class="container2"> Outro
+            <input type="radio" name="ano" value="funcionario" >
+            <span class="checkmark2"></span>
+        </label>
+        <div class="tit">Observações</div>
+    <input type="text" name="obs" placeholder="Caso nao tenha, escreva 'nenhum' "><br>
+        <input type="submit" value="enviar">
+    </form>
+</div>
+</div>
+</div>
+{% endblock %}

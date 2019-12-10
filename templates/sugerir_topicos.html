@@ -9,7 +9,7 @@
     <div class = "card">
     <form action="/sugerir" method=POST>
     <div class="evento-box">
-    <h1 class="titulo">Cadastre um evento</h1>
+    <h1 class="titulo">Monte seu evento</h1>
 
     {% for tt in teste%}
         <h6 style="text-align: center;margin-bottom: 0;">{{tt}}</h6>
@@ -31,7 +31,7 @@
         <input type="checkbox" name="assunto1" value="computacao" >
         <span class="checkmark"></span>
     </label>
-    <label class="container">Eletrica
+    <label class="container">Elétrica
             <input type="checkbox" name="assunto2" value="eletrica" >
             <span class="checkmark"></span>
         </label>
@@ -49,7 +49,7 @@
                 <input type="radio" name="tipo" value="workshop">
                 <span class="checkmark2"></span>
         </label>
-        <div class="tit">Descreva o Evento</div>
+        <div class="tit">Descreva seu Evento</div>
         <input type="text" placeholder="Não seja timido!"></textarea>
         <input type="submit" value="Criar">
         </form>
