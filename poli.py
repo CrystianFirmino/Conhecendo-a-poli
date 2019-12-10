@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route("/")
 def inicio():
     banco = Banco()
-    return render_template('inicio.html', eventos = banco.listarEventos2("04/11", "30/12","05","22"))
+    return render_template('inicio.html', eventos = banco.listarEventos("0000", "9999"))
 
 @app.route("/sugerir", methods = ['POST'])
 def sugerir():
@@ -20,18 +20,19 @@ def sugerir():
     dataIn = str(request.form["data_inicio"])
     horarioIn = str(request.form["hora_inicio"])
     horarioFim = str(request.form["hora_fim"])
-    tipo = str(request.form["tipo"])
+    try:
+        tipo = str(request.form["tipo"])
+    except:
+        tipo = ''
     assunto = []
     try:
-        assunto.append(str(request.form["assunto1"]))
-        assunto.append(str(request.form["assunto2"]))
-        assunto.append(str(request.form["assunto3"]))
+        assunto.append(str(request.form["assunto1"]).title())
+        assunto.append(str(request.form["assunto2"]).title())
     except:
-        print("Erro")
-    assunto = ", ".join(assunto)
-    print(assunto)
+        print("Nem todos assuntos selecionados -> /sugerir")
+
     banco = Banco()
-    banco.adicionarEvento(nome, descricao, local, dataIn, horarioIn, horarioFim, tipo, assunto)
+    banco.adicionarEvento(nome, descricao, local, dataIn, horarioIn, horarioFim, tipo, assunto, session['user_id'])
     
     return render_template('sugerir_topicos.html', teste = ["Enviado"])
 
@@ -48,22 +49,22 @@ def logar():
 
     banco = Banco()
     busca =  banco.buscar_pessoa(usr, senha)
-    print(busca)
     if len(busca) > 0:    
         x = busca[0]
+        id = x[0]
         usuario = x[1]
         email = x[2]
         classe = x[4]
 
         session['logged_in'] = True
         if classe == "usuario":
-            visitante = Usuario(usuario, senha, email)
+            visitante = Usuario(id, usuario, senha, email)
         elif classe == "coordenador":
-            visitante = Coordenador(usuario, senha, email)
+            visitante = Coordenador(id, usuario, senha, email)
         elif classe == "adm":
-            visitante = Adm(usuario, senha, email)
+            visitante = Adm(id, usuario, senha, email)
         else:
-            print("Um erro com as classes")
+            print("Um erro com as classes -> /logar")
             session['logged_in'] = False
     
     visitante.validar()
@@ -79,6 +80,7 @@ def logar():
 def sair():
     session['logged_in'] = False
     session['user'] = ""
+    session['user_id'] = ""
     return redirect('/')
 
 @app.route("/cadastro")
@@ -94,7 +96,6 @@ def cadastrar():
     banco = Banco()
     if (banco.buscar_pessoa(usr, senha) == []):
         cadastrado =  banco.cadastrar_pessoa(usr, senha, email)
-        print(cadastrado)
     else:
         return 'usuário já existente'
     if cadastrado:
@@ -105,11 +106,38 @@ def cadastrar():
 @app.route("/encontrar_atividades")
 def encontrar_atividades():
     banco = Banco()
-    return render_template('encontrar_atividades.html', eventos = banco.listarEventos2("04/11", "30/12","05","22"))
+    return render_template('encontrar_atividades.html', eventos = banco.listarEventos("04/11", "30/12","05","22"))
 
 @app.route("/grade")
 def grade():
+    try:
+        x = session['grade']
+    except:
+        session['grade'] = []
+        for j in range(2,8):
+            session['grade'].append("")
+            session['grade'][j-2] = []
+            for i in range(7, 20):
+                session['grade'][j-2].append("")
+
     return render_template('grade.html')
+
+@app.route("/enviar_grade", methods = ['POST'])
+def enviar_grade():
+    grade=[]
+    for j in range(2,8):
+        grade.append("")
+        grade[j-2]=[]
+        for i in range(7, 20):
+            stg = str(j) + "_" + str(i)
+            try:
+                app = request.form[stg]
+                grade[j-2].append(app.strip())
+            except:
+                grade[j-2].append("")
+    session['grade'] = grade
+
+    return redirect('/grade')
 
 @app.route("/sugerir_topicos")
 def sugerir_topicos():
@@ -117,13 +145,51 @@ def sugerir_topicos():
 
 @app.route("/aceitar_topicos")
 def aceitar_topicos():
-    return render_template('aceitar_topicos.html')
+    banco = Banco()
+    return render_template('aceitar_topicos.html', eventos = banco.listarNAceitos()[0])
+
+@app.route("/topico_aceito", methods = ['POST'])
+def topico_aceito():
+
+    try:
+        eventos = {request.form["eventos"]:'s'}
+    except:
+        eventos = {}
+    try:
+        informacoes = {request.form["informacoes"]:'s'}
+    except:
+        informacoes = {}
+    try:
+        locais = {request.form["locais"]:'s'}
+    except:
+        locais = {}
+    banco = Banco()
+    banco.aceitarCoisas(eventos, locais, informacoes)
+    return redirect('/aceitar_topicos')
+
+@app.route("/topico_recusado", methods = ['POST'])
+def topico_recusado():
+
+    try:
+        eventos = {request.form["eventos"]:'n'}
+    except:
+        eventos = {}
+    try:
+        informacoes = {request.form["informacoes"]:'n'}
+    except:
+        informacoes = {}
+    try:
+        locais = {request.form["locais"]:'n'}
+    except:
+        locais = {}
+    banco = Banco()
+    banco.aceitarCoisas(eventos, locais, informacoes)
+    return redirect('/aceitar_topicos')
 
 @app.route("/gerenciar_colaboradores")
 def gerenciar_colaboradores():
     return render_template('gerenciar_colaboradores.html')
 
 app.secret_key = os.urandom(12)
-
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000, threaded=True, debug=True)

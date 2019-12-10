@@ -5,52 +5,53 @@
 {% endblock %}
 
 {% block body %}
-{% for evento in eventos %}
-        <div class="card">
-            <table class="boxevento">
-                    
+    {% if not envento %}
+    <p class="card">Nada por aqui</p>
+    {% endif %}
+    
+    {% for evento in eventos %}
+    <div class="card">
+        <table class="boxevento">
+            <tr>
+                <th>Evento</th>
+                <th class="info">Informacoes</th>  
+            </tr>
                 <tr>
-                    <th>Evento</th>
-                    <th class="info">Informações</th>
-                    
+                    <td class=infoevento>Nome</td>
+                    <td>{{evento[1]}}</td>
                 </tr>
-    
-                    <tr>
-                        <td class=infoevento>Nome</td>
-                        <td>{{evento[1]}}</td>
-                    </tr>
-    
-                    <tr>
-                        <td class=infoevento>Data</td>
-                        <td>{{evento[4]}}</td>
-                    </tr>
-    
-                    <tr>
-                        <td class=infoevento>Local</td>
-                        <td>{{evento[3]}}</td>
-                    </tr>
-    
-                    <tr>
-                        <td class=infoevento>Tipo</td>
-                        <td>{{evento[7]}}</td>
-                    </tr>
-    
-                    <tr>
-                        <td class=infoevento>Assunto</td>
-                        <td>{{evento[8]}}</td>
-                    </tr>
-    
-                    <tr>
-                        <td class=infoevento>Descrição</td>
-                        <td class="info">{{evento[2]}}</td>
-                    </tr>
-                    </tr>             
-            </table>
-            <div class="botoes">
-                    <button type="button" class="aceitar" >Aceitar Evento</button>
-                    <button type="button" class="excluir">Excluir Evento</button>
-            </div>
+                <tr>
+                    <td class=infoevento>Data</td>
+                    <td>{{evento[4]}}</td>
+                </tr>
+                <tr>
+                    <td class=infoevento>Local</td>
+                    <td>{{evento[3]}}</td>
+                </tr>
+                <tr>
+                    <td class=infoevento>Tipo</td>
+                    <td>{{evento[7]}}</td>
+                </tr>
+                <tr>
+                    <td class=infoevento>Assunto</td>
+                    <td>{{evento[8]}}</td>
+                </tr>
+                <tr>
+                    <td class=infoevento>Descricao</td>
+                    <td>{{evento[2]}}</td>
+                </tr>
+            </tr>
+        </table>
+        <div class="botoes">
+            <form action="/topico_aceito" method="POST">
+                <input type="hidden" name="eventos" value="{{evento[0]}}">
+                <input type="submit" class="aceitar" class="aceitar" value="Aceitar Evento">
+            </form>
+            <form action="/topico_recusado" method="POST">
+                <input type="hidden" name="eventos" value="{{evento[0]}}">
+                <input type="submit" class="excluir" value="Excluir Evento">
+            </form>
         </div>
-        {% endfor %}
-
+    </div>
+    {% endfor %}
 {% endblock %}

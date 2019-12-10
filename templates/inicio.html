@@ -16,6 +16,10 @@
     <strong>Bem vindo, universitário!</strong> Faça login para uma experiência personalizada!
 </div>
 {% endif %}
+        {% if not envento %}
+        <p class="card">Nada por aqui</p>
+        {% endif %}
+
 
 
         {% for evento in eventos %}
