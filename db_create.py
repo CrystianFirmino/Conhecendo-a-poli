@@ -319,9 +319,12 @@ class Banco():
             for evento in eventos:
                 result.append = cursor.execute("""SELECT nome, data, horario_de_inicio, horario_de_fim 
                                                     FROM eventos WHERE id = ?""", (evento,))
+
+            connection.commit()
+
         return result 
 
-    def listaNAceitos(self):
+    def listarNAceitos(self):
         """
         Retorna uma lista de 3 tuplas. 1 = lista de eventos, 2 = lista de locais, 3 = lista de informaçoes
         (tablas de locais e informacoes ainda n tem conluna aceito)
@@ -337,7 +340,10 @@ class Banco():
             results.append(res_eventos)
             results.append(res_local)
             results.append(res_informacao)
-            return results
+
+            connection.commit()
+        
+        return results
 
     def aceitarCoisas(self, lista_eve, lista_loc, lista_info):
         """
@@ -370,8 +376,6 @@ class Banco():
             
             for local in lista_loc:
 
-                tabela = "local"
-
                 if lista_loc[local] == 's':
 
                     cursor.execute(form1.replace("#", tabela), (local,))
@@ -383,8 +387,6 @@ class Banco():
                     
 
             for info in lista_info:
-
-                tabela = "informacao"
 
                 if lista_info[info] == 's':
 
@@ -409,7 +411,7 @@ class Banco():
 
     def gerenciarColab(self, user):
         """
-        Input: id do user que vai ser promovido
+        Input: lista de ids dos users que vao ser promovidos
         """
         with sqlite3.connect('db1.db') as connection:
             cursor = connection.cursor()
