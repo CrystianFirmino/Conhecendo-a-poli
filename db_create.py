@@ -318,7 +318,7 @@ class Banco():
                                                     FROM eventos WHERE id = ?""", (evento,))
         return result 
 
-    def listaNAceitos(self):
+    def listarNAceitos(self):
         """
         Retorna uma lista de 3 tuplas. 1 = lista de eventos, 2 = lista de locais, 3 = lista de informaçoes
         (tablas de locais e informacoes ainda n tem conluna aceito)
@@ -353,18 +353,19 @@ class Banco():
 
             for evento in lista_eve:
                 
-                tabela  = "eventos"
+                tabela  = 'eventos'
 
                 if lista_eve[evento] == 's':
-                    
-                    cursor.execute(form1, (tabela, evento))
+                    print(tabela, evento)
+                    cursor.execute(form1, (tabela, str(evento)))
                     #add id do autor da sugestao
+                    
                     aceitos.append(cursor.execute(form3, (tabela, evento))) 
 
                 if lista_eve[evento] == 'n':
                     
                     cursor.execute(form2, (tabela, evento))
-                    recusados.append(cursor.execute(form3, (tabela, evento)))
+                    recusados.append(cursor.execute(form3, (tabela, evento)).fetchall())
             
             for local in lista_loc:
 
@@ -373,12 +374,12 @@ class Banco():
                 if lista_loc[local] == 's':
 
                     cursor.execute(form1, (tabela, local))
-                    aceitos.append(cursor.execute(form3, (tabela, local)))
+                    aceitos.append(cursor.execute(form3, (tabela, local)).fetchall())
                     
                 if lista_loc[local] == 'n':
 
                     cursor.execute(form2, (tabela, local))
-                    recusados.append(cursor.execute(form3, (tabela, local)))
+                    recusados.append(cursor.execute(form3, (tabela, local)).fetchall())
 
             for info in lista_info:
 
@@ -387,12 +388,12 @@ class Banco():
                 if lista_info[info] == 's':
 
                     cursor.execute(form1, (tabela, info))
-                    aceitos.append(cursor.execute(form3, (tabela, info)))
+                    aceitos.append(cursor.execute(form3, (tabela, info)).fetchall())
                 
                 if lista_info[info] == 'n':
 
                     cursor.execute(form2, (tabela, info))
-                    recusados.append(cursor.execute(form3, (tabela, info)))
+                    recusados.append(cursor.execute(form3, (tabela, info)).fetchall)
                 
         for user_id in aceitos:
             cursor.execute("UPDATE user SET sug_aceitas = sug_aceitas + 1 WHERE id = ?", (user_id,))
