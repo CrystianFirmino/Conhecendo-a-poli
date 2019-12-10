@@ -14,14 +14,22 @@
         <table class="boxevento">
             <tr>
                 <th>Evento</th>
-                <th class="info">Informacoes</th>  
+                <th class="info">Informações</th>  
             </tr>
                 <tr>
                     <td class=infoevento>Nome</td>
                     <td>{{evento[1]}}</td>
                 </tr>
                 <tr>
-                    <td class=infoevento>Data</td>
+                    <td class=infoevento>Data de Início</td>
+                    <td>{{evento[4]}}</td>
+                </tr>
+                <tr>
+                    <td class=infoevento>Data de Fim</td>
+                    <td>{{evento[4]}}</td>
+                </tr>
+                <tr>
+                    <td class=infoevento>Horário</td>
                     <td>{{evento[4]}}</td>
                 </tr>
                 <tr>
@@ -37,19 +45,22 @@
                     <td>{{evento[8]}}</td>
                 </tr>
                 <tr>
-                    <td class=infoevento>Descricao</td>
+                    <td class=infoevento>Descrição</td>
                     <td>{{evento[2]}}</td>
                 </tr>
             </tr>
         </table>
-        <div class="botoes">
+    </br>
+        <div>
             <form action="/topico_aceito" method="POST">
                 <input type="hidden" name="eventos" value="{{evento[0]}}">
-                <input type="submit" class="aceitar" class="aceitar" value="Aceitar Evento">
+                <input type="submit" class="aceitar2" class="aceitar" value="Aceitar Evento">
             </form>
+        </div>
+        <div>
             <form action="/topico_recusado" method="POST">
                 <input type="hidden" name="eventos" value="{{evento[0]}}">
-                <input type="submit" class="excluir" value="Excluir Evento">
+                <input type="submit" class="excluir2" value="Excluir Evento">
             </form>
         </div>
     </div>

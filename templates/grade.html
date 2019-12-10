@@ -5,12 +5,11 @@
 {% endblock %}
 
 {% block body %}
-    <p>Grade</p>
         
     <form action="/enviar_grade" method="POST">
     <table id="editable" class="boxgrade">
     <tr>
-        <th class= "dias">Horario</th>
+        <th class= "dias">Horário</th>
         <th class= "dias">Segunda</th>
         <th class= "dias"> Terça </th>
         <th class= "dias">Quarta</th>
@@ -34,11 +33,11 @@
             
     {% endfor %}
     </table>
-        <input onclick="enviar()" type="submit" value="Enviar">
     </form>
     
-    <button class = "btn" onclick="edit_table()">Edit Table</button>
-    <button class = "btn" onclick="block_table()">Block Table</button>
+    <button class = "aceitar3" onclick="edit_table()">Editar</button>
+    <button class = "aceitar3" onclick="block_table()">Terminar Edição</button>
+    <input  class = "excluir3" onclick="enviar()" type="submit" value="Salvar">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 
