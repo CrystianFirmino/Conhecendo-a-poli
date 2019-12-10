@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 import sqlite3
-import mysql.connector
-from mysql.connector import errorcode
 
 class Banco():
     def criarTabelas(self):
