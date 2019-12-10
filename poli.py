@@ -201,7 +201,7 @@ def calaborar():
     obs = str(request.form["obs"])
 
     print("Seja um colaborador: ")
-    print("Nome: ", nome, "| Curso: ", curso, "| Ano: ", ano, "| Obs: ", obs)
+    print("Nome: ", nome, "| Curso: ", curso, "| Ano: ", ano, "| Obs: ", obs, "| Id: ", session['user_id'])
     return redirect('/seja_colaborador')
 
 app.secret_key = os.urandom(12)
