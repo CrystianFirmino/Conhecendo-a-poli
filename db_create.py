@@ -162,10 +162,11 @@ class Banco():
             
                     cursor = connection.cursor()    
                     repetido = cursor.execute("SELECT id FROM eventos WHERE nome = ? AND data = ? AND local = ?", (nome, data, local)).fetchall()
-                    try:
-                        r = repetido[0]
                     
-                    except:
+                    if repetido != []:
+                        return deuCerto 
+                    
+                    else:
                         cursor = connection.cursor()    
                         cursor.execute("""
                                     INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim, tipo, autor, aceito)
@@ -234,16 +235,22 @@ class Banco():
                 lista = lista + "AND tipo = " + str(tipo)
             #ids dos eventos q cumprem requisitos de horario e tipo 
             filtro1 = cursor.execute(lista, (data, dataFim, horarioIn, horarioFim)).fetchall()
+            
             for i in range(len(filtro1)):
                 filtro1[i] = filtro1[i][0]
 
-            filtro2 = []
             if not assunto == False:
-        
+                filtro2 = []
+
                 for a in assunto:
-                    ids = cursor.connect("SELECT id FROM assuntos WHERE nome =  ", (a,))
+                    ids = cursor.execute("SELECT id FROM assuntos WHERE nome = ?", (a,)).fetchall()
+                    ids = ids[0][0]
+
                     #ids dos eventos q cumprem os requisitos de assunto 
-                    filtro2 = cursor.execute("SELECT eventoId FROM assuntosXeventos WHERE assuntoId = ?", (ids,))
+                    filtro2 = cursor.execute("SELECT eventoId FROM assuntosXeventos WHERE assuntoId = ?", (ids,)).fetchall()
+                    
+                    for i in range(len(filtro2)):
+                        filtro2[i] = filtro2[i][0]
                     
                     for ev in filtro1:
                         if ev in filtro2:
@@ -253,17 +260,17 @@ class Banco():
                     result.append(cursor.execute("SELECT * FROM eventos WHERE id = ?", (i,)).fetchall()[0])
             
         #remove duplicatas
-        
-        for ev1 in result:
-            r = result.index(ev1) +1
-            for e in range(r, len(result)):
-                ev2 = result[e]
-                if ev1[0] == ev2[0]:
-                    result.remove(ev2)
-                    
+        rep =[]
+        for i  in range(len(result)):
+    
+            for e in range(i+1, len(result)):
+    
+                if result[i][0] == result[e][0]:
+                    rep.append(result[i])
             
-        #remove duplicatas
-        #result = list(dict.fromkeys(result))
+        for ev in rep:
+            result.remove(ev)
+    
         return result
 
     def cadastrar_pessoa(self,user, senha, email, classe = "usuario"):
