@@ -132,6 +132,20 @@ class Banco():
             );
         """
         )
+        cursor.execute(
+        """       
+            CREATE TABLE IF NOT EXISTS grade(
+                id INTEGER PRIMARY KEY,
+                userId INTEGER,
+                segunda TEXT,
+                terca TEXT,
+                quarta TEXT, 
+                quinta TEXT,
+                sexta TEXT,
+                sabado TEXT
+            );
+        """
+        )
 
         connection.commit()
         cursor.close()
@@ -180,10 +194,11 @@ class Banco():
             
                     cursor = connection.cursor()    
                     repetido = cursor.execute("SELECT id FROM eventos WHERE nome = ? AND data = ? AND local = ?", (nome, data, local)).fetchall()
-                    try:
-                        r = repetido[0]
                     
-                    except:
+                    if repetido != []:
+                        return deuCerto 
+                    
+                    else:
                         cursor = connection.cursor()    
                         cursor.execute("""
                                     INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim, tipo, autor, aceito)
@@ -252,16 +267,22 @@ class Banco():
                 lista = lista + "AND tipo = " + str(tipo)
             #ids dos eventos q cumprem requisitos de horario e tipo 
             filtro1 = cursor.execute(lista, (data, dataFim, horarioIn, horarioFim)).fetchall()
+            
             for i in range(len(filtro1)):
                 filtro1[i] = filtro1[i][0]
 
-            filtro2 = []
             if not assunto == False:
-        
+                filtro2 = []
+
                 for a in assunto:
-                    ids = cursor.connect("SELECT id FROM assuntos WHERE nome =  ", (a,))
+                    ids = cursor.execute("SELECT id FROM assuntos WHERE nome = ?", (a,)).fetchall()
+                    ids = ids[0][0]
+
                     #ids dos eventos q cumprem os requisitos de assunto 
-                    filtro2 = cursor.execute("SELECT eventoId FROM assuntosXeventos WHERE assuntoId = ?", (ids,))
+                    filtro2 = cursor.execute("SELECT eventoId FROM assuntosXeventos WHERE assuntoId = ?", (ids,)).fetchall()
+                    
+                    for i in range(len(filtro2)):
+                        filtro2[i] = filtro2[i][0]
                     
                     for ev in filtro1:
                         if ev in filtro2:
@@ -271,17 +292,17 @@ class Banco():
                     result.append(cursor.execute("SELECT * FROM eventos WHERE id = ?", (i,)).fetchall()[0])
             
         #remove duplicatas
-        
-        for ev1 in result:
-            r = result.index(ev1) +1
-            for e in range(r, len(result)):
-                ev2 = result[e]
-                if ev1[0] == ev2[0]:
-                    result.remove(ev2)
-                    
+        rep =[]
+        for i  in range(len(result)):
+    
+            for e in range(i+1, len(result)):
+    
+                if result[i][0] == result[e][0]:
+                    rep.append(result[i])
             
-        #remove duplicatas
-        #result = list(dict.fromkeys(result))
+        for ev in rep:
+            result.remove(ev)
+    
         return result
 
     def cadastrar_pessoa(self,user, senha, email, classe = "usuario"):
@@ -301,24 +322,26 @@ class Banco():
             results = cursor.execute(find_user, (usr, senha)).fetchall()
         return results
 
-    def colocarNaGrade(self, usr, evento):
+    def colocarNaGrade(self, usr, matriz):
+        """
+        user deve ser o id do usuario. matriz = [dia semana][horario]
+        """
         try:
             with sqlite3.connect('db1.db') as connection:
                 cursor = connection.cursor()
                 
-                find_userId = ("SELECT id FROM user WHERE usuario = ?")
-                cursor.execute(find_userId, (usr,))
-                result0 = cursor.fetchall()
+                procura_grade = connection.execute("SELECT id FROM grade WHERE userId = ?", (user,)).fetchall()
                 
-                x= result0[0]
-                find_eventoId = ("SELECT id FROM eventos WHERE nome = ?")
-                cursor.execute(find_eventoId, (evento,))
-                result1 = cursor.fetchall()
-                y = result1[0]
-                x = x + y
-                set_grade = ("INSERT INTO grade userId = ?, eventoId = ?")
-                cursor.execute(set_grade,x)
+                if procura_grade == []:
+
+                    cursor.execute("""INSERT INTO grade (userId, segunda, terca, quarta, quinta, sexta, sabado) 
+                                VALUES (?, '', '', '', '', '', '')""", (user,))
+                
+                cursor.execute("""UPDATE grade SET segunda = ?, terca = ?, quarta = ?, quinta = ?, sexta = ?, sabado = ? 
+                                WHERE userId = ?""", (matriz[0], matriz[1], matriz[2], matriz[3], matriz[4], matriz[5]))
+                
                 connection.commit()
+            
             return True
         except:
             print("Deu ruim no coloacarNaGrade")
@@ -327,19 +350,18 @@ class Banco():
     def listarGrade(self, user):
         """
         Input: id do user.
-        Output: lista com nome, data, hora_inicio e hora_fim para cada evento da grade do usuario.
+        Output: matriz grade
         """
         with sqlite3.connect('db1.db') as connection:
             cursor = connection.cursor()
 
-            eventos = cursor.execute("SELECT eventoId FROM eventos WHERE userId = ?", (user,)).fetchall
-            result = []
-            for evento in eventos:
-                result.append = cursor.execute("""SELECT nome, data, horario_de_inicio, horario_de_fim 
-                                                    FROM eventos WHERE id = ?""", (evento,))
-
+            tbl = cursor.execute("SELECT segunda, terca, quarta, quinta, sexta, sabado FROM grade WHERE userId = ?", (user,)).fetchall()
+            
+            for i in range(len(tbl)):
+                tbl[i] = tbl[i].split(",")
             connection.commit()
 
+        result = tbl
         return result 
 
     def listarNAceitos(self):
