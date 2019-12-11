@@ -6,7 +6,7 @@
 
 {% block body %}
         
-    <form action="/enviar_grade" method="POST">
+    <form action="/enviar_grade" method="POST" id='form1'>
     <table id="editable" class="boxgrade">
     <tr>
         <th class= "dias">Horário</th>
@@ -22,7 +22,7 @@
             <th class="horario">{{i}}:00</th>
             {% for j in range(2,8)%}
                 <input type = "hidden" class="grade_inp" id="{{j}}_{{i}}" name="{{j}}_{{i}}" value="{{session['grade'][j-2][i-7]}}" style="display: none;">
-                <td class = "grade" id="{{j}}e{{i}}" contenteditable = "True">
+                <td class = "grade" id="{{j}}e{{i}}" contenteditable = "False">
                     {{session['grade'][j-2][i-7]}}
                 </td>
             {% endfor %}
@@ -37,7 +37,7 @@
     
     <button class = "aceitar3" onclick="edit_table()">Editar</button>
     <button class = "aceitar3" onclick="block_table()">Terminar Edição</button>
-    <input  class = "excluir3" onclick="enviar()" type="submit" value="Salvar">
+    <input  class = "excluir3" onclick="enviar()" type="submit" value="Salvar" form="form1">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 
