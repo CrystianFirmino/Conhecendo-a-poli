@@ -526,7 +526,7 @@ class Banco():
             cursor = connection.cursor()
             user_id = cursor.execute( "SELECT userId FROM colab WHERE id = ?", (id,)).fetchall()[0][0]
             cursor.execute( '''UPDATE colab SET status = 1 WHERE id = ?''',(id ,))
-            cursor.execute( '''UPDATE user SET classe = ? WHERE classe = ? AND id = ?''', ("colaborador", "usuario", user_id))
+            cursor.execute( '''UPDATE user SET classe = ? WHERE classe = ? AND id = ?''', ("coordenador", "usuario", user_id))
             connection.commit()
 
     def rebaixarColab(self, id):
@@ -534,7 +534,7 @@ class Banco():
             cursor = connection.cursor()
 
             user_id = cursor.execute( "SELECT userId FROM colab WHERE id = ?", (id,)).fetchall()[0][0]
-            cursor.execute( '''UPDATE user SET classe = ? WHERE classe = ? AND id = ?''', ("usuario", "colaborador", user_id))
+            cursor.execute( '''UPDATE user SET classe = ? WHERE classe = ? AND id = ?''', ("usuario", "coordenador", user_id))
             cursor.execute( '''DELETE FROM colab WHERE id = ?''',(id ,))
             connection.commit()
 
