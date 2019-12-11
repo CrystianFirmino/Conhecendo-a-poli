@@ -1,0 +1,192 @@
+{% extends "base/base.html" %}
+
+{% block head %}
+    <title>Conhecendo a poli | Mapa</title>
+{% endblock %}
+
+{% block body %}
+<div class="mapa">
+    <div class = "card">   
+        <h1>O que você precisa?</h1>
+        <h2>Clique nos ícones para descobrir para onde ir:</h2><br><br>
+
+            <!-- Trigger/Open The Modal -->
+        <div class="icons">
+        <a href="#" title="Acessar um computador" class="myBtn_multi"><i class="fas fa-laptop-code"style='font-size:48px;color:#F76c6c'></i></a>
+        <a href="#" title="Imprimir um documento" class="myBtn_multi"><i class="fas fa-print"style='font-size:48px;color:#F76c6c'></i></a>
+        <a href="#" title="Silêncio" class="myBtn_multi"><i class="far fa-bell-slash"style='font-size:48px;color:#F76c6c'></i></a>
+        <a href="#" title="Estudar sozinho" class="myBtn_multi"><i class="fas fa-book-reader"style='font-size:48px;color:#F76c6c'></i></a>
+        <a href="#" title="Estudar em grupo" class="myBtn_multi"><i class="fas fa-user-friends"style='font-size:48px;color:#F76c6c'></i></a>
+        <a href="#" title="Utilizar tomada" class="myBtn_multi"><i class="fas fa-plug"style='font-size:48px;color:#F76c6c'></i></a>
+        <a href="#" title="Wifi" class="myBtn_multi"><i class="fas fa-satellite-dish"style='font-size:48px;color:#F76c6c'></i></a>
+        </div>
+
+        <!-- Computador -->
+        <div class="modal modal_multi">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close close_multi">×</span>
+                <h2>Locais com acesso ao computador:</h2>
+                <p><i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> BLOCO B:<br>
+                    <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Biblioteca do CT.<br>Dentro da biblioteca há uma área dedicada para utilização dos computadores.<br>
+                    Detalhe: Em alguns momentos se encontram sem internet.<br>
+                    <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> CCMN: <br>Apesar de não se encontrar na Poli (bastando atravessar a rua no Bloco A para chegar), possui locais disponíveis para utilização de PCs. <br>
+                    <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Um deles se situa na bilioteca central, em um área que, deixando as mochilas nos armários e preenchendo uma pequena ficha, pode ser adentrada.<br>
+                    Sendo um local muito silencioso, com internet boa e computadores rápidos com sistema ubuntu (majoritariamente, alguns possuem windows).<br>
+                    Detalhe: Em dias de muito calor ou próximo de provas fica lotada, mas geralmente possui vagas sem muitos problemas.<br>
+                    <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> O outro se encontra no NCE, ao passar pela roleta através do login da intranet, é possível utilizar sua biblioteca com internet e wifi rápidos.<br>
+                    Detalhe: Biblioteca pequena e com poucas vagas (chegue cedo).
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Impressão -->
+        <div  class="modal modal_multi">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close close_multi">×</span>
+                <h2>Locais para Impressão:</h2>
+                <p><i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> BLOCO A:<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Primeiro andar (ao lado do banco do Brasil).<br>Impressão por 25 centavos. Também é possível comprar diversos materiais de papelaria e livros.<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Terceiro andar (prédio de física).<br>Impressão por 20 centavos. Também é possível comprar material de fisexp e apostilas de física.<br>
+                <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> BLOCO C:<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Primeiro andar.<br>Impressão por 20 centavos. Também possui materiais de estudos e notas aula.<br>
+                <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> BLOCO D:<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Primeiro andar.<br>Impressão por 25 centavos. Também possui materiais de sistemas projetivos (esquadros, réguas, compassos...) e cadernos com o logo da UFRJ com folhas em branco (bons para anotações).<br>
+                <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> Amiga Digital:<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Segundo andar do bloco C e primeiro andar do bloco H.<br>Impressão por 25 centavos. Impressões de todos os tamanhos e estilos, muito procurada para impressões de projetos em A3, A0 e semelhantes.<br>
+
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Silêncio -->
+        <div class="modal modal_multi">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close close_multi">×</span>
+                <h2>Locais silenciosos:</h2>
+
+                <p><i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> CCMN:<br>
+                    <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Atravessando a entrada do CT pelo bloco A, na biblioteca Central do CCMN.<br>A área reservada para computadores e mesas individuais, dentro na bilbioteca Central, é muito silenciosa e possui ótimo Wifi<br>Para entrar é necessário deixar a mochila em um dos armários e preencher uma ficha.<br>
+                    <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Biblioteca NCE.<br>Apesar de pequena, a bilbioteca do NCE é silenciosa e possui bom Wifi.<br>
+                    <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> BLOCO H:<br>
+                    <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Sala de estudos no terceiro andar.<br>Nessa sala de estudos há um local reservada para aqueles que desejam estudar (ou cochilar na mesa) em silêncio.<br>
+    
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Estudar sozinho -->
+        <div  class="modal modal_multi">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close close_multi">×</span>
+                <h2>Locais para estudar sozinho:</h2>
+
+                <p>
+                    <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> CCMN:<br>
+                    <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Atravessando a entrada do CT pelo bloco A, na biblioteca Central do CCMN.<br>A área reservada para computadores e mesas individuais, dentro na biblioteca Central, é muito silenciosa e possui ótimo Wifi<br>Para entrar é necessário deixar a mochila em um dos armários e preencher uma ficha.<br>
+                    <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Biblioteca NCE.<br>Apesar de pequena, a bilbioteca do NCE é silenciosa e possui bom Wifi.<br>
+                    <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> Bloco B:<br>
+                    <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Biblioteca do CT no segundo andar.<br>É silenciosa e possui bastante esoaço, porém o wifi não funciona sempre e pode ser calor para os calourentos.<br>
+                    <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> BLOCO C:<br>
+                    <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Biblioteca do IM no primeiro andar.<br>Silenciosa, ar condicionado funcionando e com wifi (um pouco instável).<br>
+                    <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> BLOCO D:<br>
+                    <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Salas de estudo no segundo andar.<br>Ambas boas, porém com poucas vagas. Chegar cedo é uma boa opção.<br>
+                    <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> BLOCO E:<br>
+                    <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Biblioteca do IQ no segundo andar.<br>Silenciosa, ar condicionado funcionando e com wifi bom. Por isso está sempre cheia, chegue cedo.<br>
+                    <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> BLOCO H:<br>
+                    <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Sala de estudos no terceiro andar.<br>Nessa sala de estudos há um local reservada para aqueles que desejam estudar (ou cochilar na mesa) em silêncio.<br>
+    
+                </p>
+
+
+            </div>
+
+        </div>
+
+        <!-- Estudar em grupo -->
+        <div  class="modal modal_multi">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close close_multi">×</span>
+                <h2>Locais para estudar em grupo:</h2>
+                <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> CCMN:<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Atravessando a entrada do CT pelo bloco A, na biblioteca Central do CCMN.<br>, é muito silenciosa e possui ótimo Wifi<br>CONTINUAR<br>
+                <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> BLOCO A:<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Sala de estudos no terceiro andar.<br>Sala de estudos do IF, com mesas grandes. Um pouco antiga mas boa para estudar em grupo quando necessário (aporvada para sisproj e fisexp).<br>
+                <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> BLOCO C:<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Biblioteca do IM no primeiro andar.<br>Silenciosa, ar condicionado funcionando e com wifi (um pouco instável).<br>Possui mesas redondas para grupos, mas o clima é de silêncio.<br>
+                <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> BLOCO D:<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Salas de estudo no segundo andar.<br>Ambas boas, porém com poucas vagas. Chegar cedo é uma boa opção.<br>
+                <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> BLOCO H:<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Sala de estudos no terceiro andar.<br>Nessa sala há um local com grandes mesas e tomadas em que grupos costumam se encontrar para estudar.
+
+            </div>
+
+        </div>
+
+        <!-- Tomada -->
+        <div  class="modal modal_multi">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close close_multi">×</span>
+                <h2>Locais para conseguir tomada:</h2>
+                <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> Salas de Estudo:<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Segundo do Andar do Bloco D.<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Segundo andar do bloco H.<br>
+                <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> Bibliotecas:<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Primeiro andar do Bloco C.<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Segundo andar do bloco E.<br>
+                <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> Hall do segundo andar do bloco A.<br>
+
+            </div>
+
+        </div>
+
+        <!-- Wifi -->
+        <div  class="modal modal_multi">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close close_multi">×</span>
+                <h2>Locais para conseguir Wifi aberto:</h2>
+                <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> CCMN<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Biblioteca Central no espaço principal (quando vazia) e no espaço interior (bom wifi).<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> NCE<br>Bom wifi em todo o prédio<br>
+                <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> Bloco E<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Segundo andar do bloco E possui bom wifi aberto.<br>
+                <i class="fas fa-circle"style='font-size:12px;color:#F76c6c'></i> Bloco H<br>
+                <i class="far fa-circle"style='font-size:10px;color:#F76c6c'></i> Segundo e terceiro andar do bloco H possuem wifi (oscilante dependendo da quantidade de usuários).<br>
+            </div>
+        </div>
+    </div>
+
+<div class="card">
+        <h2>Visão interna do prédio da Poli:</h2><br>
+        <div class="mapact"></div>
+
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+
+{% endblock %}
