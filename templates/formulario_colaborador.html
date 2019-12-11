@@ -7,7 +7,7 @@
 {% block body %}
 <div class = "left column">
     <div class = "card">
-    <form action="/gerenciar_colaboradores" method=POST>
+    <form action="/colaborar" method=POST>
     <div class="evento-box">
     <h1 class="titulo">Seja um Colaborador</h1>
 
@@ -16,9 +16,9 @@
     {% endfor%}
 
     <div class="tit">Nome</div>
-    <input type="text" name="nome_colab" placeholder="Seu nome completo"><br>
+    <input type="text" name="nome_colab" placeholder="Seu nome completo" required><br>
     <div class="tit">Curso</div>
-    <input type="text" name="curso" placeholder="Caso seja funcionario, explique sua filiação.">
+    <input type="text" name="curso" placeholder="Caso seja funcionario, explique sua filiação." required>
         <div class="tit"> Em qual ano entrou na UFRJ? </div>
         {% for i in range(19,9,-1)%}
         <label class="container2"> 20{{i}}
@@ -31,11 +31,11 @@
             <span class="checkmark2"></span>
         </label>
         <label class="container2"> Outro
-            <input type="radio" name="ano" value="funcionario" >
+            <input type="radio" name="ano" value="funcionario" checked>
             <span class="checkmark2"></span>
         </label>
         <div class="tit">Observações</div>
-    <input type="text" name="obs" placeholder="Caso nao tenha, escreva 'nenhum' "><br>
+    <input type="text" name="obs" placeholder="Caso nao tenha, escreva 'nenhum' " required><br>
         <input type="submit" value="enviar">
     </form>
 </div>

@@ -1,25 +1,28 @@
 import sqlite3
-import mysql.connector
-from mysql.connector import errorcode
+
 
 from db_create import Banco
 
 b = Banco()
 
+assunto = ['Eletrica', 'Civil', 'Computacao']
+tipo = False
+result = []
+user = 3
+with sqlite3.connect('db1.db') as connection:
+    cursor = connection.cursor()
+    # # cursor.execute("""INSERT INTO grade (userId, segunda, terca, quarta, quinta, sexta, sabado) 
+    # #                             VALUES (?, '', '', '', '', '', '')""", (user,))
+    
+    # tbl = cursor.execute("SELECT segunda, terca, quarta, quinta, sexta, sabado FROM grade WHERE userId = ?", (user,)).fetchall()
+    # print(tbl)
+    # connection.commit()
 
-# with sqlite3.connect('db1.db') as connection:
-#     cursor = connection.cursor() 
-#     cursor.execute("UPDATE user SET sug_aceitas = sug_aceitas + 1 WHERE id = ?", (3,))
-#     cursor.execute("UPDATE eventos SET autor = 3")
-e ={}
-l = {}
-i = {}
+    semat = [('rber, rveertv, , vert, erver, ,', ' , cwec, wcew, , , , ', 'rber, rveertv, , vert, erver, ,', ' , cwec, wcew, , , , ''rber, rveertv, , vert, erver, ,', ' , cwec, wcew, , , , ')]
 
-for k in range(1, 38):
-     e[k] = 's'
+    semat = list(semat[0])
 
-print(e)
-x = b.aceitarCoisas(e, l, i)
-
-
-
+    for i in range(len(semat)):
+        semat[i] = semat[i].split(",")
+    print(semat)
+        

@@ -195,6 +195,20 @@ def formulario_colaboradores():
 def gerenciar_colaboradores():
     return render_template('gerenciar_colaboradores.html')
 
+@app.route("/seja_colaborador")
+def seja_colaborador():
+    return render_template('formulario_colaborador.html')
+@app.route("/colaborar", methods = ['POST'])
+def calaborar():
+    nome = str(request.form["nome_colab"]).title()
+    curso = str(request.form["curso"]).title()
+    ano = str(request.form["ano"]).title()
+    obs = str(request.form["obs"])
+
+    print("Seja um colaborador: ")
+    print("Nome: ", nome, "| Curso: ", curso, "| Ano: ", ano, "| Obs: ", obs, "| Id: ", session['user_id'])
+    return redirect('/seja_colaborador')
+
 app.secret_key = os.urandom(12)
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000, threaded=True, debug=True)
