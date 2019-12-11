@@ -16,7 +16,7 @@
     <strong>Bem vindo, universitário!</strong> Faça login para uma experiência personalizada!
 </div>
 {% endif %}
-        {% if not envento %}
+        {% if not eventos %}
         <p class="card">Nada por aqui</p>
         {% endif %}
 
@@ -38,8 +38,14 @@
                     </tr>
     
                     <tr>
-                        <td class=infoevento>Data</td>
-                        <td>{{evento[4]}}</td>
+                        <td class=infoevento>Data de Início/ Fim</td>
+                        <td>{{evento[4]}} / {{evento[-1]}} </td>
+                    </tr>
+
+
+                    <tr>
+                        <td class=infoevento>Hora</td>
+                        <td>{{evento[5]}} / {{evento[6]}}</td>
                     </tr>
     
                     <tr>

@@ -5,25 +5,34 @@
 {% endblock %}
 
 {% block body %}
-    {% if not envento %}
-    <p class="card">Nada por aqui</p>
-    {% endif %}
     
-    {% for evento in eventos %}
     <div class="card">
+    {% if session['logged_in'] and session['priority'] > 2 %}
+
+    {% if not eventos %}
+    <p>Nada por aqui</p>
+    {% endif %}
+    {% for evento in eventos %}
+    
         <table class="boxevento">
             <tr>
                 <th>Evento</th>
-                <th class="info">Informacoes</th>  
+                <th class="info">Informações</th>  
             </tr>
                 <tr>
                     <td class=infoevento>Nome</td>
                     <td>{{evento[1]}}</td>
                 </tr>
-                <tr>
-                    <td class=infoevento>Data</td>
-                    <td>{{evento[4]}}</td>
-                </tr>
+                    <tr>
+                        <td class=infoevento>Data de Início/ Fim</td>
+                        <td>{{evento[4]}} / {{evento[4]}} </td>
+                    </tr>
+
+                    <tr>
+                        <td class=infoevento>Hora</td>
+                        <td>{{evento[5]}} / {{evento[6]}}</td>
+                    </tr>
+    
                 <tr>
                     <td class=infoevento>Local</td>
                     <td>{{evento[3]}}</td>
@@ -37,21 +46,30 @@
                     <td>{{evento[8]}}</td>
                 </tr>
                 <tr>
-                    <td class=infoevento>Descricao</td>
+                    <td class=infoevento>Descrição</td>
                     <td>{{evento[2]}}</td>
                 </tr>
             </tr>
         </table>
-        <div class="botoes">
+    </br>
+        <div>
             <form action="/topico_aceito" method="POST">
                 <input type="hidden" name="eventos" value="{{evento[0]}}">
-                <input type="submit" class="aceitar" class="aceitar" value="Aceitar Evento">
-            </form>
-            <form action="/topico_recusado" method="POST">
-                <input type="hidden" name="eventos" value="{{evento[0]}}">
-                <input type="submit" class="excluir" value="Excluir Evento">
+                <input type="submit" class="aceitar2" class="aceitar" value="Aceitar Evento">
             </form>
         </div>
-    </div>
+        <div>
+            <form action="/topico_recusado" method="POST">
+                <input type="hidden" name="eventos" value="{{evento[0]}}">
+                <input type="submit" class="excluir2" value="Excluir Evento">
+            </form>
+        </div>
+    
     {% endfor %}
+
+    {%else%}
+    <p>Seja um colaborador para acessar</p>
+    {% endif %}
+
+</div>
 {% endblock %}

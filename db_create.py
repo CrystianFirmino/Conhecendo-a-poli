@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 import sqlite3
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from send import Send
+import smtplib 
 
 class Banco():
 
-    def ajeitarTabelas(self):
+    def ajeitarTabelas(self,):
         with sqlite3.connect('db1.db') as connection:
-            cursor = connection.cursor() 
-            #cursor.execute("UPDATE eventos SET tipo = ? WHERE id = 9",("Pode chorar",))
+            cursor = connection.cursor()
+            cursor.execute("DROP TABLE IF EXISTS grade")
     def criarTabelas(self):
 
         connection = sqlite3.connect('db1.db')
@@ -24,6 +28,22 @@ class Banco():
         cursor.execute (
 
         """
+            CREATE TABLE IF NOT EXISTS colab (
+                id INTEGER PRIMARY KEY,
+                userId INTEGER,
+                nome TEXT NOT NULL,
+                curso TEXT NOT NULL,
+                ano TEXT NOT NULL,
+                observacao TEXT, 
+                status INTEGER NOT NULL,
+                FOREIGN KEY (userId) REFERENCES user(id)
+                );
+        """
+        )
+
+        cursor.execute (
+
+        """
             CREATE TABLE IF NOT EXISTS user (
                 id INTEGER PRIMARY KEY,
                 usuario TEXT NOT NULL,
@@ -34,18 +54,6 @@ class Banco():
                 sug_aceitas INTEGER, 
                 sug_Naceitas INTEGER
                 );
-        """
-        )
-
-        cursor.execute (
-        """
-            CREATE TABLE IF NOT EXISTS grade (
-                id INTEGER PRIMARY KEY,
-                userId INTEGER,
-                eventoId INTEGER,
-                FOREIGN KEY (userId) REFERENCES user(id),
-                FOREIGN KEY (eventoId) REFERENCES evento(id)
-            );
         """
         )
         
@@ -308,30 +316,49 @@ class Banco():
             results = cursor.execute(find_user, (usr, senha)).fetchall()
         return results
 
+    def ajuste(self, string):
+        string = string.strip('[')
+        string = string.strip(']')
+        string = string.strip('(')
+        string = string.strip(')')
+        string = " ".join(string.split('"'))
+        string = " ".join(string.split('"'))
+        string = " ".join(string.split("'"))
+        string = " ".join(string.split("'"))
+        
+        return string
+
     def colocarNaGrade(self, usr, matriz):
         """
         user deve ser o id do usuario. matriz = [dia semana][horario]
         """
-        try:
-            with sqlite3.connect('db1.db') as connection:
-                cursor = connection.cursor()
-                
-                procura_grade = connection.execute("SELECT id FROM grade WHERE userId = ?", (user,)).fetchall()
-                
-                if procura_grade == []:
-
-                    cursor.execute("""INSERT INTO grade (userId, segunda, terca, quarta, quinta, sexta, sabado) 
-                                VALUES (?, '', '', '', '', '', '')""", (user,))
-                
-                cursor.execute("""UPDATE grade SET segunda = ?, terca = ?, quarta = ?, quinta = ?, sexta = ?, sabado = ? 
-                                WHERE userId = ?""", (matriz[0], matriz[1], matriz[2], matriz[3], matriz[4], matriz[5]))
-                
-                connection.commit()
+       # try:
+        with sqlite3.connect('db1.db') as connection:
+            cursor = connection.cursor()
             
-            return True
+            procura_grade = connection.execute("SELECT id FROM grade WHERE userId = ?", (usr,)).fetchall()
+            
+            if procura_grade == []:
+
+                cursor.execute("""INSERT INTO grade (userId, segunda, terca, quarta, quinta, sexta, sabado) 
+                            VALUES (?, '', '', '', '', '', '')""", (usr,))
+            print(matriz)
+            for i in range(6):
+                matriz[i] = str(matriz[i])
+                matriz[i] = self.ajuste(matriz[i])
+            print(matriz)
+            cursor.execute("""UPDATE grade SET segunda = ?, terca = ?, quarta = ?, quinta = ?, sexta = ?, sabado = ? 
+                            WHERE userId = ?""", (matriz[0], matriz[1], matriz[2], matriz[3], matriz[4], matriz[5], usr))
+            
+            connection.commit()
+        
+        return True
+        '''
         except:
             print("Deu ruim no coloacarNaGrade")
             return False    
+        '''
+    
 
     def listarGrade(self, user):
         """
@@ -341,10 +368,30 @@ class Banco():
         with sqlite3.connect('db1.db') as connection:
             cursor = connection.cursor()
 
-            tbl = cursor.execute("SELECT segunda, terca, quarta, quinta, sexta, sabado FROM grade WHERE userId = ?", (user,)).fetchall()
+            procura_grade = connection.execute("SELECT id FROM grade WHERE userId = ?", (user,)).fetchall()
+                
+            if procura_grade == []:
+                grade = []
+                for j in range(2,8):
+                    grade.append("")
+                    grade[j-2] = []
+                    for i in range(7, 20):
+                        grade[j-2].append("")
+                    grade[j-2] = str(grade[j-2])
+                    grade[j-2] = self.ajuste(grade[j-2])
+
+                cursor.execute("""INSERT INTO grade (userId, segunda, terca, quarta, quinta, sexta, sabado) 
+                            VALUES (?, '', '', '', '', '', '')""", (user,))
+
+                cursor.execute("""UPDATE grade SET segunda = ?, terca = ?, quarta = ?, quinta = ?, sexta = ?, sabado = ? 
+                                WHERE userId = ?""", (grade[0], grade[1], grade[2], grade[3], grade[4], grade[5], user))
             
+            tbl = cursor.execute("SELECT segunda, terca, quarta, quinta, sexta, sabado FROM grade WHERE userId = ?", (user,)).fetchall()[0]
+            
+            tbl = list(tbl)
             for i in range(len(tbl)):
                 tbl[i] = tbl[i].split(",")
+                
             connection.commit()
 
         result = tbl
@@ -422,9 +469,7 @@ class Banco():
                 if lista_info[info] == 'n':
                     recusados.append(cursor.execute(form3, (tabela, info,)).fetchall())
                     cursor.execute(form2, (tabela, info))
-                    
-        print(aceitos)  
-        print(recusados)            
+                           
                 
         for user_id in aceitos:
             cursor.executemany("UPDATE user SET sug_aceitas = sug_aceitas + 1 WHERE id = ?", user_id)
@@ -450,5 +495,78 @@ class Banco():
                 """, (user))
             connection.commit()
 
+    def listarColab(self):
+        with sqlite3.connect('db1.db') as connection:
+            cursor = connection.cursor() 
+            res_new_colab = cursor.execute("SELECT * FROM colab WHERE status = 0").fetchall() 
+            for i in range(len(res_new_colab)):
+                colab = res_new_colab[i]
+                res_user = cursor.execute("SELECT usuario, email, classe, sugestoes, sug_aceitas, sug_Naceitas FROM user WHERE id = ?", (colab[1],)).fetchall()[0]
+                res_new_colab[i] = colab+res_user
+
+            res_old_colab = cursor.execute("SELECT * FROM colab WHERE status = 1").fetchall() 
+            for i in range(len(res_old_colab)):
+                colab = res_old_colab[i]
+                res_user = cursor.execute("SELECT usuario, email, classe, sugestoes, sug_aceitas, sug_Naceitas FROM user WHERE id = ?", (colab[1],)).fetchall()[0]
+                res_old_colab[i] = colab+res_user
+
+            res_colab = [res_new_colab, res_old_colab]
+            print(res_colab)
+            return res_colab
+                
+
+
+    def inicioColab(self, nome, curso, ano, observacao, user_id):
+        with sqlite3.connect('db1.db') as connection:
+            nome = nome.title()
+            cursor = connection.cursor()
+            
+            cursor.execute( '''INSERT INTO colab
+            ( nome, curso, ano, observacao, userId, status ) VALUES(?, ?, ?, ?, ?, 0)''', (nome, curso, ano, observacao, user_id))
+            connection.commit()
+    
+    def aceitarColab(self, id):
+        with sqlite3.connect('db1.db') as connection:
+            cursor = connection.cursor()
+            user_id = cursor.execute( "SELECT userId FROM colab WHERE id = ?", (id,)).fetchall()[0][0]
+            cursor.execute( '''UPDATE colab SET status = 1 WHERE id = ?''',(id ,))
+            cursor.execute( '''UPDATE user SET classe = ? WHERE classe = ? AND id = ?''', ("colaborador", "usuario", user_id))
+            connection.commit()
+
+    def rebaixarColab(self, id):
+        with sqlite3.connect('db1.db') as connection:
+            cursor = connection.cursor()
+
+            user_id = cursor.execute( "SELECT userId FROM colab WHERE id = ?", (id,)).fetchall()[0][0]
+            cursor.execute( '''UPDATE user SET classe = ? WHERE classe = ? AND id = ?''', ("usuario", "colaborador", user_id))
+            cursor.execute( '''DELETE FROM colab WHERE id = ?''',(id ,))
+            connection.commit()
+
+    def recuperarSenha(self,user):
+        send = Send()
+        user = user.title()
+        try: 
+            with sqlite3.connect('db1.db') as connection:
+                cursor = connection.cursor()
+                find_user = "SELECT senha, email FROM user WHERE usuario = ?"
+                
+                results = cursor.execute(find_user, (user,)).fetchall()[0]
+                
+            send.sendMessage(results[0], results[1])
+            return "enviado"
+        except:
+            return 'usuário não existe'
+
+banco = Banco()
+x = "Crystian"
+send= Send()
+'''
+send.sendMessage("123", "Crystian.S.F@Gmail.Com")
+'''
+#print(banco.recuperarSenha(x))
+'''
+banco.ajeitarTabelas()
+banco.criarTabelas()
+'''
 
 

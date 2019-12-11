@@ -1,12 +1,14 @@
 from flask import Flask, request, render_template, redirect, url_for, session
-import os
+import os, smtplib
 from db_create import Banco
 from pessoas import Pessoa, Usuario, Coordenador, Adm
 
 app = Flask(__name__)
 
-#print(exemplo_usr.get_classe())
 
+#print(exemplo_usr.get_classe())
+Tipos = {'Seminário','Mesa Redonda','Painel','Curso','Workshop','Palestra','Semana','Outro'}
+Assuntos = {'Ambiental','Civil','Controle e Automação','Computação','Materiais','Petróleo','Produção','Elétrica','Eletrônica','Mecânica','Metalúrgica','Naval','Nuclear','Outros'}
 @app.route("/")
 def inicio():
     banco = Banco()
@@ -87,6 +89,10 @@ def sair():
 def cadastro():
     return render_template('cadastro.html')
 
+@app.route("/mapa")
+def mapa():
+    return render_template('mapa.html')
+
 @app.route("/cadastrar", methods = ['POST'])
 def cadastrar():
     usr = str(request.form["usuario"]).title()
@@ -110,6 +116,13 @@ def encontrar_atividades():
 
 @app.route("/grade")
 def grade():
+    if session['logged_in']:
+        banco = Banco()
+        grade = banco.listarGrade(session['user_id'])
+    else:
+        grade = []
+    return render_template('grade.html', grade = grade)
+'''
     try:
         x = session['grade']
     except:
@@ -119,23 +132,27 @@ def grade():
             session['grade'][j-2] = []
             for i in range(7, 20):
                 session['grade'][j-2].append("")
-
-    return render_template('grade.html')
-
+'''
 @app.route("/enviar_grade", methods = ['POST'])
 def enviar_grade():
-    grade=[]
-    for j in range(2,8):
-        grade.append("")
-        grade[j-2]=[]
-        for i in range(7, 20):
-            stg = str(j) + "_" + str(i)
-            try:
-                app = request.form[stg]
-                grade[j-2].append(app.strip())
-            except:
-                grade[j-2].append("")
-    session['grade'] = grade
+    if session['logged_in']:
+        grade=[]
+        for j in range(2,8):
+            grade.append("")
+            grade[j-2]=[]
+            for i in range(7, 20):
+                stg = str(j) + "_" + str(i)
+                try:
+                    app = request.form[stg]
+                    grade[j-2].append(app.strip())
+                    grade[j-2] = ";".join(grade[j-2].split(","))
+                except:
+                    grade[j-2].append("")
+
+        print(grade)
+        banco = Banco()
+        banco.colocarNaGrade(session['user_id'], grade)
+        session['grade'] = grade
 
     return redirect('/grade')
 
@@ -186,13 +203,43 @@ def topico_recusado():
     banco.aceitarCoisas(eventos, locais, informacoes)
     return redirect('/aceitar_topicos')
 
+@app.route("/formulario_colaboradores")
+def formulario_colaboradores():
+    return render_template('formulario_colaboradores.html')
+    
 @app.route("/gerenciar_colaboradores")
 def gerenciar_colaboradores():
-    return render_template('gerenciar_colaboradores.html')
+    banco = Banco()
+    return render_template('gerenciar_colaboradores.html', colabs = banco.listarColab())
+
+@app.route("/colaborador_aceito", methods = ['POST'])
+def colaborador_aceito():
+
+    try:
+        colaborador = request.form["colaborador"]
+    except:
+        return "Deu erro colab aceito"
+
+    banco = Banco()
+    banco.aceitarColab(colaborador)
+    return redirect('/gerenciar_colaboradores')
+
+@app.route("/colaborador_recusado", methods = ['POST'])
+def colaborador_recusado():
+
+    try:
+        colaborador = request.form["colaborador"]
+    except:
+        return "Deu erro colab recusado"
+
+    banco = Banco()
+    banco.rebaixarColab(colaborador)
+    return redirect('/gerenciar_colaboradores')
 
 @app.route("/seja_colaborador")
 def seja_colaborador():
     return render_template('formulario_colaborador.html')
+
 @app.route("/colaborar", methods = ['POST'])
 def calaborar():
     nome = str(request.form["nome_colab"]).title()
@@ -202,6 +249,10 @@ def calaborar():
 
     print("Seja um colaborador: ")
     print("Nome: ", nome, "| Curso: ", curso, "| Ano: ", ano, "| Obs: ", obs, "| Id: ", session['user_id'])
+
+    banco = Banco()
+    banco.inicioColab(nome, curso, ano, obs, session['user_id'])
+
     return redirect('/seja_colaborador')
 
 app.secret_key = os.urandom(12)
