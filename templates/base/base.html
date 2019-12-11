@@ -40,6 +40,10 @@
                 <a href="sugerir_topicos"title="Cadastrar evento"><i class="far fa-lightbulb"></i></a>
                 {% endif %}
 
+                {% if session['logged_in'] and session['priority'] == 2 %}
+                <a href="seja_colaborador" title="Seja um colaborador"><i class="">Seja um colaborador</i></a>
+                {% endif %}
+
                 {% if session['logged_in'] and session['priority'] > 2 %}
                 <a href="aceitar_topicos" title="Aceitar tópicos"><i class="fas fa-clipboard-check"></i></a>
                 {% endif %}
