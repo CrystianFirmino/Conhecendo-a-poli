@@ -424,5 +424,16 @@ class Banco():
                 """, (user))
             connection.commit()
 
+    def recuperarSenha(self, user):
+        user = user.title()
+        try: 
+            with sqlite3.connect('db1.db') as connection:
+                cursor = connection.cursor()
+                find_user = ("SELECT senha, email FROM user WHERE usuario = ?")
+                results = cursor.execute(find_user, (user,)).fetchall()
+            return results
 
-
+        except:
+            return 'usuário não existe'
+banco = Banco()
+print(banco.recuperarSenha("heitor"))
