@@ -195,7 +195,7 @@ class Banco():
                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, ?)
                                     """, (nome, descricao, local, data, horarioIn, horarioFim, tipo, user_id, assunto))
                         connection.commit()
-                
+                        '''
                         id_ev = cursor.execute("SELECT id FROM eventos WHERE nome = ? AND data = ? AND local = ?", (nome, data, local)).fetchall()
                         id_ev = id_ev[0][0]
                         #print ("id_ev: " + str(id_ev))
@@ -206,7 +206,7 @@ class Banco():
                             id_ass = id_ass[0][0]
                             #print("id_ass: " + str(id_ass))
                             cursor.execute("INSERT INTO assuntosXeventos (eventoId, assuntoId) VALUES (?, ?)", (id_ev, id_ass))
-
+                        '''
                         cursor.execute("UPDATE user SET sugestoes = sugestoes + 1 WHERE id = ?", (user_id,))
 
                         connection.commit()
@@ -342,10 +342,11 @@ class Banco():
 
                 cursor.execute("""INSERT INTO grade (userId, segunda, terca, quarta, quinta, sexta, sabado) 
                             VALUES (?, '', '', '', '', '', '')""", (usr,))
-            
+            print(matriz)
             for i in range(6):
                 matriz[i] = str(matriz[i])
                 matriz[i] = self.ajuste(matriz[i])
+            print(matriz)
             cursor.execute("""UPDATE grade SET segunda = ?, terca = ?, quarta = ?, quinta = ?, sexta = ?, sabado = ? 
                             WHERE userId = ?""", (matriz[0], matriz[1], matriz[2], matriz[3], matriz[4], matriz[5], usr))
             
@@ -510,6 +511,7 @@ class Banco():
                 res_old_colab[i] = colab+res_user
 
             res_colab = [res_new_colab, res_old_colab]
+            print(res_colab)
             return res_colab
                 
 

@@ -6,14 +6,14 @@
 
 {% block body %}
     
-    <div class="card">
+    
     {% if session['logged_in'] and session['priority'] > 2 %}
-
+    
     {% if not eventos %}
-    <p>Nada por aqui</p>
+    <div class="card"><p>Nada por aqui</p></div>
     {% endif %}
     {% for evento in eventos %}
-    
+    <div class="card">
         <table class="boxevento">
             <tr>
                 <th>Evento</th>
@@ -59,12 +59,12 @@
                 <input type="submit" class="excluir" value="Excluir Evento" formaction="/topico_recusado">
             </form>
         </div>
-    
+    </div>
     {% endfor %}
 
     {%else%}
     <p>Seja um colaborador para acessar</p>
     {% endif %}
 
-</div>
+
 {% endblock %}

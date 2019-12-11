@@ -29,18 +29,23 @@ def sugerir():
         tipo = str(request.form["tipo"])
     except:
         tipo = ''
-    assunto = []
+    try:
+        assunto = str(request.form["assunto"])
+    except:
+        assunto = ''
+    '''
     for i in range(len(assuntos)):
         ass = "assunto" + str(i+1)
         try:
             assunto.append(str(request.form[ass]).title())
         except:
             print("Nem todos assuntos selecionados -> /sugerir")
+    '''
 
     banco = Banco()
     banco.adicionarEvento(nome, descricao, local, dataIn, horarioIn, horarioFim, tipo, assunto, session['user_id'])
     
-    return render_template('sugerir_topicos.html', teste = ["Enviado"])
+    return render_template('sugerir_topicos.html', teste = ["Enviado"], assuntos = assuntos, tipos = tipos)
 
 @app.route("/login")
 def login():
