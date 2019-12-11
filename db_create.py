@@ -10,7 +10,7 @@ class Banco():
     def ajeitarTabelas(self):
         with sqlite3.connect('db1.db') as connection:
             cursor = connection.cursor() 
-            #cursor.execute("UPDATE eventos SET tipo = ? WHERE id = 9",("Pode chorar",))
+            cursor.execute("UPDATE user SET email = ? WHERE id = 2", ("Crystian.S.F@Gmail.Com",))
     def criarTabelas(self):
 
         connection = sqlite3.connect('db1.db')
@@ -471,17 +471,21 @@ class Banco():
         try: 
             with sqlite3.connect('db1.db') as connection:
                 cursor = connection.cursor()
-                find_user = ("SELECT senha, email FROM user WHERE usuario = ?")
-                results = cursor.execute(find_user, (user,)).fetchall()
+                find_user = "SELECT senha, email FROM user WHERE usuario = ?"
+                
+                results = cursor.execute(find_user, (user,)).fetchall()[0]
+                
             send.sendMessage(results[0], results[1])
+            return "enviado"
         except:
             return 'usuário não existe'
 
 banco = Banco()
-x = "heitor"
+x = "Crystian"
 send= Send()
-send.sendMessage("123", "crystian.s.f@gmail.com")
 '''
-print(banco.recuperarSenha(x))
+send.sendMessage("123", "Crystian.S.F@Gmail.Com")
 '''
+#print(banco.recuperarSenha(x))
+#banco.ajeitarTabelas()
 

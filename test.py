@@ -1,6 +1,4 @@
 import sqlite3
-import mysql.connector
-from mysql.connector import errorcode
 
 from db_create import Banco
 
