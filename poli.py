@@ -6,7 +6,8 @@ from pessoas import Pessoa, Usuario, Coordenador, Adm
 app = Flask(__name__)
 
 #print(exemplo_usr.get_classe())
-
+Tipos = {'Seminário','Mesa Redonda','Painel','Curso','Workshop','Palestra','Semana','Outro'}
+Assuntos = {'Ambiental','Civil','Controle e Automação','Computação','Materiais','Petróleo','Produção','Elétrica','Eletrônica','Mecânica','Metalúrgica','Naval','Nuclear','Outros'}
 @app.route("/")
 def inicio():
     banco = Banco()
