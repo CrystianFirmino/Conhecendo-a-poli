@@ -45,8 +45,16 @@ def login():
     return render_template('login.html')
 
 @app.route("/esqueci_a_senha")
-def esqueci():
+def esqueci_a_senha():
     return render_template('esqueci_a_senha.html')
+
+@app.route("/esqueci", methods = ['POST'])
+def esqueci_():
+    email = request.form['email']
+    banco = Banco()
+
+    banco.recuperarSenha(email)
+    return redirect('/esqueci_a_senha')
 
 @app.route("/logar", methods = ['POST'])
 def logar():

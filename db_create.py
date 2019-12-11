@@ -544,7 +544,7 @@ class Banco():
         try: 
             with sqlite3.connect('db1.db') as connection:
                 cursor = connection.cursor()
-                find_user = "SELECT senha, email FROM user WHERE usuario = ?"
+                find_user = "SELECT senha, email FROM user WHERE email = ?"
                 
                 results = cursor.execute(find_user, (user,)).fetchall()[0]
                 
