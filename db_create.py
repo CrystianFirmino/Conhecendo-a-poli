@@ -255,9 +255,9 @@ class Banco():
             """)
             if not tipo == False:
                 lista = lista + "AND tipo = " + str(tipo)
-
-            if not assunto ==False:
-                lista = lista + 'AND assunto = ' + str(assunto)
+            
+            if not assunto == False:
+                lista = lista + "AND assunto= " + str(assunto)
             #ids dos eventos q cumprem requisitos de horario e tipo 
             filtro1 = cursor.execute(lista, (data, dataFim, horarioIn, horarioFim)).fetchall()
             
