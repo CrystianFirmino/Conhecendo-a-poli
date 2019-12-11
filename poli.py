@@ -135,6 +135,7 @@ def grade():
     if session['logged_in']:
         banco = Banco()
         grade = banco.listarGrade(session['user_id'])
+        print(grade)
     else:
         grade = []
     return render_template('grade.html', grade = grade)
@@ -163,9 +164,9 @@ def enviar_grade():
                     grade[j-2].append(app.strip())
                     grade[j-2] = ";".join(grade[j-2].split(","))
                 except:
-                    grade[j-2].append("")
+                    pass
+                    #grade[j-2].append("")
 
-        print(grade)
         banco = Banco()
         banco.colocarNaGrade(session['user_id'], grade)
         session['grade'] = grade
@@ -265,9 +266,6 @@ def calaborar():
     curso = str(request.form["curso"]).title()
     ano = str(request.form["ano"]).title()
     obs = str(request.form["obs"])
-
-    print("Seja um colaborador: ")
-    print("Nome: ", nome, "| Curso: ", curso, "| Ano: ", ano, "| Obs: ", obs, "| Id: ", session['user_id'])
 
     banco = Banco()
     banco.inicioColab(nome, curso, ano, obs, session['user_id'])
