@@ -1,0 +1,35 @@
+{% extends "base/base.html" %}
+
+{% block head %}
+    <title>Login - Conhecendo a poli</title>
+{% endblock %}
+
+{% block body %}
+<div class="card">
+    
+    <div class="wrap">
+            <div class="login-form">
+                <div class="form-header">
+                    <h3>Esqueci a senha</h3>
+                    <p> Preencha o formulário para receber a senha por e-mail!</p>
+                </div>
+
+                <form action="/esqueci" method="POST">
+                    
+                <!--Password Input-->
+                <div class="form-group">
+                <input type="text" name = "email" class="form-input" placeholder="E-mail" required>
+                </div>
+                <!--Login Button-->
+                <div class="form-group">
+                <input type="submit" class  value = "Enviar">
+                </div>
+                </form>
+
+            </div>
+        </div><!--/.wrap-->
+
+
+</div>
+{% endblock %}
+

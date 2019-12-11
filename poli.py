@@ -44,6 +44,10 @@ def sugerir():
 def login():
     return render_template('login.html')
 
+@app.route("/esqueci_a_senha")
+def esqueci():
+    return render_template('esqueci_a_senha.html')
+
 @app.route("/logar", methods = ['POST'])
 def logar():
     
