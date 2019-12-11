@@ -1,9 +1,10 @@
 from flask import Flask, request, render_template, redirect, url_for, session
-import os
+import os, smtplib
 from db_create import Banco
 from pessoas import Pessoa, Usuario, Coordenador, Adm
 
 app = Flask(__name__)
+
 
 #print(exemplo_usr.get_classe())
 
