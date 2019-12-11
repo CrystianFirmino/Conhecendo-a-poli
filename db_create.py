@@ -356,8 +356,8 @@ class Banco():
         '''
         except:
             print("Deu ruim no coloacarNaGrade")
-            return False    
-        '''
+            return False  
+          '''
     
 
     def listarGrade(self, user):
