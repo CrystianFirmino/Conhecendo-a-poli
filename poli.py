@@ -29,7 +29,9 @@ def sugerir():
     assunto = []
     try:
         assunto.append(str(request.form["assunto1"]).title())
+        print(assunto)
         assunto.append(str(request.form["assunto2"]).title())
+        
     except:
         print("Nem todos assuntos selecionados -> /sugerir")
 
