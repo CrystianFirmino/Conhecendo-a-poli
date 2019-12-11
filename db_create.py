@@ -191,9 +191,9 @@ class Banco():
                     else:
                         cursor = connection.cursor()    
                         cursor.execute("""
-                                    INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim, tipo, autor, aceito)
-                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)
-                                    """, (nome, descricao, local, data, horarioIn, horarioFim, tipo, user_id))
+                                    INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim, tipo, autor, aceito, assunto)
+                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, ?)
+                                    """, (nome, descricao, local, data, horarioIn, horarioFim, tipo, user_id, assunto))
                         connection.commit()
                 
                         id_ev = cursor.execute("SELECT id FROM eventos WHERE nome = ? AND data = ? AND local = ?", (nome, data, local)).fetchall()
@@ -255,43 +255,47 @@ class Banco():
             """)
             if not tipo == False:
                 lista = lista + "AND tipo = " + str(tipo)
+
+            if not assunto ==False:
+                lista = lista + 'AND assunto = ' + str(assunto)
             #ids dos eventos q cumprem requisitos de horario e tipo 
             filtro1 = cursor.execute(lista, (data, dataFim, horarioIn, horarioFim)).fetchall()
             
             for i in range(len(filtro1)):
                 filtro1[i] = filtro1[i][0]
 
-            if not assunto == False:
-                filtro2 = []
+            # if not assunto == False:
+            #     filtro2 = []
 
-                for a in assunto:
-                    ids = cursor.execute("SELECT id FROM assuntos WHERE nome = ?", (a,)).fetchall()
-                    ids = ids[0][0]
+            #     for a in assunto:
+            #         ids = cursor.execute("SELECT id FROM assuntos WHERE nome = ?", (a,)).fetchall()
+            #         ids = ids[0][0]
 
-                    #ids dos eventos q cumprem os requisitos de assunto 
-                    filtro2 = cursor.execute("SELECT eventoId FROM assuntosXeventos WHERE assuntoId = ?", (ids,)).fetchall()
+            #         #ids dos eventos q cumprem os requisitos de assunto 
+            #         filtro2 = cursor.execute("SELECT eventoId FROM assuntosXeventos WHERE assuntoId = ?", (ids,)).fetchall()
                     
-                    for i in range(len(filtro2)):
-                        filtro2[i] = filtro2[i][0]
+            #         for i in range(len(filtro2)):
+            #             filtro2[i] = filtro2[i][0]
                     
-                    for ev in filtro1:
-                        if ev in filtro2:
-                            result.append(ev)
-            else:
+            #         for ev in filtro1:
+            #             if ev in filtro2:
+            #                 result.append(ev)
+            # else:
                 for i in filtro1:
                     result.append(cursor.execute("SELECT * FROM eventos WHERE id = ?", (i,)).fetchall()[0])
+                   
             
         #remove duplicatas
-        rep =[]
-        for i  in range(len(result)):
+        # rep =[]
+        # for i  in range(len(result)):
     
-            for e in range(i+1, len(result)):
+        #     for e in range(i+1, len(result)):
     
-                if result[i][0] == result[e][0]:
-                    rep.append(result[i])
+        #         if result[i][0] == result[e][0]:
+        #             rep.append(result[i])
             
-        for ev in rep:
-            result.remove(ev)
+        # for ev in rep:
+        #     result.remove(ev)
     
         return result
 
@@ -352,8 +356,8 @@ class Banco():
         '''
         except:
             print("Deu ruim no coloacarNaGrade")
-            return False    
-        '''
+            return False  
+          '''
     
 
     def listarGrade(self, user):
