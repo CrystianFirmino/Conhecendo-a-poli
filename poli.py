@@ -198,11 +198,37 @@ def formulario_colaboradores():
     
 @app.route("/gerenciar_colaboradores")
 def gerenciar_colaboradores():
-    return render_template('gerenciar_colaboradores.html')
+    banco = Banco()
+    return render_template('gerenciar_colaboradores.html', colabs = banco.listarColab())
+
+@app.route("/colaborador_aceito", methods = ['POST'])
+def colaborador_aceito():
+
+    try:
+        colaborador = request.form["colaborador"]
+    except:
+        return "Deu erro colab aceito"
+
+    banco = Banco()
+    banco.aceitarColab(colaborador)
+    return redirect('/gerenciar_colaboradores')
+
+@app.route("/colaborador_recusado", methods = ['POST'])
+def colaborador_recusado():
+
+    try:
+        colaborador = request.form["colaborador"]
+    except:
+        return "Deu erro colab recusado"
+
+    banco = Banco()
+    banco.rebaixarColab(colaborador)
+    return redirect('/gerenciar_colaboradores')
 
 @app.route("/seja_colaborador")
 def seja_colaborador():
     return render_template('formulario_colaborador.html')
+
 @app.route("/colaborar", methods = ['POST'])
 def calaborar():
     nome = str(request.form["nome_colab"]).title()
@@ -212,6 +238,10 @@ def calaborar():
 
     print("Seja um colaborador: ")
     print("Nome: ", nome, "| Curso: ", curso, "| Ano: ", ano, "| Obs: ", obs, "| Id: ", session['user_id'])
+
+    banco = Banco()
+    banco.inicioColab(nome, curso, ano, obs, session['user_id'])
+
     return redirect('/seja_colaborador')
 
 app.secret_key = os.urandom(12)
