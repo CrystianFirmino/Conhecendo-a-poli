@@ -26,33 +26,24 @@
     <input class="data" type="date" name="data_fim" id="data" placeholder="Data Fim">
     <input class="data" type="time" name="hora_fim" placeholder="Hora">
 
-    <div class="tit">Quais os cursos são relacionados ao evento?</div>
-    <label class="container">Computação
-        <input type="checkbox" name="assunto1" value="computacao" >
+    <div class="tit">Qual o curso é relacionado ao evento?</div>
+    {%for i in range (0, 14) %}
+    <label class="container">{{assuntos[i]}}
+        <input type="radio" name="assunto" value="{{assuntos[i]}}" >
         <span class="checkmark"></span>
     </label>
-    <label class="container">Elétrica
-            <input type="checkbox" name="assunto2" value="eletrica" >
-            <span class="checkmark"></span>
-        </label>
-        <label class="container">Controle
-                <input type="checkbox" name="assunto3" value="controle" >
-                <span class="checkmark"></span>
-        </label>
+    {%endfor%}
 
         <div class="tit"> Qual o tipo do evento? </div>
-        <label class="container2"> Palestra
-                <input type="radio" name="tipo" value="palestra" >
+    {%for i in range (0, 8)%}
+
+        <label class="container2"> {{tipos[i]}}
+                <input type="radio" name="tipo" value="{{tipos[i]}}" >
                 <span class="checkmark2"></span>
         </label>
-        <label class="container2"> Workshop
-                <input type="radio" name="tipo" value="workshop">
-                <span class="checkmark2"></span>
-        </label>
-        <label class="container2"> Outro
-            <input type="radio" name="tipo" value="outro" checked>
-            <span class="checkmark2"></span>
-    </label>
+
+    {%endfor%}
+
         <div class="tit">Descreva seu Evento</div>
         <input type="text" placeholder="Não seja timido!" name="descricao"></textarea>
         <input type="submit" value="Criar">

@@ -64,11 +64,13 @@
         </tr>
     </table>
         </br>
+        <div class="botoes">
         <form action="/colaborador_aceito" method="POST">
             <input type="hidden" name="colaborador" value="{{colab[0]}}">
-            <input type="submit" class="aceitar2" class="aceitar" value="Aceitar Colaborador">
-            <input type="submit" class="excluir2" value="Excluir Colaborador" formaction="/colaborador_recusado">
+            <input type="submit"  class="aceitar" value="Aceitar Colaborador">
+            <input type="submit" class="excluir" value="Excluir Colaborador" formaction="/colaborador_recusado">
         </form>
+        </div>
 </div>
 {% endfor %}
 
@@ -122,10 +124,12 @@
         </tr>
     </table>
         </br>
+        <div class="botoes2">
         <form action="/colaborador_recusado" method="POST">
             <input type="hidden" name="colaborador" value="{{colab[0]}}">
-            <input type="submit" class="excluir2" value="Excluir Colaborador">
+            <input type="submit" class="excluir" value="Excluir Colaborador">
         </form>
+        </div>
 </div>
 {% endfor %}
 {% else %}

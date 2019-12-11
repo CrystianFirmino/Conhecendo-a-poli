@@ -52,16 +52,11 @@
             </tr>
         </table>
     </br>
-        <div>
+        <div class="botoes">
             <form action="/topico_aceito" method="POST">
                 <input type="hidden" name="eventos" value="{{evento[0]}}">
-                <input type="submit" class="aceitar2" class="aceitar" value="Aceitar Evento">
-            </form>
-        </div>
-        <div>
-            <form action="/topico_recusado" method="POST">
-                <input type="hidden" name="eventos" value="{{evento[0]}}">
-                <input type="submit" class="excluir2" value="Excluir Evento">
+                <input type="submit" class="aceitar" class="aceitar" value="Aceitar Evento">
+                <input type="submit" class="excluir" value="Excluir Evento" formaction="/topico_recusado">
             </form>
         </div>
     
