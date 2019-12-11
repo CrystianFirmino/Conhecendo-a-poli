@@ -5,5 +5,42 @@
 {% endblock %}
 
 {% block body %}
-    <p>Gerenciar colaboradores </p>
+{% for i in range(5,0,-1) %}
+<div class="card">
+    <table class="boxevento">
+            
+        <tr>
+            <th>Colaborador</th>
+            <th class="info">Informações</th>
+            
+        </tr>
+
+            <tr>
+                <td class=infoevento>Nome</td>
+                <td>Nome{{i}}</td>
+            </tr>
+
+            <tr>
+                <td class=infoevento>Curso</td>
+                <td>Curso{{i}}</td>
+            </tr>
+
+            <tr>
+                <td class=infoevento>Ano de entrada</td>
+                <td>ano{{i}}</td>
+            </tr>
+
+            <tr>
+                <td class=infoevento>Observações</td>
+                <td>obs{{i}}</td>
+            </tr>
+            </tr>
+         </table>
+        </br>
+        <div class="botoes">
+                <button type="button" class="aceitar" >Aceitar Colaborador</button>
+                <button type="button" class="excluir">Excluir Colaborador</button>
+        </div>
+</div>
+{% endfor %}
 {% endblock %}

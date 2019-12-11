@@ -5,5 +5,52 @@
 {% endblock %}
 
 {% block body %}
-    <p>Aceitar topicos</p>
+{% for evento in eventos %}
+        <div class="card">
+            <table class="boxevento">
+                    
+                <tr>
+                    <th>Evento</th>
+                    <th class="info">Informações</th>
+                    
+                </tr>
+    
+                    <tr>
+                        <td class=infoevento>Nome</td>
+                        <td>{{evento[1]}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td class=infoevento>Data</td>
+                        <td>{{evento[4]}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td class=infoevento>Local</td>
+                        <td>{{evento[3]}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td class=infoevento>Tipo</td>
+                        <td>{{evento[7]}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td class=infoevento>Assunto</td>
+                        <td>{{evento[8]}}</td>
+                    </tr>
+    
+                    <tr>
+                        <td class=infoevento>Descrição</td>
+                        <td class="info">{{evento[2]}}</td>
+                    </tr>
+                    </tr>             
+            </table>
+            <div class="botoes">
+                    <button type="button" class="aceitar" >Aceitar Evento</button>
+                    <button type="button" class="excluir">Excluir Evento</button>
+            </div>
+        </div>
+        {% endfor %}
+
 {% endblock %}
