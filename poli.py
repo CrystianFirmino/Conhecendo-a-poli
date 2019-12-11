@@ -16,6 +16,9 @@ def inicio():
 
 @app.route("/sugerir", methods = ['POST'])
 def sugerir():
+    tipos = ['Seminário','Mesa Redonda','Painel','Curso','Workshop','Palestra','Semana','Outro']
+    assuntos = ['Ambiental','Civil','Controle e Automação','Computação','Materiais','Petróleo','Produção','Elétrica','Eletrônica','Mecânica','Metalúrgica','Naval','Nuclear','Outros']
+    
     nome = str(request.form["nome"])
     descricao = str(request.form["descricao"])
     local = str(request.form["local"])
@@ -27,13 +30,12 @@ def sugerir():
     except:
         tipo = ''
     assunto = []
-    try:
-        assunto.append(str(request.form["assunto1"]).title())
-        print(assunto)
-        assunto.append(str(request.form["assunto2"]).title())
-        
-    except:
-        print("Nem todos assuntos selecionados -> /sugerir")
+    for i in range(len(assuntos)):
+        ass = "assunto" + str(i+1)
+        try:
+            assunto.append(str(request.form[ass]).title())
+        except:
+            print("Nem todos assuntos selecionados -> /sugerir")
 
     banco = Banco()
     banco.adicionarEvento(nome, descricao, local, dataIn, horarioIn, horarioFim, tipo, assunto, session['user_id'])
