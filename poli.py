@@ -89,6 +89,10 @@ def sair():
 def cadastro():
     return render_template('cadastro.html')
 
+@app.route("/mapa")
+def mapa():
+    return render_template('mapa.html')
+
 @app.route("/cadastrar", methods = ['POST'])
 def cadastrar():
     usr = str(request.form["usuario"]).title()
