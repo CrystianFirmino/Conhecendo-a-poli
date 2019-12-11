@@ -160,7 +160,10 @@ def enviar_grade():
 
 @app.route("/sugerir_topicos")
 def sugerir_topicos():
-    return render_template('sugerir_topicos.html')
+    tipos = ['Seminário','Mesa Redonda','Painel','Curso','Workshop','Palestra','Semana','Outro']
+    assuntos = ['Ambiental','Civil','Controle e Automação','Computação','Materiais','Petróleo','Produção','Elétrica','Eletrônica','Mecânica','Metalúrgica','Naval','Nuclear','Outros']
+    
+    return render_template('sugerir_topicos.html', assuntos = assuntos, tipos = tipos)
 
 @app.route("/aceitar_topicos")
 def aceitar_topicos():

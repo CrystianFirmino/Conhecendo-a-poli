@@ -778,14 +778,18 @@ td
 }
 .botoes
 {
-  margin-left: 35%;
+  margin-left: 25%;
+}
+.botoes2
+{
+  margin-left: 37%;
 }
 
 .aceitar, .excluir
 {
-    height: 45px;
+    height: 50px;
     border-radius: 3%;
-    width: 25%;
+    width: 35%;
     background-color: #f5e7a3;
     color: #24305e;
     font-size: 15px;
