@@ -24,6 +24,20 @@ class Banco():
         cursor.execute (
 
         """
+            CREATE TABLE IF NOT EXISTS colab (
+                id INTEGER PRIMARY KEY,
+                nome TEXT NOT NULL,
+                curso TEXT NOT NULL,
+                ano TEXT NOT NULL,
+                observacao TEXT, 
+                status text
+                );
+        """
+        )
+
+        cursor.execute (
+
+        """
             CREATE TABLE IF NOT EXISTS user (
                 id INTEGER PRIMARY KEY,
                 usuario TEXT NOT NULL,
@@ -424,5 +438,25 @@ class Banco():
                 """, (user))
             connection.commit()
 
+    def inicioColab(self, nome, curso, ano, observacao):
+        with sqlite3.connect('db1.db') as connection:
+            nome = nome.title()
+            cursor = connection.cursor()
+            cursor.execute( '''INSERT INTO colab
+            ( nome, curso, ano, observacao, status ) VALUES(?, ?, ?, ?, ?)''', (nome, curso, ano, observacao, "trainee"))
+            connection.commit()
+    
+    def aceitarColab(self, nome):
+        with sqlite3.connect('db1.db') as connection:
+            cursor = connection.cursor()
+            nome = nome.title()
+            cursor.execute( '''UPDATE colab SET status = "efetivado" WHERE nome = ?''',(nome ,))
+            cursor.execute( '''UPDATE user SET classe = "colaborador" WHERE usuario = ?''',(nome ,))
 
+    def rebaixarColab(self,nome):
+        with sqlite3.connect('db1.db') as connection:
+            cursor = connection.cursor()
+            nome = nome.title()
+            cursor.execute( '''UPDATE colab SET status = "recusado" WHERE nome = ?''',(nome ,))
+            cursor.execute( '''UPDATE user SET classe = "usuario" WHERE usuario = ?''',(nome ,))
 
