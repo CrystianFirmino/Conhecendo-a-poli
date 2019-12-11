@@ -187,29 +187,31 @@ class Banco():
                     
                     if repetido != []:
                         return deuCerto 
-                    
+                
                     else:
-                        cursor = connection.cursor()    
+                        cursor = connection.cursor()
+                        assunto = assunto[0]
+                        print(assunto)
                         cursor.execute("""
                                     INSERT INTO eventos(nome, descricao, local, data, horario_de_inicio, horario_de_fim, tipo, autor, aceito, assunto)
                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, ?)
-                                    """, (nome, descricao, local, data, horarioIn, horarioFim, tipo, user_id, assunto))
+                                    """, (nome, descricao, local, data, horarioIn, horarioFim, tipo, int(user_id), assunto))
                         connection.commit()
                 
-                        id_ev = cursor.execute("SELECT id FROM eventos WHERE nome = ? AND data = ? AND local = ?", (nome, data, local)).fetchall()
-                        id_ev = id_ev[0][0]
-                        #print ("id_ev: " + str(id_ev))
+                        # id_ev = cursor.execute("SELECT id FROM eventos WHERE nome = ? AND data = ? AND local = ?", (nome, data, local)).fetchall()
+                        # id_ev = id_ev[0][0]
+                        # #print ("id_ev: " + str(id_ev))
                         
-                        for a in assunto:
+                        # for a in assunto:
                 
-                            id_ass = cursor.execute("SELECT id FROM assuntos WHERE nome = ?", (a,)).fetchall()
-                            id_ass = id_ass[0][0]
-                            #print("id_ass: " + str(id_ass))
-                            cursor.execute("INSERT INTO assuntosXeventos (eventoId, assuntoId) VALUES (?, ?)", (id_ev, id_ass))
+                        #     id_ass = cursor.execute("SELECT id FROM assuntos WHERE nome = ?", (a,)).fetchall()
+                        #     id_ass = id_ass[0][0]
+                        #     #print("id_ass: " + str(id_ass))
+                        #     cursor.execute("INSERT INTO assuntosXeventos (eventoId, assuntoId) VALUES (?, ?)", (id_ev, id_ass))
 
-                        cursor.execute("UPDATE user SET sugestoes = sugestoes + 1 WHERE id = ?", (user_id,))
+                        # cursor.execute("UPDATE user SET sugestoes = sugestoes + 1 WHERE id = ?", (user_id,))
 
-                        connection.commit()
+                        # connection.commit()
                         deuCerto = True
         return deuCerto
 
