@@ -342,11 +342,10 @@ class Banco():
 
                 cursor.execute("""INSERT INTO grade (userId, segunda, terca, quarta, quinta, sexta, sabado) 
                             VALUES (?, '', '', '', '', '', '')""", (usr,))
-            print(matriz)
+            
             for i in range(6):
                 matriz[i] = str(matriz[i])
                 matriz[i] = self.ajuste(matriz[i])
-            print(matriz)
             cursor.execute("""UPDATE grade SET segunda = ?, terca = ?, quarta = ?, quinta = ?, sexta = ?, sabado = ? 
                             WHERE userId = ?""", (matriz[0], matriz[1], matriz[2], matriz[3], matriz[4], matriz[5], usr))
             
@@ -511,7 +510,6 @@ class Banco():
                 res_old_colab[i] = colab+res_user
 
             res_colab = [res_new_colab, res_old_colab]
-            print(res_colab)
             return res_colab
                 
 
