@@ -7,38 +7,46 @@
 {% block body %}
 <div class = "left column">
     <div class = "card">
+    {% if session['logged_in'] and session['priority'] == 2 %}
     <form action="/colaborar" method=POST>
-    <div class="evento-box">
-    <h1 class="titulo">Seja um Colaborador</h1>
+        <div class="evento-box">
+            <h1 class="titulo">Seja um Colaborador</h1>
 
-    {% for tt in teste%}
-        <h6 style="text-align: center;margin-bottom: 0;">{{tt}}</h6>
-    {% endfor%}
+            {% for tt in teste%}
+                <h6 style="text-align: center;margin-bottom: 0;">{{tt}}</h6>
+            {% endfor%}
 
-    <div class="tit">Nome</div>
-    <input type="text" name="nome_colab" placeholder="Seu nome completo" required><br>
-    <div class="tit">Curso</div>
-    <input type="text" name="curso" placeholder="Caso seja funcionario, explique sua filiação." required>
-        <div class="tit"> Em qual ano entrou na UFRJ? </div>
-        {% for i in range(19,9,-1)%}
-        <label class="container2"> 20{{i}}
-                <input type="radio" name="ano" value="20{{i}}" >
-                <span class="checkmark2"></span>
-        </label>
-        {% endfor %}
-        <label class="container2"> Sou funcionário/filiado
-            <input type="radio" name="ano" value="funcionario" >
-            <span class="checkmark2"></span>
-        </label>
-        <label class="container2"> Outro
-            <input type="radio" name="ano" value="funcionario" checked>
-            <span class="checkmark2"></span>
-        </label>
-        <div class="tit">Observações</div>
-    <input type="text" name="obs" placeholder="Caso nao tenha, escreva 'nenhum' " required><br>
-        <input type="submit" value="enviar">
+            <div class="tit">Nome</div>
+            <input type="text" name="nome_colab" placeholder="Seu nome completo" required><br>
+            <div class="tit">Curso</div>
+            <input type="text" name="curso" placeholder="Caso seja funcionario, explique sua filiação." required>
+                <div class="tit"> Em qual ano entrou na UFRJ? </div>
+                {% for i in range(19,9,-1)%}
+                <label class="container2"> 20{{i}}
+                        <input type="radio" name="ano" value="20{{i}}" >
+                        <span class="checkmark2"></span>
+                </label>
+                {% endfor %}
+                <label class="container2"> Sou funcionário/filiado
+                    <input type="radio" name="ano" value="funcionario" >
+                    <span class="checkmark2"></span>
+                </label>
+                <label class="container2"> Outro
+                    <input type="radio" name="ano" value="funcionario" checked>
+                    <span class="checkmark2"></span>
+                </label>
+                <div class="tit">Observações</div>
+            <input type="text" name="obs" placeholder="Caso nao tenha, escreva 'nenhum' " required><br>
+                <input type="submit" value="enviar">
+        </div>
     </form>
-</div>
+    {%elif session['logged_in'] and session['priority'] > 2%}
+    <p>Você já é colaborador</p>
+
+    {% else %}
+    <p>Faça login para se tornar</p>
+    {% endif %}
+
 </div>
 </div>
 {% endblock %}

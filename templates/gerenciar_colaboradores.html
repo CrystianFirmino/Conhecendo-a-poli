@@ -5,42 +5,133 @@
 {% endblock %}
 
 {% block body %}
-{% for i in range(5,0,-1) %}
+
+{% if session['logged_in'] and session['priority'] > 4 %}
+{% if not colabs%}
+<div class="card">
+    <p>Nada aqui</p>
+</div>
+{% endif%}
+
+<h1>Ainda não aceitos</h1>
+{% if not colabs[0]%}
+<div class="card">
+    <p>Nada aqui</p>
+</div>
+{% endif%}
+{% for colab in colabs[0] %}
 <div class="card">
     <table class="boxevento">
             
         <tr>
             <th>Colaborador</th>
             <th class="info">Informações</th>
-            
         </tr>
-
-            <tr>
-                <td class=infoevento>Nome</td>
-                <td>Nome{{i}}</td>
-            </tr>
-
-            <tr>
-                <td class=infoevento>Curso</td>
-                <td>Curso{{i}}</td>
-            </tr>
-
-            <tr>
-                <td class=infoevento>Ano de entrada</td>
-                <td>ano{{i}}</td>
-            </tr>
-
-            <tr>
-                <td class=infoevento>Observações</td>
-                <td>obs{{i}}</td>
-            </tr>
-            </tr>
-         </table>
+        <tr>
+            <td class=infoevento>Status</td>
+            <td>{{colab[9].title()}}</td>
+        </tr>
+        <tr>
+            <td class=infoevento>Nome</td>
+            <td>{{colab[2]}}</td>
+        </tr>
+        <tr>
+            <td class=infoevento>Usuario</td>
+            <td>{{colab[7]}}</td>
+        </tr>
+        <tr>
+            <td class=infoevento>Email</td>
+            <td>{{colab[8]}}</td>
+        </tr>
+        <tr>
+            <td class=infoevento>Curso</td>
+            <td>{{colab[3]}}</td>
+        </tr>
+        <tr>
+            <td class=infoevento>Ano de entrada</td>
+            <td>{{colab[4]}}</td>
+        </tr>
+        <tr>
+            <td class=infoevento>Observações</td>
+            <td>{{colab[5]}}</td>
+        </tr>
+        
+        <tr>
+            <td class=infoevento>Sugestoes</td>
+            <td>Total: {{colab[10]}}</td>
+            <td>Aceitas: {{colab[11]}}</td>
+            <td>Negadas: {{colab[11]}}</td>
+        </tr>
+    </table>
         </br>
-        <div class="botoes">
-                <button type="button" class="aceitar" >Aceitar Colaborador</button>
-                <button type="button" class="excluir">Excluir Colaborador</button>
-        </div>
+        <form action="/colaborador_aceito" method="POST">
+            <input type="hidden" name="colaborador" value="{{colab[0]}}">
+            <input type="submit" class="aceitar2" class="aceitar" value="Aceitar Colaborador">
+            <input type="submit" class="excluir2" value="Excluir Colaborador" formaction="/colaborador_recusado">
+        </form>
 </div>
 {% endfor %}
+
+<h1>Aceitos</h1>
+{% if not colabs[1]%}
+<div class="card">
+    <p>Nada aqui</p>
+</div>
+{% endif%}
+{% for colab in colabs[1] %}
+<div class="card">
+    <table class="boxevento">
+        <tr>
+            <th>Colaborador</th>
+            <th class="info">Informações</th>
+        </tr>
+        <tr>
+            <td class=infoevento>Status</td>
+            <td>{{colab[9].title()}}</td>
+        </tr>
+        <tr>
+            <td class=infoevento>Nome</td>
+            <td>{{colab[2]}}</td>
+        </tr>
+        <tr>
+            <td class=infoevento>Usuario</td>
+            <td>{{colab[7]}}</td>
+        </tr>
+        <tr>
+            <td class=infoevento>Email</td>
+            <td>{{colab[8]}}</td>
+        </tr>
+        <tr>
+            <td class=infoevento>Curso</td>
+            <td>{{colab[3]}}</td>
+        </tr>
+        <tr>
+            <td class=infoevento>Ano de entrada</td>
+            <td>{{colab[4]}}</td>
+        </tr>
+        <tr>
+            <td class=infoevento>Observações</td>
+            <td>{{colab[5]}}</td>
+        </tr>
+        
+        <tr>
+            <td class=infoevento>Sugestoes</td>
+            <td>Total: {{colab[10]}}</td>
+            <td>Aceitas: {{colab[11]}}</td>
+            <td>Negadas: {{colab[11]}}</td>
+        </tr>
+    </table>
+        </br>
+        <form action="/colaborador_recusado" method="POST">
+            <input type="hidden" name="colaborador" value="{{colab[0]}}">
+            <input type="submit" class="excluir2" value="Excluir Colaborador">
+        </form>
+</div>
+{% endfor %}
+{% else %}
+
+<div class="card">
+    <p>Acesso negado</p>
+</div>
+{% endif%}
 {% endblock %}

@@ -5,40 +5,44 @@
 {% endblock %}
 
 {% block body %}
-        
-    <form action="/enviar_grade" method="POST">
-    <table id="editable" class="boxgrade">
-    <tr>
-        <th class= "dias">Horário</th>
-        <th class= "dias">Segunda</th>
-        <th class= "dias"> Terça </th>
-        <th class= "dias">Quarta</th>
-        <th class= "dias">Quinta</th>
-        <th class= "dias"> Sexta </th>
-        <th class= "dias">Sábado</th>
-    </tr>
-    {% for i in range(7, 20)%}
+    {% if session['logged_in'] %}    
+        <form action="/enviar_grade" method="POST" id='form1'>
+        <table id="editable" class="boxgrade">
         <tr>
-            <th class="horario">{{i}}:00</th>
-            {% for j in range(2,8)%}
-                <input type = "hidden" class="grade_inp" id="{{j}}_{{i}}" name="{{j}}_{{i}}" value="{{session['grade'][j-2][i-7]}}" style="display: none;">
-                <td class = "grade" id="{{j}}e{{i}}" contenteditable = "True">
-                    {{session['grade'][j-2][i-7]}}
-                </td>
-            {% endfor %}
-            
-            
-            
+            <th class= "dias">Horário</th>
+            <th class= "dias">Segunda</th>
+            <th class= "dias"> Terça </th>
+            <th class= "dias">Quarta</th>
+            <th class= "dias">Quinta</th>
+            <th class= "dias"> Sexta </th>
+            <th class= "dias">Sábado</th>
         </tr>
-            
-    {% endfor %}
-    </table>
-    </form>
-    
-    <button class = "aceitar3" onclick="edit_table()">Editar</button>
-    <button class = "aceitar3" onclick="block_table()">Terminar Edição</button>
-    <input  class = "excluir3" onclick="enviar()" type="submit" value="Salvar">
-    
+        {% for i in range(7, 20)%}
+            <tr>
+                <th class="horario">{{i}}:00</th>
+                {% for j in range(2,8)%}
+                    <input type = "hidden" class="grade_inp" id="{{j}}_{{i}}" name="{{j}}_{{i}}" value="{{grade[j-2][i-7]}}" style="display: none;">
+                    <td class = "grade" id="{{j}}e{{i}}" contenteditable = "False">
+                        {{grade[j-2][i-7]}}
+                    </td>
+                {% endfor %}
+                
+                
+                
+            </tr>
+                
+        {% endfor %}
+        </table>
+        </form>
+        
+        <button class = "aceitar3" onclick="edit_table()">Editar</button>
+        <button class = "aceitar3" onclick="block_table()">Terminar Edição</button>
+        <input  class = "excluir3" onclick="enviar()" type="submit" value="Salvar" form="form1">
+    {% else %}
+        <div class="card">
+            <p>Faça login para acessar</p>
+        </div>
+    {% endif %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 
     <script>
@@ -77,4 +81,5 @@
             );
         }
     </script>
+
 {% endblock %}
