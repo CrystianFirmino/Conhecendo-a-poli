@@ -281,8 +281,8 @@ class Banco():
             #             if ev in filtro2:
             #                 result.append(ev)
             # else:
-                for i in filtro1:
-                    result.append(cursor.execute("SELECT * FROM eventos WHERE id = ?", (i,)).fetchall()[0])
+            for i in filtro1:
+                result.append(cursor.execute("SELECT * FROM eventos WHERE id = ?", (i,)).fetchall()[0])
                    
             
         #remove duplicatas
