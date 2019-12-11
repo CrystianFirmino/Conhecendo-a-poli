@@ -186,6 +186,10 @@ def topico_recusado():
     banco.aceitarCoisas(eventos, locais, informacoes)
     return redirect('/aceitar_topicos')
 
+@app.route("/formulario_colaboradores")
+def formulario_colaboradores():
+    return render_template('formulario_colaboradores.html')
+    
 @app.route("/gerenciar_colaboradores")
 def gerenciar_colaboradores():
     return render_template('gerenciar_colaboradores.html')
