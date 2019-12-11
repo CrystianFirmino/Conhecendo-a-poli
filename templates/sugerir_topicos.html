@@ -26,10 +26,10 @@
     <input class="data" type="date" name="data_fim" id="data" placeholder="Data Fim">
     <input class="data" type="time" name="hora_fim" placeholder="Hora">
 
-    <div class="tit">Quais os cursos são relacionados ao evento?</div>
+    <div class="tit">Qual o curso é relacionado ao evento?</div>
     {%for i in range (0, 14) %}
     <label class="container">{{assuntos[i]}}
-        <input type="checkbox" name="assunto{{i}}" value="{{assuntos[i]}}" >
+        <input type="radio" name="assunto" value="{{assuntos[i]}}" >
         <span class="checkmark"></span>
     </label>
     {%endfor%}
