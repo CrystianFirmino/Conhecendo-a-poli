@@ -5,6 +5,10 @@
 {% endblock %}
 
 {% block body %}
+    {% if not envento %}
+    <p class="card">Nada por aqui</p>
+    {% endif %}
+    
     {% for evento in eventos %}
     <div class="card">
         <table class="boxevento">

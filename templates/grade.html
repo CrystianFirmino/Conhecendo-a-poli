@@ -8,9 +8,8 @@
         
     <form action="/enviar_grade" method="POST">
     <table id="editable" class="boxgrade">
-    <tr >
-        <th class="dias"> Horario </th>
-        <th class= "dias">Domingo</th>
+    <tr>
+        <th class= "dias">Horário</th>
         <th class= "dias">Segunda</th>
         <th class= "dias"> Terça </th>
         <th class= "dias">Quarta</th>
@@ -21,9 +20,11 @@
     {% for i in range(7, 20)%}
         <tr>
             <th class="horario">{{i}}:00</th>
-            {% for j in range(1,8)%}
-                
-                <td class="grade"></td>
+            {% for j in range(2,8)%}
+                <input type = "hidden" class="grade_inp" id="{{j}}_{{i}}" name="{{j}}_{{i}}" value="{{session['grade'][j-2][i-7]}}" style="display: none;">
+                <td class = "grade" id="{{j}}e{{i}}" contenteditable = "True">
+                    {{session['grade'][j-2][i-7]}}
+                </td>
             {% endfor %}
             
             
@@ -32,12 +33,48 @@
             
     {% endfor %}
     </table>
-    <input type="submit" value="Login" >
     </form>
+    
+    <button class = "aceitar3" onclick="edit_table()">Editar</button>
+    <button class = "aceitar3" onclick="block_table()">Terminar Edição</button>
+    <input  class = "excluir3" onclick="enviar()" type="submit" value="Salvar">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 
     <script>
-        function marcardesmarcar(id){
-            document.getElementById(id).checked = !document.getElementById(id).checked;
+        function enviar() {
+            for (var i = 7; i < 20; i++) {
+                for (var j = 2; j < 8; j++) {
+                    var id = j+"_"+i
+                    var id2=j+"e"+i
+                    document.getElementById(id).value = document.getElementById(id2).textContent
+                }
+            }
+            }
+        function edit_table(){
+            $(".grade").each(
+                function(){
+                $(this).prop("contenteditable", true)
+                }
+            );
+        }
+        function block_table(){
+            $(".grade").each(
+                function(){
+                $(this).prop("contenteditable", false)
+                }
+            );
+        }
+        function disablef(){
+            $(".grade_inp").each(
+                function() {
+                    if ($(this).prop("disabled")==true) {
+                        $(this).prop("disabled", false);
+                    } else {
+                        $(this).prop("disabled", true);
+                    }
+                }
+            );
         }
     </script>
 {% endblock %}

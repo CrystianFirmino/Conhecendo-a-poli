@@ -89,12 +89,6 @@
 
   
 
-
-
-
-
-
-
   
   /* Create two unequal columns that floats next to each other */
 /* Left column */
@@ -173,12 +167,18 @@
   padding: 20px;
 }
 
+<<<<<<< HEAD
 .legenda{
   text-align: center;
 }
 
 
 /*Login*/
+=======
+
+/*Login*/
+
+>>>>>>> 2fd057762323a38ee90d4e8bc349715e6701215c
 .wrap {
   margin:0;
   padding: 0;
@@ -732,12 +732,13 @@ td
   /*grade*/
 .boxgrade
 {   
-    margin-left: 5%;
+    margin-left: 6%;
     margin-top: 5%;
-    margin-bottom: 5%;
+    margin-right: 6%;
+    margin-bottom: 3%;
     box-sizing: border-box;
     height: 310px;
-    width: 70%;
+    width: 85%;
     border-radius: 2%;
     background-color:rgb(250, 233, 148);
     border-color: rgb(250, 233, 148);
@@ -760,11 +761,11 @@ td
     border: 1px solid white;
     border-top: none;
     border-left: none;
-    height: 18px;
+    height: 20px;
     width: 70px;
     text-align: left;
     background-color: rgb(247, 234, 160);
-    font-size: medium;
+    font-size: 85%;
 }
 .horario
 {
@@ -783,7 +784,7 @@ td
   margin-left: 35%;
 }
 
-.aceitar
+.aceitar, .excluir
 {
     height: 45px;
     border-radius: 3%;
@@ -797,33 +798,54 @@ td
     margin-bottom: 3%;
     margin-top: 0px;
 }
-.aceitar:hover
+.aceitar:hover, .aceitar2:hover, .aceitar3:hover
 {
   background-color: #aadaff;
   border: 3px solid #aadaff;
 }
 
-.excluir
+
+.excluir:hover, .excluir2:hover, .excluir3:hover
 {
-  height: 45px;
-    border-radius: 2%;
+  background-color: #F76c6c;
+  border:3px solid #F76c6c;
+}
+
+.aceitar2, .excluir2
+{
+    height: 45px;
+    border-radius: 3%;
     width: 25%;
     background-color: #f5e7a3;
     color: #24305e;
     font-size: 15px;
     font-weight: bold;
     border: 3px solid #f5e7a3;
+    border-radius: 2%;
+    margin-bottom: 1%;
+    margin-top: 0px;
+    margin-left: 37%;
+}
+.aceitar3, .excluir3
+{
+    height: 45px;
+    border-radius: 3%;
+    width: 24%;
+    background-color: #f5e7a3;
+    color: #24305e;
+    font-size: 15px;
+    font-weight: bold;
+    border: 3px solid #f5e7a3;
+    border-radius: 2%;
     margin-bottom: 3%;
     margin-top: 0px;
-}
-.excluir:hover
-{
-  background-color: #F76c6c;
-  border:3px solid #F76c6c;
+    margin-left: 6%;
+    margin-right: 0px;
 }
 
-  
-  
+
+
+
   
     
 

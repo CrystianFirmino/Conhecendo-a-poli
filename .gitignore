@@ -1,1 +1,7 @@
 *.pyc
+*.json
+*.cpython-37.pyc
+*.cpython-37
+.vscode/settings.json
+__pycache__/db_create.cpython-37.pyc
+__pycache__/pessoas.cpython-37.pyc
