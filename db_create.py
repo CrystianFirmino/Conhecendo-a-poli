@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 import sqlite3
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from send import Send
+import smtplib 
 
 class Banco():
 
@@ -424,5 +428,22 @@ class Banco():
                 """, (user))
             connection.commit()
 
+    def recuperarSenha(self,user):
+        send = Send()
+        user = user.title()
+        try: 
+            with sqlite3.connect('db1.db') as connection:
+                cursor = connection.cursor()
+                find_user = ("SELECT senha, email FROM user WHERE usuario = ?")
+                results = cursor.execute(find_user, (user,)).fetchall()
+            send.sendMessage(results[0], results[1])
+        except:
+            return 'usuário não existe'
 
-
+banco = Banco()
+x = "heitor"
+send= Send()
+send.sendMessage("123", "heitor_ndrd@hotmail.com")
+'''
+print(banco.recuperarSenha(x))
+'''
