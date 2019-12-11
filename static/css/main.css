@@ -313,8 +313,8 @@ font-size: 13px;
 
 /* Style the checkmark/indicator */
 .container .checkmark:after {
-  left: 5px;
-  top: 1px;
+  left: 7px;
+  top: 3px;
   width: 5px;
   height: 10px;
   border: solid white;
@@ -438,13 +438,13 @@ font-size: 13px;
   border-top: none;
   border-left: 2px solid white;
   border-right: none;
-  font-size: 120%;
+  font-size: 95%;
   margin-left: 5%;
   margin-bottom: 2%;
   color: #24305e;
   text-indent: 5%;
-  
-}
+  }
+
 label
   {
     font-size: 10px;
@@ -460,7 +460,7 @@ label
     background-color: rgba(0, 0, 0, 0.089);
     outline: none;
     height: 33px;
-    color: rgb(128, 128, 128);
+    color: rgb(83, 83, 83);
     font-size: 13px;
     text-indent: 3%;
   }
@@ -840,7 +840,7 @@ td
     border-radius: 2%;
     margin-bottom: 3%;
     margin-top: 0px;
-    margin-left: 6%;
+    margin-left: 17%;
     margin-right: 0px;
 }
 
