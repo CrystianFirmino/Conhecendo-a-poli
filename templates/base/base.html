@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-    
+
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 
     {% block head %}{% endblock %}
@@ -44,7 +44,7 @@
                 {% endif %}
 
                 {% if session['logged_in'] and session['priority'] == 2 %}
-                <a href="seja_colaborador" title="Seja um colaborador"><i class="">Seja um colaborador</i></a>
+                <a href="seja_colaborador" title="Seja um colaborador"><i class="fas fa-user-edit"></i></a>
                 {% endif %}
 
                 {% if session['logged_in'] and session['priority'] > 2 %}
@@ -73,7 +73,7 @@
     <div class="rightcolumn">
             <div class="card">
               <h3>Colabore conosco!</h3>
-              <a href="#colabore">
+              <a href="seja_colaborador">
               <div class="imghelp" style="height:100px;"></div></a>
               <div class="legenda"><p>Seja um colaborador e nos ajude a manter universitários informados!</p></div>
             </div>
