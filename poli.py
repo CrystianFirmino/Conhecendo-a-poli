@@ -116,6 +116,13 @@ def encontrar_atividades():
 
 @app.route("/grade")
 def grade():
+    if session['logged_in']:
+        banco = Banco()
+        grade = banco.listarGrade(session['user_id'])
+    else:
+        grade = []
+    return render_template('grade.html', grade = grade)
+'''
     try:
         x = session['grade']
     except:
@@ -125,23 +132,27 @@ def grade():
             session['grade'][j-2] = []
             for i in range(7, 20):
                 session['grade'][j-2].append("")
-
-    return render_template('grade.html')
-
+'''
 @app.route("/enviar_grade", methods = ['POST'])
 def enviar_grade():
-    grade=[]
-    for j in range(2,8):
-        grade.append("")
-        grade[j-2]=[]
-        for i in range(7, 20):
-            stg = str(j) + "_" + str(i)
-            try:
-                app = request.form[stg]
-                grade[j-2].append(app.strip())
-            except:
-                grade[j-2].append("")
-    session['grade'] = grade
+    if session['logged_in']:
+        grade=[]
+        for j in range(2,8):
+            grade.append("")
+            grade[j-2]=[]
+            for i in range(7, 20):
+                stg = str(j) + "_" + str(i)
+                try:
+                    app = request.form[stg]
+                    grade[j-2].append(app.strip())
+                    grade[j-2] = ";".join(grade[j-2].split(","))
+                except:
+                    grade[j-2].append("")
+
+        print(grade)
+        banco = Banco()
+        banco.colocarNaGrade(session['user_id'], grade)
+        session['grade'] = grade
 
     return redirect('/grade')
 
