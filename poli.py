@@ -44,6 +44,8 @@ def sugerir():
 
     banco = Banco()
     banco.adicionarEvento(nome, descricao, local, dataIn, horarioIn, horarioFim, tipo, assunto, session['user_id'])
+    tipos = ['Seminário','Mesa Redonda','Painel','Curso','Workshop','Palestra','Semana','Outro']
+    assuntos = ['Ambiental','Civil','Controle e Automação','Computação','Materiais','Petróleo','Produção','Elétrica','Eletrônica','Mecânica','Metalúrgica','Naval','Nuclear','Outros']
     
     return render_template('sugerir_topicos.html', teste = ["Enviado"], assuntos = assuntos, tipos = tipos)
 
