@@ -23,6 +23,7 @@ def sugerir():
     descricao = str(request.form["descricao"])
     local = str(request.form["local"])
     dataIn = str(request.form["data_inicio"])
+    dataFim = str(request.form["data_fim"])
     horarioIn = str(request.form["hora_inicio"])
     horarioFim = str(request.form["hora_fim"])
     try:
@@ -30,7 +31,7 @@ def sugerir():
     except:
         tipo = ''
     try:
-        assunto = str(request.form["assunto"])
+        assunto = [str(request.form["assunto"])]
     except:
         assunto = ''
     '''
@@ -43,7 +44,7 @@ def sugerir():
     '''
 
     banco = Banco()
-    banco.adicionarEvento(nome, descricao, local, dataIn, horarioIn, horarioFim, tipo, assunto, session['user_id'])
+    banco.adicionarEvento(nome, descricao, local, dataIn, dataFim, horarioIn, horarioFim, tipo, assunto, session['user_id'])
     tipos = ['Seminário','Mesa Redonda','Painel','Curso','Workshop','Palestra','Semana','Outro']
     assuntos = ['Ambiental','Civil','Controle e Automação','Computação','Materiais','Petróleo','Produção','Elétrica','Eletrônica','Mecânica','Metalúrgica','Naval','Nuclear','Outros']
     
@@ -142,7 +143,6 @@ def grade():
     if session['logged_in']:
         banco = Banco()
         grade = banco.listarGrade(session['user_id'])
-        print(grade)
     else:
         grade = []
     return render_template('grade.html', grade = grade)
